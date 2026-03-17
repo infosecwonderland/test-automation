@@ -202,6 +202,36 @@ jobs:
             --summary-export performance-tests/k6/results/summary.json \
             performance-tests/k6/ecommerce_load_test.js
 
+      # ── AI-Assisted Tests ─────────────────────────────────────────────────────
+
+      - name: Install AI test dependencies
+        run: pip install -r ai-tests/test-generation/requirements.txt
+
+      - name: AI Tests - Step 1 - Generate test data
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python3 ai-tests/test-generation/data_generator.py --no-run
+
+      - name: AI Tests - Step 2 - Generate scenario tests
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python3 ai-tests/test-generation/scenario_generator.py --no-run
+
+      - name: AI Tests - Step 3 - Generate negative tests
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python3 ai-tests/test-generation/negative_test_generator.py --no-run
+
+      - name: AI Tests - Step 4 - Run generated tests + analyse failures
+        id: ai_tests
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python3 ai-tests/test-generation/failure_analyzer.py \
+            --suite ai-tests/test-generation/generated \
+            --alluredir ai-tests/reports/allure-results
+
       # ── Failure Gate ──────────────────────────────────────────────────────────
 
       - name: Check all suites passed
@@ -214,6 +244,7 @@ jobs:
           [ "${{ steps.newman.outcome }}"     != "success" ] && FAILED="$FAILED\n  - API Tests (Newman)"
           [ "${{ steps.security.outcome }}"   != "success" ] && FAILED="$FAILED\n  - Security Tests"
           [ "${{ steps.k6.outcome }}"         != "success" ] && FAILED="$FAILED\n  - Performance Tests (k6)"
+          [ "${{ steps.ai_tests.outcome }}"   != "success" ] && FAILED="$FAILED\n  - AI-Assisted Tests"
           if [ -n "$FAILED" ]; then
             echo -e "GATE FAILED — the following suites failed:$FAILED"
             exit 1
@@ -239,6 +270,18 @@ jobs:
             api-tests/karate/target/allure-results/
             api-tests/newman/allure-results/
             security-tests/Pytest/allure-results/
+            ai-tests/reports/allure-results/
+
+      - name: Upload AI test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-test-reports
+          path: |
+            ai-tests/reports/failure_analysis.json
+            ai-tests/test-generation/generated/test_data.json
+            ai-tests/test-generation/generated/test_ai_scenarios.py
+            ai-tests/test-generation/generated/test_negative_cases.py
 
       - name: Upload k6 results
         if: always()
@@ -248,109 +291,11 @@ jobs:
           path: performance-tests/k6/results/
           retention-days: 30
 
-  # ── AI-Assisted Tests ─────────────────────────────────────────────────────────
-  ai-tests:
-    name: AI-Assisted Tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install SUT dependencies
-        run: cd sut && npm install
-
-      - name: Install AI test dependencies
-        run: pip install -r ai-tests/test-generation/requirements.txt
-
-      - name: Install utils dependencies
-        run: pip install pyyaml openapi3
-
-      - name: Start SUT
-        run: |
-          node sut/index.js &
-          for i in {1..30}; do
-            if curl -sf http://localhost:3000/health > /dev/null 2>&1; then
-              echo "SUT is ready"
-              break
-            fi
-            sleep 1
-          done
-
-      - name: Step 1 - Generate test data
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          python3 ai-tests/test-generation/data_generator.py --no-run
-
-      - name: Step 2 - Generate scenario tests
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          python3 ai-tests/test-generation/scenario_generator.py --no-run
-
-      - name: Step 3 - Generate negative tests
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          python3 ai-tests/test-generation/negative_test_generator.py --no-run
-
-      - name: Step 4 - Run generated tests + analyse failures
-        id: ai_tests
-        continue-on-error: true
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          python3 ai-tests/test-generation/failure_analyzer.py \
-            --suite ai-tests/test-generation/generated \
-            --alluredir ai-tests/reports/allure-results
-
-      - name: Stop SUT
-        if: always()
-        run: pkill -f "node sut/index.js" || true
-
-      - name: Upload AI test Allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-ai-tests
-          path: ai-tests/reports/allure-results/
-
-      - name: Upload AI test reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ai-test-reports
-          path: |
-            ai-tests/reports/
-            ai-tests/test-generation/generated/test_data.json
-            ai-tests/test-generation/generated/test_ai_scenarios.py
-            ai-tests/test-generation/generated/test_negative_cases.py
-
-      - name: Gate - AI tests must pass
-        if: always()
-        run: |
-          if [ "${{ steps.ai_tests.outcome }}" != "success" ]; then
-            echo "GATE FAILED — AI-generated tests failed. Check failure_analysis.json for root cause."
-            exit 1
-          fi
-          echo "AI tests passed."
-
   # ── Allure Report ─────────────────────────────────────────────────────────────
   report:
     name: Generate Allure Report
     runs-on: ubuntu-latest
-    needs: [sast, sca, test, ai-tests]
+    needs: [sast, sca, test]
     if: always()
 
     steps:
@@ -372,13 +317,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: allure-tests
-          path: reports/allure/results/
-        continue-on-error: true
-
-      - name: Download AI test results
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-ai-tests
           path: reports/allure/results/
         continue-on-error: true
 
