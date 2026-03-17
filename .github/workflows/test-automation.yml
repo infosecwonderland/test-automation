@@ -1,4 +1,4 @@
-name: Test Automation Pipeline
+name: Test Automation Pipeline (Secure)
 
 on:
   push:
@@ -10,25 +10,91 @@ on:
       - main
       - master
   workflow_dispatch:
+    inputs:
+      test_suite:
+        description: 'Test suite to run (all|ui|api|security|performance|ai)'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - ui
+          - api
+          - security
+          - performance
+          - ai
+
+# Least-privilege permissions
+permissions:
+  contents: read
+  security-events: write
+  checks: write
+  pull-requests: write
+
+# Prevent concurrent runs on the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: '3.11'
+  NODE_VERSION: '20'
+  JAVA_VERSION: '21'
+  ALLURE_VERSION: '2.27.0'
 
 jobs:
 
-  # ── SAST: Semgrep ────────────────────────────────────────────────────────────
-  sast:
-    name: SAST (Semgrep)
+  # ── Dependency Check ──────────────────────────────────────────────────────────
+  deps-check:
+    name: Dependency Security Check
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be0f245ec8763ff594 # v4.1.1
+
+      - name: Run Trivy dependency check
+        uses: aquasecurity/trivy-action@6e7b7d1feac57ef12cc873e0e6f9ad6293f0ec33 # v0.24.0
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@ea9e104ddf51205a72467713186665039c2b990a # v3.24.0
+        with:
+          sarif_file: 'trivy-results.sarif'
+          wait-for-processing: true
+
+  # ── SAST: Semgrep ─────────────────────────────────────────────────────────────
+  sast:
+    name: SAST (Semgrep)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    needs: deps-check
+    if: |
+      github.event_name != 'workflow_dispatch' ||
+      contains(fromJson('["all","security"]'), github.event.inputs.test_suite)
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be0f245ec8763ff594 # v4.1.1
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
         with:
-          python-version: "3.11"
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
 
       - name: Install Semgrep
-        run: pip install semgrep
+        run: pip install --no-cache-dir semgrep
 
       - name: Run Semgrep
         run: |
@@ -47,95 +113,127 @@ jobs:
 
       - name: Upload Semgrep Allure results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb9c915 # v4.3.1
         with:
           name: allure-sast
           path: security-tests/semgrep/allure-results/
+          retention-days: 30
+          if-no-files-found: ignore
 
-  # ── SCA: Trivy ───────────────────────────────────────────────────────────────
+  # ── SCA: Trivy ────────────────────────────────────────────────────────────────
   sca:
     name: SCA (Trivy)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    needs: deps-check
+    if: |
+      github.event_name != 'workflow_dispatch' ||
+      contains(fromJson('["all","security"]'), github.event.inputs.test_suite)
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be0f245ec8763ff594 # v4.1.1
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
         with:
-          python-version: "3.11"
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
 
-      - name: Install Trivy
-        run: |
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
-            | sh -s -- -b /usr/local/bin
+      - name: Run Trivy filesystem scan
+        uses: aquasecurity/trivy-action@6e7b7d1feac57ef12cc873e0e6f9ad6293f0ec33 # v0.24.0
+        with:
+          scan-type: 'fs'
+          scan-ref: 'sut/'
+          format: 'json'
+          output: 'security-tests/trivy/results.json'
+          severity: 'CRITICAL,HIGH,MEDIUM'
 
-      - name: Run Trivy
+      - name: Convert Trivy results to Allure format
         run: |
-          mkdir -p security-tests/trivy
-          trivy fs \
-            --format json \
-            --output security-tests/trivy/results.json \
-            sut/
           python3 utils/convert_to_allure.py \
             --type trivy \
             security-tests/trivy/results.json \
             security-tests/trivy/allure-results
-          python3 utils/gates/trivy_gate.py
+
+      - name: Run Trivy gate
+        run: python3 utils/gates/trivy_gate.py
 
       - name: Upload Trivy Allure results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb9c915 # v4.3.1
         with:
           name: allure-sca
           path: security-tests/trivy/allure-results/
+          retention-days: 30
+          if-no-files-found: ignore
 
-  # ── Functional, Security & Performance Tests ─────────────────────────────────
+  # ── Functional, Security & Performance Tests ──────────────────────────────────
   test:
     name: Run All Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
+    needs: deps-check
+    if: |
+      github.event_name != 'workflow_dispatch' ||
+      contains(fromJson('["all","ui","api","security","performance","ai"]'), github.event.inputs.test_suite)
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be0f245ec8763ff594 # v4.1.1
+
+      - name: Validate test environment
+        run: |
+          if [ ! -f "sut/index.js" ]; then
+            echo "ERROR: SUT entry point not found"
+            exit 1
+          fi
+          echo "Environment validation passed"
 
       # ── Runtimes ──────────────────────────────────────────────────────────────
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@60edb5dd545a775178fac7f3d46c2f61d85ee269 # v4.0.2
         with:
-          node-version: "20"
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
         with:
-          python-version: "3.11"
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
 
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@9da3f4fb69f0a9e0cf3edd5da16ccd29fde1c9c6 # v4.0.0
         with:
-          distribution: temurin
-          java-version: "21"
+          distribution: 'temurin'
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: 'maven'
 
       # ── Dependencies ──────────────────────────────────────────────────────────
 
       - name: Install SUT dependencies
-        run: cd sut && npm install
+        run: cd sut && npm ci --prefer-offline --no-audit
 
       - name: Install Playwright dependencies
         working-directory: ui-tests/playwright
         run: |
-          npm install
-          npx playwright install --with-deps
+          npm ci --prefer-offline --no-audit
+          npx playwright install --with-deps chromium
 
       - name: Install PyTest dependencies
         working-directory: api-tests/pytest
-        run: pip install -r requirements.txt
+        run: pip install --no-cache-dir -q -r requirements.txt
 
       - name: Install Security Test dependencies
         working-directory: security-tests/Pytest
-        run: pip install -r requirements.txt
+        run: pip install --no-cache-dir -q -r requirements.txt
 
       - name: Install k6
         uses: grafana/setup-k6-action@v1
@@ -144,68 +242,96 @@ jobs:
 
       - name: Start SUT
         run: |
-          node sut/index.js &
+          node sut/index.js > /tmp/sut.log 2>&1 &
+          SUT_PID=$!
+          echo "SUT_PID=$SUT_PID" >> $GITHUB_ENV
+
           for i in {1..30}; do
-            if curl -sf http://localhost:3000/health > /dev/null 2>&1; then
-              echo "SUT is ready on port 3000"
-              break
+            if curl -sf --max-time 5 http://localhost:3000/health > /dev/null 2>&1; then
+              echo "✓ SUT is ready on port 3000"
+              exit 0
             fi
-            echo "Waiting for SUT (attempt $i)..."
+            echo "⏳ Waiting for SUT (attempt $i/30)..."
             sleep 1
           done
 
-      # ── Test Suites (all run regardless of individual failures) ──────────────
+          echo "✗ SUT failed to start. Logs:"
+          cat /tmp/sut.log
+          exit 1
+
+      # ── Test Suites (all run regardless of individual failures) ───────────────
 
       - name: UI Tests (Playwright)
         id: playwright
         continue-on-error: true
+        if: |
+          github.event_name != 'workflow_dispatch' ||
+          contains(fromJson('["all","ui"]'), github.event.inputs.test_suite)
         working-directory: ui-tests/playwright
-        run: npx playwright test
+        run: npx playwright test --reporter=json,html
 
       - name: UI Tests (Self-Healing)
         id: self_healing
         continue-on-error: true
+        if: |
+          github.event_name != 'workflow_dispatch' ||
+          contains(fromJson('["all","ui"]'), github.event.inputs.test_suite)
         working-directory: ui-tests/browseruse-self-healing
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BASE_URL: http://localhost:3000
         run: |
-          pip install -r requirements.txt
-          pip show playwright
+          pip install --no-cache-dir -q -r requirements.txt
           python -m playwright install chromium --with-deps
           python -m pytest tests/ -v
 
       - name: API Tests (PyTest)
         id: pytest
         continue-on-error: true
+        if: |
+          github.event_name != 'workflow_dispatch' ||
+          contains(fromJson('["all","api"]'), github.event.inputs.test_suite)
         working-directory: api-tests/pytest
-        run: python -m pytest -v --alluredir=allure-results
+        run: python -m pytest -v --alluredir=allure-results --tb=short
 
       - name: API Tests (Karate)
         id: karate
         continue-on-error: true
+        if: |
+          github.event_name != 'workflow_dispatch' ||
+          contains(fromJson('["all","api"]'), github.event.inputs.test_suite)
         working-directory: api-tests/karate
-        run: mvn test -B
+        run: mvn test -B --quiet
 
       - name: API Tests (Newman)
         id: newman
         continue-on-error: true
+        if: |
+          github.event_name != 'workflow_dispatch' ||
+          contains(fromJson('["all","api"]'), github.event.inputs.test_suite)
         run: |
           npm install -g newman newman-reporter-allure
           newman run api-tests/newman/ecommerce-api.postman_collection.json \
             --environment api-tests/newman/local.postman_environment.json \
             --reporters cli,allure \
-            --reporter-allure-export api-tests/newman/allure-results
+            --reporter-allure-export api-tests/newman/allure-results \
+            --timeout 30000
 
       - name: Security Tests
         id: security
         continue-on-error: true
+        if: |
+          github.event_name != 'workflow_dispatch' ||
+          contains(fromJson('["all","security"]'), github.event.inputs.test_suite)
         working-directory: security-tests/Pytest
-        run: python -m pytest -v --alluredir=allure-results
+        run: python -m pytest -v --alluredir=allure-results --tb=short
 
       - name: Performance Tests (k6)
         id: k6
         continue-on-error: true
+        if: |
+          github.event_name != 'workflow_dispatch' ||
+          contains(fromJson('["all","performance"]'), github.event.inputs.test_suite)
         run: |
           mkdir -p performance-tests/k6/results
           k6 run \
@@ -216,19 +342,31 @@ jobs:
       # ── AI-Assisted Tests ─────────────────────────────────────────────────────
 
       - name: Install AI test dependencies
-        run: pip install -r ai-tests/test-generation/requirements.txt
+        if: |
+          github.event_name != 'workflow_dispatch' ||
+          contains(fromJson('["all","ai"]'), github.event.inputs.test_suite)
+        run: pip install --no-cache-dir -q -r ai-tests/test-generation/requirements.txt
 
       - name: AI Tests - Step 1 - Generate test data
+        if: |
+          github.event_name != 'workflow_dispatch' ||
+          contains(fromJson('["all","ai"]'), github.event.inputs.test_suite)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python3 ai-tests/test-generation/data_generator.py --no-run
 
       - name: AI Tests - Step 2 - Generate scenario tests
+        if: |
+          github.event_name != 'workflow_dispatch' ||
+          contains(fromJson('["all","ai"]'), github.event.inputs.test_suite)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python3 ai-tests/test-generation/scenario_generator.py --no-run
 
       - name: AI Tests - Step 3 - Generate negative tests
+        if: |
+          github.event_name != 'workflow_dispatch' ||
+          contains(fromJson('["all","ai"]'), github.event.inputs.test_suite)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python3 ai-tests/test-generation/negative_test_generator.py --no-run
@@ -236,6 +374,9 @@ jobs:
       - name: AI Tests - Step 4 - Run generated tests + analyse failures
         id: ai_tests
         continue-on-error: true
+        if: |
+          github.event_name != 'workflow_dispatch' ||
+          contains(fromJson('["all","ai"]'), github.event.inputs.test_suite)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
@@ -249,31 +390,36 @@ jobs:
         if: always()
         run: |
           FAILED=""
-          [ "${{ steps.playwright.outcome }}"    != "success" ] && FAILED="$FAILED\n  - UI Tests (Playwright)"
-          [ "${{ steps.self_healing.outcome }}" != "success" ] && FAILED="$FAILED\n  - UI Tests (Self-Healing)"
-          [ "${{ steps.pytest.outcome }}"     != "success" ] && FAILED="$FAILED\n  - API Tests (PyTest)"
-          [ "${{ steps.karate.outcome }}"     != "success" ] && FAILED="$FAILED\n  - API Tests (Karate)"
-          [ "${{ steps.newman.outcome }}"     != "success" ] && FAILED="$FAILED\n  - API Tests (Newman)"
-          [ "${{ steps.security.outcome }}"   != "success" ] && FAILED="$FAILED\n  - Security Tests"
-          [ "${{ steps.k6.outcome }}"         != "success" ] && FAILED="$FAILED\n  - Performance Tests (k6)"
-          [ "${{ steps.ai_tests.outcome }}"   != "success" ] && FAILED="$FAILED\n  - AI-Assisted Tests"
+          [ "${{ steps.playwright.outcome }}"   != "success" ] && [ "${{ steps.playwright.outcome }}"   != "skipped" ] && FAILED="$FAILED\n  • UI Tests (Playwright)"
+          [ "${{ steps.self_healing.outcome }}" != "success" ] && [ "${{ steps.self_healing.outcome }}" != "skipped" ] && FAILED="$FAILED\n  • UI Tests (Self-Healing)"
+          [ "${{ steps.pytest.outcome }}"       != "success" ] && [ "${{ steps.pytest.outcome }}"       != "skipped" ] && FAILED="$FAILED\n  • API Tests (PyTest)"
+          [ "${{ steps.karate.outcome }}"       != "success" ] && [ "${{ steps.karate.outcome }}"       != "skipped" ] && FAILED="$FAILED\n  • API Tests (Karate)"
+          [ "${{ steps.newman.outcome }}"       != "success" ] && [ "${{ steps.newman.outcome }}"       != "skipped" ] && FAILED="$FAILED\n  • API Tests (Newman)"
+          [ "${{ steps.security.outcome }}"     != "success" ] && [ "${{ steps.security.outcome }}"     != "skipped" ] && FAILED="$FAILED\n  • Security Tests"
+          [ "${{ steps.k6.outcome }}"           != "success" ] && [ "${{ steps.k6.outcome }}"           != "skipped" ] && FAILED="$FAILED\n  • Performance Tests (k6)"
+          [ "${{ steps.ai_tests.outcome }}"     != "success" ] && [ "${{ steps.ai_tests.outcome }}"     != "skipped" ] && FAILED="$FAILED\n  • AI-Assisted Tests"
           if [ -n "$FAILED" ]; then
-            echo -e "GATE FAILED — the following suites failed:$FAILED"
+            echo "::error::GATE FAILED — the following suites failed:$FAILED"
             exit 1
           fi
-          echo "All suites passed."
+          echo "✓ All suites passed."
 
       # ── Stop SUT ──────────────────────────────────────────────────────────────
 
       - name: Stop SUT
         if: always()
-        run: pkill -f "node sut/index.js" || true
+        run: |
+          if [ -n "$SUT_PID" ]; then
+            kill $SUT_PID 2>/dev/null || true
+            wait $SUT_PID 2>/dev/null || true
+          fi
+          pkill -f "node sut/index.js" || true
 
       # ── Upload per-suite Allure results ───────────────────────────────────────
 
       - name: Upload test Allure results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb9c915 # v4.3.1
         with:
           name: allure-tests
           path: |
@@ -283,10 +429,12 @@ jobs:
             api-tests/newman/allure-results/
             security-tests/Pytest/allure-results/
             ai-tests/reports/allure-results/
+          retention-days: 30
+          if-no-files-found: ignore
 
       - name: Upload AI test reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb9c915 # v4.3.1
         with:
           name: ai-test-reports
           path: |
@@ -294,39 +442,44 @@ jobs:
             ai-tests/test-generation/generated/test_data.json
             ai-tests/test-generation/generated/test_ai_scenarios.py
             ai-tests/test-generation/generated/test_negative_cases.py
+          retention-days: 30
+          if-no-files-found: ignore
 
       - name: Upload k6 results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb9c915 # v4.3.1
         with:
           name: k6-results
           path: performance-tests/k6/results/
           retention-days: 30
+          if-no-files-found: ignore
 
   # ── Allure Report ─────────────────────────────────────────────────────────────
   report:
     name: Generate Allure Report
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [sast, sca, test]
     if: always()
 
     steps:
       - name: Download SAST results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@c4b5ff82d5c59e238e5b53cc3fcee3cc3cabd59f # v4.1.0
         with:
           name: allure-sast
           path: reports/allure/results/
         continue-on-error: true
 
       - name: Download SCA results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@c4b5ff82d5c59e238e5b53cc3fcee3cc3cabd59f # v4.1.0
         with:
           name: allure-sca
           path: reports/allure/results/
         continue-on-error: true
 
       - name: Download test results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@c4b5ff82d5c59e238e5b53cc3fcee3cc3cabd59f # v4.1.0
         with:
           name: allure-tests
           path: reports/allure/results/
@@ -334,22 +487,44 @@ jobs:
 
       - name: Flatten Allure results
         run: |
-          find reports/allure/results -mindepth 2 -type f \( -name "*-result.json" -o -name "*-container.json" -o -name "*-attachment*" \) \
+          mkdir -p reports/allure/results
+          find reports/allure/results -mindepth 2 -type f \
+            \( -name "*-result.json" -o -name "*-container.json" -o -name "*-attachment*" \) \
             -exec mv {} reports/allure/results/ \; 2>/dev/null || true
 
       - name: Install Allure CLI
         run: |
-          wget -q https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz \
+          wget -q "https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz" \
             -O /tmp/allure.tgz
           tar -xzf /tmp/allure.tgz -C /opt
-          echo "/opt/allure-2.27.0/bin" >> $GITHUB_PATH
+          echo "/opt/allure-${ALLURE_VERSION}/bin" >> $GITHUB_PATH
 
       - name: Generate Allure HTML report
         run: allure generate reports/allure/results --clean -o reports/allure/html
 
       - name: Upload Allure report artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb9c915 # v4.3.1
         with:
           name: allure-report
           path: reports/allure/html/
           retention-days: 30
+
+  # ── Security Summary ──────────────────────────────────────────────────────────
+  security-summary:
+    name: Security & Quality Summary
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    needs: [deps-check, sast, sca]
+    if: always()
+
+    steps:
+      - name: Report security results
+        run: |
+          echo "## Security Check Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Dependency Check | ${{ needs.deps-check.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| SAST (Semgrep) | ${{ needs.sast.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| SCA (Trivy) | ${{ needs.sca.result }} |" >> $GITHUB_STEP_SUMMARY
