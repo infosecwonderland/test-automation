@@ -59,6 +59,9 @@ jobs:
         working-directory: security-tests/Pytest
         run: pip install -r requirements.txt
 
+      - name: Install Semgrep
+        run: pip install semgrep
+
       # ── Start SUT (shared across all test suites) ───────────────────────────
 
       - name: Start SUT
@@ -74,6 +77,19 @@ jobs:
           done
 
       # ── Test Suites ─────────────────────────────────────────────────────────
+
+      - name: SAST (Semgrep)
+        run: |
+          semgrep scan \
+            --config p/nodejs \
+            --config p/jwt \
+            --config security-tests/semgrep/semgrep.yml \
+            --json \
+            --output security-tests/semgrep/results.json \
+            sut/ || true
+          python3 security-tests/semgrep/convert_to_allure.py \
+            security-tests/semgrep/results.json \
+            security-tests/semgrep/allure-results
 
       - name: UI Tests (Playwright)
         working-directory: ui-tests/playwright
@@ -124,6 +140,7 @@ jobs:
           cp -r api-tests/karate/target/allure-results/. reports/allure/results/ 2>/dev/null || true
           cp -r api-tests/newman/allure-results/.        reports/allure/results/ 2>/dev/null || true
           cp -r security-tests/Pytest/allure-results/.  reports/allure/results/ 2>/dev/null || true
+          cp -r security-tests/semgrep/allure-results/. reports/allure/results/ 2>/dev/null || true
 
       - name: Generate Allure HTML report
         if: always()

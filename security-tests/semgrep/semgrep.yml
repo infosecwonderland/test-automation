@@ -1,28 +1,44 @@
 rules:
-  - id: js-no-eval
-    message: "Avoid eval(); it can lead to code injection vulnerabilities."
+  # SUT-specific rules that supplement the registry packs (p/nodejs, p/jwt).
+  # These target patterns unique to this codebase that generic rules miss.
+
+  - id: sut-jwt-hardcoded-secret-fallback
+    message: >
+      JWT secret falls back to a hardcoded string when SUT_JWT_SECRET is unset.
+      Any environment running without the env var uses a predictable secret,
+      making every token forgeable.
     severity: ERROR
     languages: [javascript, typescript]
     patterns:
-      - pattern: eval($EXPR)
+      - pattern: process.env.$VAR || '$FALLBACK'
+      - metavariable-regex:
+          metavariable: $VAR
+          regex: '.*SECRET.*|.*KEY.*|.*PASSWORD.*|.*TOKEN.*'
 
-  - id: js-no-child-process-exec
-    message: "Avoid child_process exec/spawn with untrusted input."
+  - id: sut-express-cors-unrestricted
+    message: >
+      cors() is called without an origin allowlist. All origins are permitted,
+      exposing authenticated API endpoints to cross-origin requests from any site.
     severity: WARNING
     languages: [javascript, typescript]
     patterns:
-      - pattern-either:
-          - pattern: child_process.exec($CMD, ...)
-          - pattern: child_process.execSync($CMD, ...)
-          - pattern: child_process.spawn($CMD, ...)
-          - pattern: child_process.spawnSync($CMD, ...)
+      - pattern: $APP.use(cors())
+      - pattern-not: $APP.use(cors({...}))
 
-  - id: js-hardcoded-jwt-secret
-    message: "Potential hardcoded JWT secret; consider using environment variables or secrets management."
+  - id: sut-express-body-parser-no-limit
+    message: >
+      bodyParser.json() has no body size limit. An attacker can send an
+      arbitrarily large payload to exhaust server memory.
     severity: WARNING
     languages: [javascript, typescript]
     patterns:
-      - pattern: jwt.verify($TOKEN, $SECRET, ...)
-    metavariable-pattern:
-      metavariable: $SECRET
-      pattern: "'...'"
+      - pattern: bodyParser.json()
+      - pattern-not: bodyParser.json({limit: ...})
+
+  - id: sut-console-log-payment
+    message: >
+      console.log() inside payment processing code. Log output may contain
+      order totals or card-adjacent data that ends up in production log stores.
+    severity: WARNING
+    languages: [javascript, typescript]
+    pattern: console.log(...)
