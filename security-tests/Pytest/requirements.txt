@@ -1,2 +1,6 @@
 requests
 PyJWT
+pytest
+allure-pytest==2.13.5
+openapi3
+PyYAML

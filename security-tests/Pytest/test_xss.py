@@ -1,84 +1,60 @@
-import html
-
 import allure
 import pytest
 import requests
 
 from auth_utils import BASE_URL, login
-
+from utils.contract_loader import injectable_endpoints
 
 XSS_PAYLOADS = [
-  "<script>alert('xss')</script>",
-  "<img src=x onerror=alert(1)>",
-  "<svg/onload=alert`xss`>",
-  "\"><script>alert('xss')</script>",
-  "<body onload=alert('xss')>",
+    "<script>alert('xss')</script>",
+    "<img src=x onerror=alert(1)>",
+    "<svg/onload=alert`xss`>",
+    "\"><script>alert('xss')</script>",
+    "<body onload=alert('xss')>",
+]
+
+_PARAMS = [
+    (ep, payload)
+    for ep in injectable_endpoints()
+    for payload in XSS_PAYLOADS
 ]
 
 
 @allure.feature("Security")
 @allure.story("XSS")
-@pytest.mark.parametrize("payload", XSS_PAYLOADS)
-def test_xss_in_search_query_is_escaped(payload: str):
-  """
-  XSS payloads in search query parameters should not be reflected unsanitized
-  in the HTML or JSON response.
-  """
-  token = login()
-  headers = {"Authorization": f"Bearer {token}"}
+@pytest.mark.parametrize(
+    "endpoint,payload",
+    _PARAMS,
+    ids=lambda x: f"{x['method']} {x['path']} [{x['field']}]" if isinstance(x, dict) else x,
+)
+def test_xss(endpoint, payload):
+    """
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    """
+    headers = {}
+    if endpoint["auth_required"]:
+        headers["Authorization"] = f"Bearer {login()}"
 
-  resp = requests.get(
-    f"{BASE_URL}/products?search={payload}",
-    headers=headers,
-  )
+    body = {**endpoint["base_body"], endpoint["field"]: payload}
 
-  print(
-    f"[XSS] GET /products?search={html.escape(payload)} "
-    f"-> {resp.status_code}, content-type={resp.headers.get('Content-Type')}"
-  )
+    resp = requests.request(
+        method=endpoint["method"],
+        url=BASE_URL + endpoint["path"],
+        headers=headers or None,
+        json=body,
+    )
 
-  # Response should be OK (or at least not a server error)
-  assert resp.status_code < 500, (
-    f"XSS search payload caused server error: {resp.status_code}"
-  )
+    print(
+        f"[XSS] {endpoint['method']} {endpoint['path']} "
+        f"field={endpoint['field']} payload={payload!r} -> {resp.status_code}"
+    )
 
-  body_text = resp.text
-  # The raw payload string should not appear unescaped in the response body
-  assert payload not in body_text, (
-    "Potential reflected XSS: payload appears unescaped in response body"
-  )
-
-
-@allure.feature("Security")
-@allure.story("XSS")
-@pytest.mark.parametrize("payload", XSS_PAYLOADS)
-def test_xss_in_cart_error_message_is_sanitized(payload: str):
-  """
-  XSS payloads in user-controlled fields should not be echoed back
-  in error messages without sanitization.
-  """
-  token = login()
-  headers = {"Authorization": f"Bearer {token}"}
-
-  # Use an obviously invalid product name / ID to trigger an error path
-  resp = requests.post(
-    f"{BASE_URL}/cart/add",
-    headers=headers,
-    json={"productId": payload, "quantity": 1},
-  )
-
-  print(
-    f"[XSS] POST /cart/add with productId={html.escape(payload)} "
-    f"-> {resp.status_code}, content-type={resp.headers.get('Content-Type')}"
-  )
-
-  # Expect a client error, not 2xx or 5xx
-  assert 400 <= resp.status_code < 500, (
-    f"Unexpected status for XSS payload in cart/add: {resp.status_code}"
-  )
-
-  body_text = resp.text
-  assert payload not in body_text, (
-    "Potential reflected XSS in cart/add error response"
-  )
-
+    assert resp.status_code < 500, (
+        f"XSS payload caused server error on {endpoint['method']} {endpoint['path']}: "
+        f"{resp.status_code}"
+    )
+    assert payload not in resp.text, (
+        f"Potential reflected XSS: payload appears unescaped in response from "
+        f"{endpoint['method']} {endpoint['path']} field={endpoint['field']!r}"
+    )

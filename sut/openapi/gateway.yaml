@@ -51,6 +51,10 @@ paths:
     post:
       summary: Login and obtain JWT access token
       operationId: login
+      x-rate-limited: true
+      x-rate-limit-body:
+        email: "ratelimit-victim@example.com"
+        password: "wrong-password-12"
       requestBody:
         required: true
         content:
@@ -73,6 +77,8 @@ paths:
     get:
       summary: Get current authenticated user
       operationId: getCurrentUser
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Current user
@@ -103,6 +109,9 @@ paths:
     post:
       summary: Add item to cart
       operationId: addToCart
+      security:
+        - bearerAuth: []
+      x-rate-limited: true
       requestBody:
         required: true
         content:
@@ -142,6 +151,8 @@ paths:
     post:
       summary: Clear the current user's cart
       operationId: clearCart
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Cart cleared
@@ -159,6 +170,8 @@ paths:
     get:
       summary: Get items in current user's cart
       operationId: getCartItems
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Cart items with product details
@@ -173,6 +186,8 @@ paths:
     post:
       summary: Remove an item from cart
       operationId: removeCartItem
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -228,6 +243,9 @@ paths:
     post:
       summary: Create order from current cart
       operationId: createOrderFromCart
+      security:
+        - bearerAuth: []
+      x-rate-limited: true
       requestBody:
         required: false
         content:
@@ -269,6 +287,8 @@ paths:
     get:
       summary: Get order details by id
       operationId: getOrderById
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: orderId
@@ -305,6 +325,9 @@ paths:
     post:
       summary: Charge payment for an order
       operationId: chargePayment
+      security:
+        - bearerAuth: []
+      x-rate-limited: true
       requestBody:
         required: true
         content:
@@ -363,6 +386,12 @@ paths:
                     type: string
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
   schemas:
     RegisterRequest:
       type: object
@@ -475,4 +504,3 @@ components:
           type: integer
         quantity:
           type: integer
-

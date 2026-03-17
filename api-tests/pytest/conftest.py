@@ -1,10 +1,14 @@
 import os
 import subprocess
+import sys
 import time
 from typing import Generator
 
 import pytest
 import requests
+
+# Make the repo root importable so utils/contract_loader is available
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 
 from client import ApiClient
 
@@ -62,7 +66,10 @@ def client(base_url: str) -> Generator[ApiClient, None, None]:
 
 @pytest.fixture(scope="session")
 def valid_credentials() -> dict:
-    return {"email": "test@example.com", "password": "password123"}
+    return {
+        "email": os.getenv("SUT_TEST_EMAIL", "test@example.com"),
+        "password": os.getenv("SUT_TEST_PASSWORD", "password123"),
+    }
 
 
 @pytest.fixture(scope="session")
