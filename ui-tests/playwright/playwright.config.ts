@@ -23,6 +23,14 @@ export default defineConfig({
     video: 'retain-on-failure',
     trace: 'on-first-retry',
   },
+  webServer: {
+    command: 'node ../../sut/index.js',
+    url: 'http://localhost:3000/health',
+    reuseExistingServer: !process.env.CI,
+    timeout: 30000,
+    stdout: 'pipe',
+    stderr: 'pipe',
+  },
   projects: [
     {
       name: 'chromium',

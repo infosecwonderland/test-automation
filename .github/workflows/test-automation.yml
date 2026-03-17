@@ -49,8 +49,8 @@ jobs:
             echo "No Node-based SUT with package.json found; skipping npm install."
           fi
 
-  start_sut:
-    name: Start SUT only
+  ui_tests_playwright:
+    name: UI Tests (Playwright)
     runs-on: ubuntu-latest
     needs: lint_and_requirements
 
@@ -65,48 +65,8 @@ jobs:
 
       - name: Install SUT dependencies
         run: |
-          if [ -d "sut" ] && [ -f "sut/package.json" ]; then
-            cd sut
-            npm install
-          else
-            echo "No Node-based SUT with package.json found; cannot start SUT."
-          fi
-
-      - name: Start SUT
-        run: |
-          if [ -d "sut" ] && [ -f "sut/package.json" ]; then
-            cd sut
-            npm start &
-          else
-            echo "No Node-based SUT found; skipping start."
-          fi
-
-      - name: Wait for SUT to be ready
-        run: |
-          for i in {1..30}; do
-            if curl -sSf http://localhost:3000/ >/dev/null 2>&1; then
-              echo "SUT is up."
-              exit 0
-            fi
-            echo "Waiting for SUT (attempt $i)..."
-            sleep 2
-          done
-          echo "SUT did not become ready in time."
-          exit 1
-
-  ui_tests_playwright:
-    name: UI Tests (Playwright)
-    runs-on: ubuntu-latest
-    needs: start_sut
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
+          cd sut
+          npm install
 
       - name: Install Playwright dependencies
         working-directory: ui-tests/playwright
@@ -117,6 +77,6 @@ jobs:
       - name: Run Playwright tests
         working-directory: ui-tests/playwright
         env:
-          SUT_BASE_URL: http://localhost:3000
+          CI: true
         run: |
           npx playwright test --reporter=line
