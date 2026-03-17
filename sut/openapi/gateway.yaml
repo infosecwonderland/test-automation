@@ -1,0 +1,478 @@
+openapi: 3.0.3
+info:
+  title: API Gateway (SUT)
+  version: 1.0.0
+  description: >
+    Logical API gateway of the e-commerce SUT. This single contract aggregates
+    all HTTP APIs exposed by the monolithic Express app.
+servers:
+  - url: http://localhost:3000
+paths:
+  /health:
+    get:
+      summary: Health check for the SUT
+      operationId: gatewayHealth
+      responses:
+        '200':
+          description: Health information
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                properties:
+                  status:
+                    type: string
+
+  /auth/register:
+    post:
+      summary: Register a new user
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: User registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Missing fields
+        '409':
+          description: User already exists
+
+  /auth/login:
+    post:
+      summary: Login and obtain JWT access token
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Missing fields
+        '401':
+          description: Invalid credentials
+
+  /auth/me:
+    get:
+      summary: Get current authenticated user
+      operationId: getCurrentUser
+      responses:
+        '200':
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Invalid or missing token
+        '404':
+          description: User not found
+
+  /products:
+    get:
+      summary: List products
+      operationId: listProducts
+      responses:
+        '200':
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+
+  /cart/add:
+    post:
+      summary: Add item to cart
+      operationId: addToCart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCartItemRequest'
+      responses:
+        '201':
+          description: Item added
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                  - cart
+                properties:
+                  message:
+                    type: string
+                  cart:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CartItem'
+        '400':
+          description: Invalid productId or quantity
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+
+  /cart/clear:
+    post:
+      summary: Clear the current user's cart
+      operationId: clearCart
+      responses:
+        '200':
+          description: Cart cleared
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties:
+                  message:
+                    type: string
+
+  /cart/items:
+    get:
+      summary: Get items in current user's cart
+      operationId: getCartItems
+      responses:
+        '200':
+          description: Cart items with product details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CartItemDetailed'
+
+  /cart/remove:
+    post:
+      summary: Remove an item from cart
+      operationId: removeCartItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - productId
+              properties:
+                productId:
+                  type: integer
+      responses:
+        '200':
+          description: Item removed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                  - cart
+                properties:
+                  message:
+                    type: string
+                  cart:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CartItem'
+        '400':
+          description: Invalid productId
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Item not in cart
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+
+  /order/create:
+    post:
+      summary: Create order from current cart
+      operationId: createOrderFromCart
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Order created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                  - orderId
+                  - total
+                properties:
+                  message:
+                    type: string
+                    example: Order created
+                  orderId:
+                    type: string
+                  total:
+                    type: number
+        '400':
+          description: Cart is empty
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+
+  /order/{orderId}:
+    get:
+      summary: Get order details by id
+      operationId: getOrderById
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Order found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - total
+                  - status
+                  - items
+                properties:
+                  id:
+                    type: string
+                  total:
+                    type: number
+                  status:
+                    type: string
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OrderItem'
+        '404':
+          description: Order not found
+
+  /payment/charge:
+    post:
+      summary: Charge payment for an order
+      operationId: chargePayment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - orderId
+                - cardNumber
+              properties:
+                orderId:
+                  type: string
+                cardNumber:
+                  type: string
+                  minLength: 4
+      responses:
+        '200':
+          description: Payment successful
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                  - orderId
+                  - status
+                properties:
+                  message:
+                    type: string
+                    example: Payment successful
+                  orderId:
+                    type: string
+                  status:
+                    type: string
+        '400':
+          description: Invalid card details
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+
+components:
+  schemas:
+    RegisterRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          pattern: '^[^@\s]+@[^@\s]+\.[^@\s]+$'
+        password:
+          type: string
+          minLength: 8
+          maxLength: 64
+          pattern: '^[\S]+$'
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          pattern: '^[^@\s]+@[^@\s]+\.[^@\s]+$'
+        password:
+          type: string
+          minLength: 8
+          maxLength: 64
+          pattern: '^[\S]+$'
+    LoginResponse:
+      type: object
+      required:
+        - accessToken
+        - tokenType
+      properties:
+        accessToken:
+          type: string
+        tokenType:
+          type: string
+          example: Bearer
+    User:
+      type: object
+      required:
+        - id
+        - email
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+          format: email
+    Product:
+      type: object
+      required:
+        - id
+        - name
+        - price
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+    CartItem:
+      type: object
+      required:
+        - productId
+        - quantity
+      properties:
+        productId:
+          type: integer
+        quantity:
+          type: integer
+    CartItemDetailed:
+      type: object
+      required:
+        - productId
+        - name
+        - price
+        - quantity
+      properties:
+        productId:
+          type: integer
+        name:
+          type: string
+        price:
+          type: number
+        quantity:
+          type: integer
+    AddCartItemRequest:
+      type: object
+      required:
+        - productId
+        - quantity
+      properties:
+        productId:
+          type: integer
+        quantity:
+          type: integer
+    OrderItem:
+      type: object
+      required:
+        - productId
+        - quantity
+      properties:
+        productId:
+          type: integer
+        quantity:
+          type: integer
+

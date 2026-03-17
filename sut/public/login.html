@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - Demo Shop</title>
+</head>
+<body>
+  <h1>Login</h1>
+  <button id="login" type="button">Open Login Form</button>
+  <form id="login-form">
+    <div id="login-error" data-testid="login-error" class="error" style="color: red; margin-bottom: 8px;" aria-live="polite"></div>
+    <label>
+      Email:
+      <input id="email" type="email" name="email" value="test@example.com" />
+    </label>
+    <br />
+    <label>
+      Password:
+      <input id="password" type="password" name="password" value="password123" />
+    </label>
+    <br />
+    <button id="submit" type="submit">Login</button>
+  </form>
+  <p><a href="/register">Register a new account</a></p>
+  <p><a href="/products-page">Continue as guest to Products/Search</a></p>
+  <script>
+    const loginButton = document.getElementById('login');
+    const emailInput = document.getElementById('email');
+    if (loginButton && emailInput) {
+      loginButton.addEventListener('click', () => {
+        emailInput.focus();
+      });
+    }
+
+    // Auth login happens internally via API; on success redirect to product search
+    const errorEl = document.getElementById('login-error');
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (errorEl) errorEl.textContent = '';
+      const form = e.target;
+      const email = form.querySelector('input[name="email"]').value;
+      const password = form.querySelector('input[name="password"]').value;
+      try {
+        const res = await fetch('/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          const msg = data.error || data.message || 'Invalid credentials';
+          if (errorEl) errorEl.textContent = msg;
+          return;
+        }
+        window.location.href = '/products-page';
+      } catch (err) {
+        console.error('Login failed', err);
+        if (errorEl) errorEl.textContent = 'Login failed';
+      }
+    });
+  </script>
+</body>
+</html>

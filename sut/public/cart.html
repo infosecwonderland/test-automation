@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cart - Demo Shop</title>
+</head>
+<body>
+  <h1>Cart</h1>
+  <p>This page represents the Cart screen.</p>
+
+  <ul id="cart-items"></ul>
+
+  <p id="cart-empty" style="color: gray; display: none;">Your cart is empty.</p>
+
+  <button id="proceed-to-checkout">Proceed to Checkout</button>
+
+  <script>
+    async function loadCart() {
+      const list = document.getElementById('cart-items');
+      const emptyMsg = document.getElementById('cart-empty');
+      const checkoutBtn = document.getElementById('proceed-to-checkout');
+      list.innerHTML = '';
+      const res = await fetch('/cart/items');
+      const items = await res.json();
+      if (!items.length) {
+        if (emptyMsg) emptyMsg.style.display = 'block';
+        if (checkoutBtn) checkoutBtn.disabled = true;
+        return;
+      }
+      if (emptyMsg) emptyMsg.style.display = 'none';
+      if (checkoutBtn) checkoutBtn.disabled = false;
+      items.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent =
+          item.name +
+          ' x ' +
+          item.quantity +
+          ' - $' +
+          item.price * item.quantity;
+        li.setAttribute('data-testid', 'cart-item');
+        const btn = document.createElement('button');
+        btn.textContent = 'Remove';
+        btn.setAttribute('data-testid', 'remove-from-cart-button');
+        btn.addEventListener('click', async () => {
+          await fetch('/cart/remove', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ productId: item.productId }),
+          });
+          loadCart();
+        });
+        li.appendChild(btn);
+        list.appendChild(li);
+      });
+    }
+
+    document
+      .getElementById('proceed-to-checkout')
+      .addEventListener('click', () => {
+        window.location.href = '/checkout';
+      });
+
+    loadCart();
+  </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "ecommerce-sut",
+  "version": "1.0.0",
+  "description": "Simple e-commerce SUT for automation assessment (Auth, Product, Cart, Order, Payment, Notification).",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "check:sut": "node tests/check-sut.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "express-openapi-validator": "^5.1.6",
+    "jsonwebtoken": "^9.0.3"
+  }
+}
