@@ -147,7 +147,12 @@ def analyze_failures(failures: list[dict], summary: dict) -> dict:
 
     client = anthropic.Anthropic()
 
-    failures_json = json.dumps(failures, indent=2)
+    # Cap at 20 failures to keep prompt within token budget
+    capped = failures[:20]
+    if len(failures) > 20:
+        print(f"[failure_analyzer] Capping analysis to first 20 of {len(failures)} failures.")
+
+    failures_json = json.dumps(capped, indent=2)
     total = summary.get("total", "?")
     passed = summary.get("passed", "?")
     failed = summary.get("failed", len(failures))
@@ -198,7 +203,7 @@ Rules:
     result_parts = []
     with client.messages.stream(
         model="claude-opus-4-6",
-        max_tokens=4096,
+        max_tokens=32000,
         thinking={"type": "adaptive"},
         messages=[{"role": "user", "content": prompt}],
     ) as stream:
@@ -214,7 +219,18 @@ Rules:
         lines = raw.splitlines()
         raw = "\n".join(lines[1:-1] if lines[-1].strip() == "```" else lines[1:])
 
-    return json.loads(raw)
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        # Response was truncated — return a minimal valid structure
+        print("\n[failure_analyzer] WARNING: response was truncated, returning partial analysis.")
+        return {
+            "summary": "Analysis response was truncated. Increase max_tokens or reduce failure count.",
+            "failure_count": len(failures),
+            "analyses": [],
+            "patterns": [],
+            "recommendations": ["Investigate truncated Claude response — reduce failures sent per batch."],
+        }
 
 
 # ---------------------------------------------------------------------------
