@@ -1,0 +1,348 @@
+name: Test Automation Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - "**/feature/**"
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  lint_and_build:
+    name: Lint and Build (Foundation)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install core Python tooling
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      - name: Record foundation summary
+        run: |
+          {
+            echo "## Lint and Build (Foundation)";
+            echo "";
+            echo "- Python 3.11 and Node 20 set up.";
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  unit_tests:
+    name: Unit Tests (SUT)
+    runs-on: ubuntu-latest
+    needs: lint_and_build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install SUT dependencies (if present)
+        run: |
+          if [ -d "sut" ] && [ -f "sut/package.json" ]; then
+            cd sut
+            npm install
+          else
+            echo "No Node-based SUT with package.json found; skipping SUT unit tests."
+          fi
+
+      - name: Run SUT unit tests (npm test)
+        run: |
+          if [ -d "sut" ] && [ -f "sut/package.json" ]; then
+            cd sut
+            npm test
+          else
+            echo "Skipping SUT unit tests because sut/package.json is missing."
+          fi
+
+      - name: Append unit test summary
+        if: always()
+        run: |
+          {
+            echo "## Unit Tests (SUT)";
+            echo "";
+            echo "- Ran \`npm test\` in \`sut\` when a Node-based SUT was detected.";
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  api_tests:
+    name: API Tests (Pytest)
+    runs-on: ubuntu-latest
+    needs: lint_and_build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install API test dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r api-tests/pytest/requirements.txt
+
+      - name: Start SUT
+        run: |
+          if [ -d "sut" ] && [ -f "sut/package.json" ]; then
+            cd sut
+            npm install
+            npm start &
+          else
+            echo "No Node-based SUT found; API tests may fail if they require a running backend."
+          fi
+
+      - name: Wait for SUT to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -sSf http://localhost:3000/ >/dev/null 2>&1; then
+              echo "SUT is up.";
+              exit 0
+            fi
+            echo "Waiting for SUT (attempt $i)..."
+            sleep 2
+          done
+          echo "SUT did not become ready in time."
+          exit 1
+
+      - name: Run API tests (pytest)
+        run: |
+          mkdir -p reports
+          pytest api-tests/pytest \
+            --junitxml=reports/api-tests-junit.xml \
+            -q
+
+      - name: Upload API test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-tests-junit
+          path: reports/api-tests-junit.xml
+          if-no-files-found: warn
+
+      - name: Append API test summary
+        if: always()
+        run: |
+          {
+            echo "## API Tests";
+            echo "";
+            echo "- Pytest suite executed from \`api-tests/pytest\`.";
+            echo "- JUnit report saved as artifact \`api-tests-junit\`.";
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  security_scans:
+    name: Security Scans (Semgrep & Pytests)
+    runs-on: ubuntu-latest
+    needs: lint_and_build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Semgrep and security test deps
+        run: |
+          pip install --upgrade pip
+          pip install semgrep
+          pip install -r security-tests/Pytest/requirements.txt
+
+      - name: Run Semgrep static analysis
+        run: |
+          mkdir -p reports
+          semgrep \
+            --config security-tests/semgrep/semgrep.yml \
+            --error \
+            --json > reports/semgrep-report.json
+
+      - name: Upload Semgrep report
+        uses: actions/upload-artifact@v4
+        with:
+          name: semgrep-report
+          path: reports/semgrep-report.json
+          if-no-files-found: warn
+
+      - name: Run security-focused pytest suite
+        run: |
+          mkdir -p reports
+          pytest security-tests/Pytest \
+            --junitxml=reports/security-tests-junit.xml \
+            -q
+
+      - name: Upload security pytest results
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-tests-junit
+          path: reports/security-tests-junit.xml
+          if-no-files-found: warn
+
+      - name: Append security summary
+        if: always()
+        run: |
+          {
+            echo "## Security Scans";
+            echo "";
+            echo "- Semgrep run with custom rules from \`security-tests/semgrep/semgrep.yml\`.";
+            echo "- Python security tests executed from \`security-tests/Pytest\`.";
+            echo "- Reports uploaded as artifacts (\`semgrep-report\`, \`security-tests-junit\`).";
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  ui_tests_playwright:
+    name: UI Tests (Playwright)
+    runs-on: ubuntu-latest
+    needs: lint_and_build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Start SUT
+        run: |
+          if [ -d "sut" ] && [ -f "sut/package.json" ]; then
+            cd sut
+            npm install
+            npm start &
+          else
+            echo "No Node-based SUT found; UI tests may fail if they require a running backend."
+          fi
+
+      - name: Wait for SUT to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -sSf http://localhost:3000/ >/dev/null 2>&1; then
+              echo "SUT is up.";
+              exit 0
+            fi
+            echo "Waiting for SUT (attempt $i)..."
+            sleep 2
+          done
+          echo "SUT did not become ready in time."
+          exit 1
+
+      - name: Install Playwright dependencies
+        working-directory: ui-tests/playwright
+        run: |
+          npm install
+          npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        working-directory: ui-tests/playwright
+        run: |
+          npx playwright test --reporter=line,junit
+
+      - name: Upload Playwright HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-html-report
+          path: ui-tests/playwright/playwright-report
+          if-no-files-found: warn
+
+      - name: Append UI test summary
+        if: always()
+        run: |
+          {
+            echo "## UI Tests (Playwright)";
+            echo "";
+            echo "- Playwright test suite executed from \`ui-tests/playwright\`.";
+            echo "- HTML report uploaded as \`playwright-html-report\` artifact.";
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  performance_k6:
+    name: Performance Tests (k6 E-commerce Flow)
+    runs-on: ubuntu-latest
+    needs:
+      - api_tests
+      - security_scans
+      - ui_tests_playwright
+    # Set to true if you want perf regressions to NOT fail the whole workflow
+    continue-on-error: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install k6
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y k6
+
+      - name: Start SUT
+        run: |
+          if [ -d "sut" ] && [ -f "sut/package.json" ]; then
+            cd sut
+            npm install
+            npm start &
+          else
+            echo "No Node-based SUT found; k6 tests may fail if they require a running backend."
+          fi
+
+      - name: Wait for SUT to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -sSf http://localhost:3000/ >/dev/null 2>&1; then
+              echo "SUT is up.";
+              exit 0
+            fi
+            echo "Waiting for SUT (attempt $i)..."
+            sleep 2
+          done
+          echo "SUT did not become ready in time."
+          exit 1
+
+      - name: Run k6 performance test
+        working-directory: performance-tests/k6
+        env:
+          BASE_URL: http://localhost:3000
+        run: |
+          mkdir -p reports
+          k6 run --out json=reports/k6-results.json ecommerce_load_test.js
+
+      - name: Upload k6 results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-results
+          path: performance-tests/k6/reports/k6-results.json
+          if-no-files-found: warn
+
+      - name: Append performance summary
+        if: always()
+        run: |
+          {
+            echo "## Performance Tests (k6)";
+            echo "";
+            echo "- k6 e-commerce load test executed from \`performance-tests/k6/ecommerce_load_test.js\`.";
+            echo "- JSON metrics uploaded as \`k6-results\` artifact.";
+            echo "- Threshold violations (latency, error rate, etc.) will fail this job if \`continue-on-error\` is false.";
+          } >> "$GITHUB_STEP_SUMMARY"
+

@@ -1,0 +1,28 @@
+rules:
+  - id: js-no-eval
+    message: "Avoid eval(); it can lead to code injection vulnerabilities."
+    severity: ERROR
+    languages: [javascript, typescript]
+    patterns:
+      - pattern: eval($EXPR)
+
+  - id: js-no-child-process-exec
+    message: "Avoid child_process exec/spawn with untrusted input."
+    severity: WARNING
+    languages: [javascript, typescript]
+    patterns:
+      - pattern-either:
+          - pattern: child_process.exec($CMD, ...)
+          - pattern: child_process.execSync($CMD, ...)
+          - pattern: child_process.spawn($CMD, ...)
+          - pattern: child_process.spawnSync($CMD, ...)
+
+  - id: js-hardcoded-jwt-secret
+    message: "Potential hardcoded JWT secret; consider using environment variables or secrets management."
+    severity: WARNING
+    languages: [javascript, typescript]
+    patterns:
+      - pattern: jwt.verify($TOKEN, $SECRET, ...)
+    metavariable-pattern:
+      metavariable: $SECRET
+      pattern: "'...'"
