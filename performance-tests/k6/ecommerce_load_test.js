@@ -12,17 +12,27 @@ const BASE_URL = __ENV.BASE_URL || 'http://localhost:3000';
 const CARD_NUMBER = __ENV.CARD_NUMBER || '4111111111111111';
 
 /**
- * Load profile:
- * - 2 minutes ramp-up to 1000 VUs
- * - 3 minutes sustained at 1000 VUs
- * - 1 minute ramp-down
+ * Load profiles (select via CI_PROFILE env var):
+ *   smoke — 20 VUs, 1 minute  (CI default, fast feedback)
+ *   load  — 1000 VUs, 6 minutes (full assessment scenario, run locally)
  */
-export const options = {
-  stages: [
+const PROFILE = __ENV.CI_PROFILE || 'load';
+
+const STAGES = {
+  // 1 VU for 1 minute — validates full purchase flow without hitting rate limits
+  // (all VUs share the same IP in CI; SUT rate limits are 20-25 req/10s per IP)
+  smoke: [
+    { duration: '1m', target: 1 },
+  ],
+  load: [
     { duration: '2m', target: 1000 },
     { duration: '3m', target: 1000 },
     { duration: '1m', target: 0 },
   ],
+};
+
+export const options = {
+  stages: STAGES[PROFILE] || STAGES.load,
   thresholds: {
     http_req_duration: ['p(95)<2000'], // P95 latency < 2s
     http_req_failed: ['rate<0.01'],    // < 1% requests failing
