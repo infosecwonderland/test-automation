@@ -51,9 +51,9 @@ function createApp() {
     };
   }
 
-  const cartRateLimit    = createRateLimiter({ windowMs: 10000, max: 20 });
-  const orderRateLimit   = createRateLimiter({ windowMs: 10000, max: 10 });
-  const paymentRateLimit = createRateLimiter({ windowMs: 10000, max: 5  });
+  const cartRateLimit    = createRateLimiter({ windowMs: 10000, max: 25 });
+  const orderRateLimit   = createRateLimiter({ windowMs: 10000, max: 20 });
+  const paymentRateLimit = createRateLimiter({ windowMs: 10000, max: 20 });
 
   function requireAuth(req, res, next) {
     const authHeader = req.headers.authorization || '';

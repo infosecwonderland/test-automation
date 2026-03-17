@@ -26,7 +26,7 @@ export default defineConfig({
   webServer: {
     command: 'node ../../sut/index.js',
     url: 'http://localhost:3000/health',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
     timeout: 30000,
     stdout: 'pipe',
     stderr: 'pipe',

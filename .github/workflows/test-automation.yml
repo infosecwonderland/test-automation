@@ -1,4 +1,4 @@
-name: Minimal Linting and SUT Startup
+name: Test Automation Pipeline
 
 on:
   push:
@@ -13,60 +13,36 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint_and_requirements:
-    name: Linting and Install Requirements
+  test:
+    name: Run All Tests
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      # ── Runtimes ────────────────────────────────────────────────────────────
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
-          node-version: "20"
+          distribution: temurin
+          java-version: "17"
 
-      - name: Install Python requirements (if any)
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f "requirements.txt" ]; then
-            pip install -r requirements.txt
-          else
-            echo "No top-level requirements.txt found; skipping global Python deps."
-          fi
+      # ── Dependencies ────────────────────────────────────────────────────────
 
       - name: Install SUT dependencies
-        run: |
-          if [ -d "sut" ] && [ -f "sut/package.json" ]; then
-            cd sut
-            npm install
-          else
-            echo "No Node-based SUT with package.json found; skipping npm install."
-          fi
-
-  ui_tests_playwright:
-    name: UI Tests (Playwright)
-    runs-on: ubuntu-latest
-    needs: lint_and_requirements
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install SUT dependencies
-        run: |
-          cd sut
-          npm install
+        run: cd sut && npm install
 
       - name: Install Playwright dependencies
         working-directory: ui-tests/playwright
@@ -74,9 +50,40 @@ jobs:
           npm install
           npx playwright install --with-deps
 
-      - name: Run Playwright tests
-        working-directory: ui-tests/playwright
-        env:
-          CI: true
+      - name: Install PyTest dependencies
+        working-directory: api-tests/pytest
+        run: pip install -r requirements.txt
+
+      # ── Start SUT (shared across all test suites) ───────────────────────────
+
+      - name: Start SUT
         run: |
-          npx playwright test --reporter=line
+          node sut/index.js &
+          for i in {1..30}; do
+            if curl -sf http://localhost:3000/health > /dev/null 2>&1; then
+              echo "SUT is ready on port 3000"
+              break
+            fi
+            echo "Waiting for SUT (attempt $i)..."
+            sleep 1
+          done
+
+      # ── Test Suites ─────────────────────────────────────────────────────────
+
+      - name: UI Tests (Playwright)
+        working-directory: ui-tests/playwright
+        run: npx playwright test --reporter=line
+
+      - name: API Tests (PyTest)
+        working-directory: api-tests/pytest
+        run: python -m pytest -v
+
+      - name: API Tests (Karate)
+        working-directory: api-tests/karate
+        run: mvn test -B
+
+      # ── Stop SUT ─────────────────────────────────────────────────────────────
+
+      - name: Stop SUT
+        if: always()
+        run: pkill -f "node sut/index.js" || true
