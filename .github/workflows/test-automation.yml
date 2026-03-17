@@ -82,6 +82,13 @@ jobs:
         working-directory: api-tests/karate
         run: mvn test -B
 
+      - name: API Tests (Newman)
+        run: |
+          npm install -g newman
+          newman run api-tests/newman/ecommerce-api.postman_collection.json \
+            --environment api-tests/newman/local.postman_environment.json \
+            --reporters cli
+
       # ── Stop SUT ─────────────────────────────────────────────────────────────
 
       - name: Stop SUT
