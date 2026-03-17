@@ -164,6 +164,18 @@ jobs:
         working-directory: ui-tests/playwright
         run: npx playwright test
 
+      - name: UI Tests (Self-Healing)
+        id: self_healing
+        continue-on-error: true
+        working-directory: ui-tests/browseruse-self-healing
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BASE_URL: http://localhost:3000
+        run: |
+          pip install -r requirements.txt
+          python -m playwright install chromium --with-deps
+          python -m pytest tests/ -v
+
       - name: API Tests (PyTest)
         id: pytest
         continue-on-error: true
@@ -238,7 +250,8 @@ jobs:
         if: always()
         run: |
           FAILED=""
-          [ "${{ steps.playwright.outcome }}" != "success" ] && FAILED="$FAILED\n  - UI Tests (Playwright)"
+          [ "${{ steps.playwright.outcome }}"    != "success" ] && FAILED="$FAILED\n  - UI Tests (Playwright)"
+          [ "${{ steps.self_healing.outcome }}" != "success" ] && FAILED="$FAILED\n  - UI Tests (Self-Healing)"
           [ "${{ steps.pytest.outcome }}"     != "success" ] && FAILED="$FAILED\n  - API Tests (PyTest)"
           [ "${{ steps.karate.outcome }}"     != "success" ] && FAILED="$FAILED\n  - API Tests (Karate)"
           [ "${{ steps.newman.outcome }}"     != "success" ] && FAILED="$FAILED\n  - API Tests (Newman)"
