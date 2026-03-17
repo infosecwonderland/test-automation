@@ -14,6 +14,7 @@ A comprehensive, production-grade test automation ecosystem for a microservices-
   - [Prerequisites](#prerequisites)
   - [Start the SUT](#start-the-sut)
   - [UI Tests](#ui-tests-playwright)
+  - [Self-Healing UI Tests](#self-healing-ui-tests)
   - [API Tests](#api-tests)
   - [Security Tests](#security-tests)
   - [Performance Tests](#performance-tests)
@@ -56,6 +57,7 @@ SUT: Express.js e-commerce API (port 3000)
 | Layer | Tool | Version |
 |---|---|---|
 | UI Automation | Playwright + TypeScript | ^1.58.2 |
+| Self-Healing UI | browser-use + Claude API | Python |
 | API Automation | pytest + Python | ^8.3.3 |
 | API Automation | Karate DSL | 1.4.0 |
 | API Automation | Newman (Postman) | CLI |
@@ -85,11 +87,16 @@ test-automation/
 │   └── public/                  # Frontend HTML pages
 │
 ├── ui-tests/
-│   └── playwright/              # Playwright + TypeScript E2E tests
-│       ├── pages/               # Page Object Models (7 pages)
-│       ├── tests/e2e/           # Test specs (login, register, cart, checkout…)
-│       ├── fixtures/            # Test data (users.json)
-│       └── playwright.config.ts
+│   ├── playwright/              # Playwright + TypeScript E2E tests
+│   │   ├── pages/               # Page Object Models (7 pages)
+│   │   ├── tests/e2e/           # Test specs (login, register, cart, checkout…)
+│   │   ├── fixtures/            # Test data (users.json)
+│   │   └── playwright.config.ts
+│   └── browseruse-self-healing/ # AI self-healing UI tests
+│       ├── agents.py            # Claude-powered healing agent
+│       ├── healer.py            # Selector repair logic
+│       ├── pages/               # Page objects with fallback selectors
+│       └── tests/               # Self-healing test specs
 │
 ├── api-tests/
 │   ├── pytest/                  # Python API tests (12 tests, 5 modules)
@@ -211,6 +218,21 @@ Full E2E scenarios: register → login → search products → add to cart → c
 
 ---
 
+### Self-Healing UI Tests
+
+Requires `ANTHROPIC_API_KEY` set in environment.
+
+```bash
+cd ui-tests/browseruse-self-healing
+pip install -r requirements.txt
+python -m playwright install chromium --with-deps
+python -m pytest tests/ -v
+```
+
+Uses [browser-use](https://github.com/browser-use/browser-use) with the Claude API to detect broken UI selectors and automatically suggest and apply fixes. When a locator fails, the AI agent inspects the live DOM and recovers using alternative selectors — no manual test maintenance required.
+
+---
+
 ### API Tests
 
 **pytest:**
@@ -328,14 +350,15 @@ Defined in [`.github/workflows/test-automation.yml`](.github/workflows/test-auto
          │  1. Install runtimes (Node 20, Python 3.11, Java) │
          │  2. Start SUT (health-check readiness wait)       │
          │  3. UI Tests (Playwright)         continue-on-err │
-         │  4. API Tests (pytest)            continue-on-err │
-         │  5. API Tests (Karate)            continue-on-err │
-         │  6. API Tests (Newman)            continue-on-err │
-         │  7. Security Tests (pytest)       continue-on-err │
-         │  8. Performance Tests (k6)        continue-on-err │
-         │  9. AI Tests (4-step pipeline)    continue-on-err │
-         │  10. Failure Gate (all must pass)                 │
-         │  11. Stop SUT                                     │
+         │  4. UI Tests (Self-Healing)       continue-on-err │
+         │  5. API Tests (pytest)            continue-on-err │
+         │  6. API Tests (Karate)            continue-on-err │
+         │  7. API Tests (Newman)            continue-on-err │
+         │  8. Security Tests (pytest)       continue-on-err │
+         │  9. Performance Tests (k6)        continue-on-err │
+         │  10. AI Tests (4-step pipeline)   continue-on-err │
+         │  11. Failure Gate (all must pass)                 │
+         │  12. Stop SUT                                     │
          └────────────────────────┬─────────────────────────┘
                                   │
                          ┌────────▼────────┐
