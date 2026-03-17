@@ -144,7 +144,7 @@ function createApp() {
 
   // ---- REST APIs in scope ----
 
-  app.use('/auth', createAuthRouter({ db, kafka }));
+  app.use('/auth', createAuthRouter({ db, kafka, jwtSecret: JWT_SECRET }));
 
   // GET /products
   app.get('/products', (req, res) => {
