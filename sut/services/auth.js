@@ -1,7 +1,10 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = process.env.SUT_JWT_SECRET || 'sut-secret';
+if (!process.env.SUT_JWT_SECRET) {
+  process.stderr.write('[SUT] WARNING: SUT_JWT_SECRET is not set. Using a random secret — all existing tokens will be invalid after restart.\n');
+}
+const JWT_SECRET = process.env.SUT_JWT_SECRET || require('crypto').randomBytes(32).toString('hex');
 
 // In-memory rate limiting for login attempts (per IP + email).
 // This is separate from the generic per-path limiter in index.js so that

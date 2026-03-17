@@ -14,15 +14,18 @@ const { createKafkaBus } = require('./lib/kafka-bus');
 const { createDb } = require('./lib/db');
 
 // Keep JWT secret consistent with auth service
-const JWT_SECRET = process.env.SUT_JWT_SECRET || 'sut-secret';
+if (!process.env.SUT_JWT_SECRET) {
+  process.stderr.write('[SUT] WARNING: SUT_JWT_SECRET is not set. Using a random secret — all existing tokens will be invalid after restart.\n');
+}
+const JWT_SECRET = process.env.SUT_JWT_SECRET || require('crypto').randomBytes(32).toString('hex');
 const JWT_EXPIRES_IN = "1h";
 const PORT = process.env.SUT_PORT || process.env.PORT || 3000;
 
 function createApp() {
   const app = express();
 
-  app.use(cors());
-  app.use(bodyParser.json());
+  app.use(cors({ origin: process.env.CORS_ORIGIN || 'http://localhost:3000' }));
+  app.use(bodyParser.json({ limit: '10kb' }));
   app.use(express.urlencoded({ extended: true }));
 
   const db = createDb();
@@ -278,8 +281,8 @@ function createApp() {
 
     order.status = 'PAID';
 
-    // Simulate notification via log (placeholder for Kafka/notification service)
-    console.log(`Notification: order ${orderId} paid, total=${order.total}`);
+    // Simulate notification (placeholder for Kafka/notification service)
+    kafka.publish('order.paid', { orderId });
 
     res.json({
       message: 'Payment successful',
@@ -299,7 +302,7 @@ function createApp() {
 if (require.main === module) {
   const app = createApp();
   app.listen(PORT, () => {
-    console.log(`E-commerce SUT listening on http://localhost:${PORT}`);
+    process.stdout.write(`E-commerce SUT listening on http://localhost:${PORT}\n`);
   });
 }
 
