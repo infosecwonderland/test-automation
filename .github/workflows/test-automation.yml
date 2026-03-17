@@ -40,11 +40,22 @@ jobs:
             --config security-tests/semgrep/semgrep.yml \
             --json \
             --output security-tests/semgrep/results.json \
-            sut/ || true
+            sut/
           python3 utils/convert_to_allure.py \
             --type semgrep \
             security-tests/semgrep/results.json \
             security-tests/semgrep/allure-results
+          python3 -c "
+import json, sys
+d = json.load(open('security-tests/semgrep/results.json'))
+errors = [r for r in d.get('results', []) if r.get('extra', {}).get('severity') == 'ERROR']
+if errors:
+    print(f'GATE FAILED: {len(errors)} ERROR-severity finding(s):')
+    for r in errors:
+        print(f'  {r[\"check_id\"]} at {r[\"path\"]}:{r[\"start\"][\"line\"]}')
+    sys.exit(1)
+print('Semgrep gate passed.')
+"
 
       - name: Upload Semgrep Allure results
         if: always()
@@ -78,11 +89,28 @@ jobs:
           trivy fs \
             --format json \
             --output security-tests/trivy/results.json \
-            sut/ || true
+            sut/
           python3 utils/convert_to_allure.py \
             --type trivy \
             security-tests/trivy/results.json \
             security-tests/trivy/allure-results
+          python3 -c "
+import json, sys
+BLOCKING = {'HIGH', 'CRITICAL'}
+d = json.load(open('security-tests/trivy/results.json'))
+findings = [
+    f\"{v['VulnerabilityID']} ({v['Severity']}) in {v['PkgName']}@{v['InstalledVersion']}\"
+    for r in d.get('Results', [])
+    for v in (r.get('Vulnerabilities') or [])
+    if v.get('Severity', '').upper() in BLOCKING
+]
+if findings:
+    print(f'GATE FAILED: {len(findings)} HIGH/CRITICAL CVE(s):')
+    for f in findings:
+        print(f'  {f}')
+    sys.exit(1)
+print('Trivy gate passed.')
+"
 
       - name: Upload Trivy Allure results
         if: always()
@@ -154,21 +182,29 @@ jobs:
             sleep 1
           done
 
-      # ── Test Suites ───────────────────────────────────────────────────────────
+      # ── Test Suites (all run regardless of individual failures) ──────────────
 
       - name: UI Tests (Playwright)
+        id: playwright
+        continue-on-error: true
         working-directory: ui-tests/playwright
         run: npx playwright test
 
       - name: API Tests (PyTest)
+        id: pytest
+        continue-on-error: true
         working-directory: api-tests/pytest
         run: python -m pytest -v --alluredir=allure-results
 
       - name: API Tests (Karate)
+        id: karate
+        continue-on-error: true
         working-directory: api-tests/karate
         run: mvn test -B
 
       - name: API Tests (Newman)
+        id: newman
+        continue-on-error: true
         run: |
           npm install -g newman newman-reporter-allure
           newman run api-tests/newman/ecommerce-api.postman_collection.json \
@@ -177,16 +213,38 @@ jobs:
             --reporter-allure-export api-tests/newman/allure-results
 
       - name: Security Tests
+        id: security
+        continue-on-error: true
         working-directory: security-tests/Pytest
         run: python -m pytest -v --alluredir=allure-results
 
       - name: Performance Tests (k6)
+        id: k6
+        continue-on-error: true
         run: |
           mkdir -p performance-tests/k6/results
           k6 run \
             --env CI_PROFILE=smoke \
             --summary-export performance-tests/k6/results/summary.json \
             performance-tests/k6/ecommerce_load_test.js
+
+      # ── Failure Gate ──────────────────────────────────────────────────────────
+
+      - name: Check all suites passed
+        if: always()
+        run: |
+          FAILED=""
+          [ "${{ steps.playwright.outcome }}" != "success" ] && FAILED="$FAILED\n  - UI Tests (Playwright)"
+          [ "${{ steps.pytest.outcome }}"     != "success" ] && FAILED="$FAILED\n  - API Tests (PyTest)"
+          [ "${{ steps.karate.outcome }}"     != "success" ] && FAILED="$FAILED\n  - API Tests (Karate)"
+          [ "${{ steps.newman.outcome }}"     != "success" ] && FAILED="$FAILED\n  - API Tests (Newman)"
+          [ "${{ steps.security.outcome }}"   != "success" ] && FAILED="$FAILED\n  - Security Tests"
+          [ "${{ steps.k6.outcome }}"         != "success" ] && FAILED="$FAILED\n  - Performance Tests (k6)"
+          if [ -n "$FAILED" ]; then
+            echo -e "GATE FAILED — the following suites failed:$FAILED"
+            exit 1
+          fi
+          echo "All suites passed."
 
       # ── Stop SUT ──────────────────────────────────────────────────────────────
 
