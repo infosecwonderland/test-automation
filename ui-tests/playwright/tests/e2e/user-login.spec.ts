@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../../fixtures/allure';
 import { LoginPage } from '../../pages/LoginPage';
 import { loadJson } from '../../utils/testDataLoader';
 import type { User } from '../../types/user';

@@ -13,14 +13,7 @@ export default defineConfig({
   reporter: [
     ['list'],
     ['html', { open: 'never' }],
-    ['allure-playwright', {
-      outputFolder: 'allure-results',
-      suiteTitle: false,
-      labels: [
-        { name: 'parentSuite', value: 'UI Tests' },
-        { name: 'suite', value: 'Playwright' },
-      ],
-    }],
+    ['allure-playwright', { outputFolder: 'allure-results' }],
   ],
   use: {
     baseURL: 'http://localhost:3000/',
