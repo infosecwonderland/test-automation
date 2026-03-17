@@ -74,6 +74,7 @@ jobs:
 
       - name: Run Trivy
         run: |
+          mkdir -p security-tests/trivy
           trivy fs \
             --format json \
             --output security-tests/trivy/results.json \

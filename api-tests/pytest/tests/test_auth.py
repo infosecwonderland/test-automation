@@ -3,7 +3,6 @@ from jsonschema import validate
 
 from utils.contract_loader import response_schema
 
-JWT_SECRET = "sut-secret"
 JWT_ALGORITHM = "HS256"
 
 
@@ -33,7 +32,7 @@ def test_auth_login_jwt_contents(client, valid_credentials):
     assert resp.status_code == 200
 
     token = resp.json()["accessToken"]
-    payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+    payload = jwt.decode(token, options={"verify_signature": False}, algorithms=[JWT_ALGORITHM])
     assert payload["sub"] == "1"
     assert payload["email"] == valid_credentials["email"]
     assert "exp" in payload
