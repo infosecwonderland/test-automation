@@ -173,6 +173,7 @@ jobs:
           BASE_URL: http://localhost:3000
         run: |
           pip install -r requirements.txt
+          pip show playwright
           python -m playwright install chromium --with-deps
           python -m pytest tests/ -v
 

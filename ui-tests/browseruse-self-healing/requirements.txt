@@ -1,5 +1,6 @@
 browser-use
 langchain-anthropic
+playwright>=1.40.0
 pydantic>=2.0
 pytest
 pytest-asyncio
