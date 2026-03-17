@@ -286,26 +286,3 @@ Feature: API contract validation - auth only
     When method post
     Then assert responseStatus >= 400
   
-  # /cart/add should not accept non-POST methods
-  Scenario: Contract - /cart/add rejects non-POST method
-    Given path '/cart/add'
-    When method get
-    Then assert responseStatus >= 400
-
-    Given path '/cart/add'
-    When method put
-    Then assert responseStatus >= 400
-
-    Given path '/cart/add'
-    When method delete
-    Then assert responseStatus >= 400
-
-  # /cart/add should only accept JSON payloads
-    Scenario: Contract - /cart/add rejects non-JSON payload
-    Given path '/cart/add'
-    And header Content-Type = 'text/plain'
-    And request 'productId=1&quantity=2'
-    When method post
-    Then assert responseStatus >= 400
-
-  

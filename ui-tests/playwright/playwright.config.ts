@@ -6,13 +6,14 @@ export default defineConfig({
   expect: {
     timeout: 7000,
   },
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: 1,
   reporter: [
     ['list'],
     ['html', { open: 'never' }],
+    ['allure-playwright', { outputFolder: 'allure-results' }],
   ],
   use: {
     baseURL: 'http://localhost:3000/',

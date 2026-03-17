@@ -16,6 +16,16 @@
   <ul id="products"></ul>
 
   <script>
+    function getAuthHeaders() {
+      const token = localStorage.getItem('authToken');
+      return token
+        ? {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          }
+        : { 'Content-Type': 'application/json' };
+    }
+
     async function loadProducts(filterText) {
       const list = document.getElementById('products');
       list.innerHTML = '';
@@ -33,12 +43,24 @@
         btn.textContent = 'Add to cart';
         btn.setAttribute('data-testid', 'add-to-cart-button');
         btn.addEventListener('click', async () => {
-          await fetch('/cart/add', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ productId: p.id, quantity: 1 }),
-          });
-          window.location.href = '/cart';
+          try {
+            const res = await fetch('/cart/add', {
+              method: 'POST',
+              headers: getAuthHeaders(),
+              body: JSON.stringify({ productId: p.id, quantity: 1 }),
+            });
+            if (res.status === 401) {
+              window.location.href = '/login';
+              return;
+            }
+            if (!res.ok) {
+              console.error('Failed to add to cart');
+              return;
+            }
+            window.location.href = '/cart';
+          } catch (err) {
+            console.error('Error adding to cart', err);
+          }
         });
         li.appendChild(btn);
         list.appendChild(li);

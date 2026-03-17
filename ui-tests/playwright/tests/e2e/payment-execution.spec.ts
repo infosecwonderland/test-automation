@@ -5,9 +5,26 @@ import { CheckoutPage } from '../../pages/CheckoutPage';
 import { PaymentPage } from '../../pages/PaymentPage';
 import { ConfirmationPage } from '../../pages/ConfirmationPage';
 
+const TEST_EMAIL = 'test@example.com';
+const TEST_PASSWORD = 'password123';
+
+test.describe.configure({ mode: 'serial' });
+
 test.describe('Payment execution', () => {
-  test.beforeEach(async ({ request }) => {
-    await request.post('/cart/clear');
+  test.beforeEach(async ({ page, request }) => {
+    const loginRes = await request.post('/auth/login', {
+      data: { email: TEST_EMAIL, password: TEST_PASSWORD },
+    });
+    const { accessToken } = await loginRes.json();
+
+    await page.goto('/products-page');
+    await page.evaluate((token: string) => {
+      localStorage.setItem('authToken', token);
+    }, accessToken);
+
+    await request.post('/cart/clear', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
   });
 
   test('payment form is visible when reached from checkout', async ({ page }) => {
@@ -58,8 +75,7 @@ test.describe('Payment execution', () => {
 
     await paymentPage.paymentExecution('ignored-order-id', '4111111111111111');
 
-    const msg = await paymentPage.getErrorMessage();
-    expect(msg).toContain('Unable to create order');
+    await expect(paymentPage.errorMessage).toContainText('Unable to create order');
     await expect(page).toHaveURL(/\/payment$/);
   });
 
@@ -80,8 +96,7 @@ test.describe('Payment execution', () => {
     // Blank card number
     await paymentPage.paymentExecution('ignored-order-id', '');
 
-    const msg = await paymentPage.getErrorMessage();
-    expect(msg).toContain('Payment failed');
+    await expect(paymentPage.errorMessage).toContainText('Payment failed');
     await expect(page).toHaveURL(/\/payment$/);
   });
 
@@ -102,8 +117,7 @@ test.describe('Payment execution', () => {
     // Too short card number
     await paymentPage.paymentExecution('ignored-order-id', '123');
 
-    const msg = await paymentPage.getErrorMessage();
-    expect(msg).toContain('Payment failed');
+    await expect(paymentPage.errorMessage).toContainText('Payment failed');
     await expect(page).toHaveURL(/\/payment$/);
   });
 });

@@ -39,7 +39,9 @@ export class ProductsPage {
 
   async search(text: string): Promise<void> {
     await this.productSearch();
+    const responsePromise = this.page.waitForResponse('**/products');
     await this.searchInput.fill(text);
+    await responsePromise;
   }
 
   async getVisibleProductNames(): Promise<string[]> {

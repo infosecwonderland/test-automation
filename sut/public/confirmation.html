@@ -22,6 +22,26 @@
   <p><a href="/products-page" id="back-to-products" data-testid="back-to-products">Back to Products</a></p>
 
   <script>
+    function getAuthHeaders() {
+      const token = localStorage.getItem('authToken');
+      return token
+        ? {
+            Authorization: 'Bearer ' + token,
+          }
+        : {};
+    }
+
+    (async function enforceAuth() {
+      try {
+        const res = await fetch('/auth/me', { headers: getAuthHeaders() });
+        if (res.status === 401) {
+          window.location.href = '/login';
+        }
+      } catch {
+        window.location.href = '/login';
+      }
+    })();
+
     (async function () {
       const params = new URLSearchParams(window.location.search);
       const orderId = params.get('orderId');
@@ -35,7 +55,9 @@
       }
 
       try {
-        const res = await fetch('/order/' + encodeURIComponent(orderId));
+        const res = await fetch('/order/' + encodeURIComponent(orderId), {
+          headers: getAuthHeaders(),
+        });
         if (!res.ok) {
           if (orderDetails) orderDetails.style.display = 'none';
           if (noOrderMessage) noOrderMessage.style.display = 'block';

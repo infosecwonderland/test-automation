@@ -24,6 +24,27 @@
   <p><a href="/order-confirmation">Go to Order Confirmation</a></p>
 
   <script>
+    function getAuthHeaders() {
+      const token = localStorage.getItem('authToken');
+      return token
+        ? {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          }
+        : { 'Content-Type': 'application/json' };
+    }
+
+    (async function enforceAuth() {
+      try {
+        const res = await fetch('/auth/me', { headers: getAuthHeaders() });
+        if (res.status === 401) {
+          window.location.href = '/login';
+        }
+      } catch {
+        window.location.href = '/login';
+      }
+    })();
+
     const form = document.getElementById('payment-form');
     const errorEl = document.getElementById('payment-error');
     form.addEventListener('submit', async (e) => {
@@ -31,7 +52,10 @@
       if (errorEl) errorEl.textContent = '';
       try {
         // First, create an order from the current cart
-        const orderRes = await fetch('/order/create', { method: 'POST' });
+        const orderRes = await fetch('/order/create', {
+          method: 'POST',
+          headers: getAuthHeaders(),
+        });
         if (!orderRes.ok) {
           const text = await orderRes.text().catch(() => '');
           console.error('Order create failed', text);
@@ -49,7 +73,7 @@
 
         const payRes = await fetch('/payment/charge', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: getAuthHeaders(),
           body: JSON.stringify({ orderId, cardNumber }),
         });
 

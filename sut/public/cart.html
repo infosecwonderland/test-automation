@@ -15,12 +15,27 @@
   <button id="proceed-to-checkout">Proceed to Checkout</button>
 
   <script>
+    function getAuthHeaders() {
+      const token = localStorage.getItem('authToken');
+      return token
+        ? {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          }
+        : { 'Content-Type': 'application/json' };
+    }
+
     async function loadCart() {
       const list = document.getElementById('cart-items');
       const emptyMsg = document.getElementById('cart-empty');
       const checkoutBtn = document.getElementById('proceed-to-checkout');
       list.innerHTML = '';
-      const res = await fetch('/cart/items');
+      const res = await fetch('/cart/items', { headers: getAuthHeaders() });
+      if (res.status === 401) {
+        if (checkoutBtn) checkoutBtn.disabled = true;
+        window.location.href = '/login';
+        return;
+      }
       const items = await res.json();
       if (!items.length) {
         if (emptyMsg) emptyMsg.style.display = 'block';
@@ -44,7 +59,7 @@
         btn.addEventListener('click', async () => {
           await fetch('/cart/remove', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify({ productId: item.productId }),
           });
           loadCart();

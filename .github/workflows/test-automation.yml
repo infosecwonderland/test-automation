@@ -93,3 +93,30 @@ jobs:
           done
           echo "SUT did not become ready in time."
           exit 1
+
+  ui_tests_playwright:
+    name: UI Tests (Playwright)
+    runs-on: ubuntu-latest
+    needs: start_sut
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Playwright dependencies
+        working-directory: ui-tests/playwright
+        run: |
+          npm install
+          npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        working-directory: ui-tests/playwright
+        env:
+          SUT_BASE_URL: http://localhost:3000
+        run: |
+          npx playwright test --reporter=line

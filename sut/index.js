@@ -28,6 +28,33 @@ function createApp() {
   const db = createDb();
   const kafka = createKafkaBus();
 
+  /**
+   * Generic in-memory rate limiter factory.
+   * @param {number} windowMs  - sliding window in milliseconds
+   * @param {number} max       - max requests allowed per window per IP
+   */
+  function createRateLimiter({ windowMs = 10000, max = 20 } = {}) {
+    const buckets = new Map();
+    return function rateLimiter(req, res, next) {
+      const key = req.ip || 'unknown';
+      const now = Date.now();
+      let bucket = buckets.get(key);
+      if (!bucket || now > bucket.resetAt) {
+        bucket = { count: 0, resetAt: now + windowMs };
+      }
+      bucket.count += 1;
+      buckets.set(key, bucket);
+      if (bucket.count > max) {
+        return res.status(429).json({ error: 'Too Many Requests' });
+      }
+      next();
+    };
+  }
+
+  const cartRateLimit    = createRateLimiter({ windowMs: 10000, max: 20 });
+  const orderRateLimit   = createRateLimiter({ windowMs: 10000, max: 10 });
+  const paymentRateLimit = createRateLimiter({ windowMs: 10000, max: 5  });
+
   function requireAuth(req, res, next) {
     const authHeader = req.headers.authorization || '';
     const [, token] = authHeader.split(' ');
@@ -99,29 +126,6 @@ function createApp() {
 
   // ---- OpenAPI validation for API routes ----
 
-  // Middleware before OpenAPI validator to trace which paths reach it
-  app.use((req, res, next) => {
-    // #region agent log
-    fetch('http://127.0.0.1:7720/ingest/83b26dc7-e0f6-447f-ae08-2bd6e4dc06c6', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Debug-Session-Id': '50206d',
-      },
-      body: JSON.stringify({
-        sessionId: '50206d',
-        runId: 'run1',
-        hypothesisId: 'H1',
-        location: 'sut/index.js:openapi-pre',
-        message: 'Request reached OpenAPI validator',
-        data: { method: req.method, path: req.path },
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-    // #endregion agent log
-    next();
-  });
-
   app.use(
     OpenApiValidator.middleware({
       apiSpec: path.join(__dirname, 'openapi', 'gateway.yaml'),
@@ -132,29 +136,6 @@ function createApp() {
 
   // Error-logging middleware to capture OpenAPI NotFound and other errors
   app.use((err, req, res, next) => {
-    // #region agent log
-    fetch('http://127.0.0.1:7720/ingest/83b26dc7-e0f6-447f-ae08-2bd6e4dc06c6', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Debug-Session-Id': '50206d',
-      },
-      body: JSON.stringify({
-        sessionId: '50206d',
-        runId: 'run1',
-        hypothesisId: 'H2',
-        location: 'sut/index.js:openapi-error',
-        message: 'Error after OpenAPI validator',
-        data: {
-          method: req && req.method,
-          path: req && req.path,
-          errorMessage: err && err.message,
-          errorName: err && err.name,
-        },
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-    // #endregion agent log
     next(err);
   });
 
@@ -167,8 +148,8 @@ function createApp() {
     res.json(products);
   });
 
-  // POST /cart/add (requires auth)
-  app.post('/cart/add', requireAuth, (req, res) => {
+  // POST /cart/add (requires auth + rate limit)
+  app.post('/cart/add', requireAuth, cartRateLimit, (req, res) => {
     const userId = Number(req.user && req.user.id) || 1;
     const { productId, quantity } = req.body || {};
     const product = products.find(p => p.id === Number(productId));
@@ -204,10 +185,13 @@ function createApp() {
     res.json(detailed);
   });
 
-  app.get('/order/:orderId', (req, res) => {
+  app.get('/order/:orderId', requireAuth, (req, res) => {
     const order = orders[req.params.orderId];
     if (!order) {
       return res.status(404).json({ error: 'Order not found' });
+    }
+    if (order.userId !== Number(req.user.id)) {
+      return res.status(403).json({ error: 'Forbidden' });
     }
     const detailedItems = order.items.map(item => {
       const product = products.find(p => p.id === item.productId) || {};
@@ -249,8 +233,8 @@ function createApp() {
     res.json({ message: 'Cart cleared' });
   });
 
-  // POST /order/create (requires valid user JWT)
-  app.post('/order/create', requireAuth, (req, res) => {
+  // POST /order/create (requires auth + rate limit)
+  app.post('/order/create', requireAuth, orderRateLimit, (req, res) => {
     const userId = Number(req.user && req.user.id) || 1;
     const userCart = carts[userId] || [];
     if (userCart.length === 0) {
@@ -281,8 +265,8 @@ function createApp() {
     });
   });
 
-  // POST /payment/charge (requires valid user JWT)
-  app.post('/payment/charge', requireAuth, (req, res) => {
+  // POST /payment/charge (requires auth + rate limit)
+  app.post('/payment/charge', requireAuth, paymentRateLimit, (req, res) => {
     const { orderId, cardNumber } = req.body || {};
     const order = orders[orderId];
     if (!order) {

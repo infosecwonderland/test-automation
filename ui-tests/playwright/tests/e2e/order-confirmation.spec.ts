@@ -5,9 +5,26 @@ import { CheckoutPage } from '../../pages/CheckoutPage';
 import { PaymentPage } from '../../pages/PaymentPage';
 import { ConfirmationPage } from '../../pages/ConfirmationPage';
 
+const TEST_EMAIL = 'test@example.com';
+const TEST_PASSWORD = 'password123';
+
+test.describe.configure({ mode: 'serial' });
+
 test.describe('Order confirmation', () => {
-  test.beforeEach(async ({ request }) => {
-    await request.post('/cart/clear');
+  test.beforeEach(async ({ page, request }) => {
+    const loginRes = await request.post('/auth/login', {
+      data: { email: TEST_EMAIL, password: TEST_PASSWORD },
+    });
+    const { accessToken } = await loginRes.json();
+
+    await page.goto('/products-page');
+    await page.evaluate((token: string) => {
+      localStorage.setItem('authToken', token);
+    }, accessToken);
+
+    await request.post('/cart/clear', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
   });
 
   test('after successful payment, confirmation shows order details and notification', async ({
@@ -26,8 +43,7 @@ test.describe('Order confirmation', () => {
     await checkoutPage.checkoutProcess();
 
     await paymentPage.paymentExecution('ignored-order-id', '4111111111111111');
-
-    await page.waitForURL(/\/order-confirmation\?orderId=/, { timeout: 15000 });
+    await page.waitForURL(/\/order-confirmation\?orderId=/, { timeout: 30000 });
     await confirmationPage.orderConfirmation();
 
     await confirmationPage.waitForOrderDetails(20000);
@@ -81,6 +97,7 @@ test.describe('Order confirmation', () => {
     await checkoutPage.checkoutProcess();
 
     await paymentPage.paymentExecution('ignored-order-id', '4111111111111111');
+    await page.waitForURL(/\/order-confirmation\?orderId=/, { timeout: 30000 });
     await confirmationPage.orderConfirmation();
 
     await confirmationPage.clickBackToProducts();

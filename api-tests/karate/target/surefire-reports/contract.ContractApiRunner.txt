@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: contract.ContractApiRunner
 -------------------------------------------------------------------------------
-Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.128 s - in contract.ContractApiRunner
+Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.326 s - in contract.ContractApiRunner

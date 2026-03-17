@@ -53,7 +53,8 @@ export class ConfirmationPage {
   }
 
   async isNoOrderMessageVisible(): Promise<boolean> {
-    return await this.noOrderMessage.isVisible();
+    await this.noOrderMessage.waitFor({ state: 'visible', timeout: 7000 });
+    return true;
   }
 
   async clickBackToProducts(): Promise<void> {

@@ -1,10 +1,82 @@
 
-# Playwright
+# ── Node / Playwright ──────────────────────────────────────────────────────────
 node_modules/
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+venv/
+.venv/
+env/
 .env
+pip-wheel-metadata/
+
+# ── Java / Maven (Karate) ─────────────────────────────────────────────────────
+api-tests/karate/target/
+*.class
+*.jar
+*.war
+*.nar
+
+# ── k6 / Performance ──────────────────────────────────────────────────────────
+performance-tests/k6/results/
+performance-tests/k6/*.json
+performance-tests/k6/*.csv
+
+# ── Allure / Test Reports ─────────────────────────────────────────────────────
+reports/
+allure-results/
+allure-report/
+ui-tests/playwright/allure-results/
+ui-tests/playwright/allure-report/
+api-tests/pytest/allure-results/
+security-tests/allure-results/
+
+# ── Security scan outputs ─────────────────────────────────────────────────────
+security-tests/zap/reports/
+security-tests/zap/*.xml
+security-tests/zap/*.html
+security-tests/zap/*.json
+snyk-results/
+trivy-results/
+semgrep-results/
+
+# ── CI/CD artifacts ───────────────────────────────────────────────────────────
+.github/artifacts/
+
+# ── Screenshots / Videos (captured on failure) ────────────────────────────────
+screenshots/
+videos/
+ui-tests/playwright/test-results/
+
+# ── AI test generation outputs ────────────────────────────────────────────────
+ai-tests/test-generation/generated/
+ai-tests/test-generation/*.generated.py
+ai-tests/test-generation/*.generated.ts
+
+# ── Claude / local docs ───────────────────────────────────────────────────────
+CLAUDE.md
+STATUS.md
+
+# ── Misc ──────────────────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+*.tmp
 .cursor/
+.idea/
+.vscode/

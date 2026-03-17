@@ -52,6 +52,12 @@
           if (errorEl) errorEl.textContent = msg;
           return;
         }
+        const data = await res.json().catch(() => ({}));
+        const token =
+          (data && (data.accessToken || data.token)) ? (data.accessToken || data.token) : null;
+        if (token) {
+          localStorage.setItem('authToken', token);
+        }
         window.location.href = '/products-page';
       } catch (err) {
         console.error('Login failed', err);

@@ -27,11 +27,13 @@ def _burst_requests(method: str, path: str, *, headers=None, json_body=None, att
 def test_rate_limiting_on_auth_login():
   """
   Rate limiting: aggressive login attempts should eventually be throttled.
+  Uses a dedicated email so the burst does not exhaust the rate-limit bucket
+  for the shared test@example.com account used by other tests.
   """
   counter = _burst_requests(
     "POST",
     "/auth/login",
-    json_body=lambda i: {"email": "test@example.com", "password": f"wrong-password-{i}"},
+    json_body=lambda i: {"email": "ratelimit-victim@example.com", "password": f"wrong-password-{i}"},
   )
 
   assert 429 in counter, (

@@ -8,5 +8,27 @@
   <h1>Checkout</h1>
   <p>This page represents the Checkout screen.</p>
   <p><a href="/payment">Continue to Payment</a></p>
+
+  <script>
+    function getAuthHeaders() {
+      const token = localStorage.getItem('authToken');
+      return token
+        ? {
+            Authorization: 'Bearer ' + token,
+          }
+        : {};
+    }
+
+    (async function enforceAuth() {
+      try {
+        const res = await fetch('/auth/me', { headers: getAuthHeaders() });
+        if (res.status === 401) {
+          window.location.href = '/login';
+        }
+      } catch {
+        window.location.href = '/login';
+      }
+    })();
+  </script>
 </body>
 </html>

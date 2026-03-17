@@ -2,97 +2,97 @@ import http from 'k6/http';
 import { check, sleep, group } from 'k6';
 import { Trend, Rate } from 'k6/metrics';
 
-// Custom metrics (optional but useful in dashboards)
+// Custom metrics
 export const loginDuration = new Trend('login_duration');
 export const purchaseDuration = new Trend('purchase_flow_duration');
 export const errors = new Rate('errors');
 
 // Base configuration
 const BASE_URL = __ENV.BASE_URL || 'http://localhost:3000';
-const USER_EMAIL = __ENV.USER_EMAIL || 'test@example.com';
-const USER_PASSWORD = __ENV.USER_PASSWORD || 'password123';
 const CARD_NUMBER = __ENV.CARD_NUMBER || '4111111111111111';
 
 /**
  * Load profile:
- * - 1 minute ramp-up to 1000 VUs
+ * - 2 minutes ramp-up to 1000 VUs
  * - 3 minutes sustained at 1000 VUs
  * - 1 minute ramp-down
  */
 export const options = {
   stages: [
-    { duration: '1m', target: 100 },
-    { duration: '3m', target: 100 },
+    { duration: '2m', target: 1000 },
+    { duration: '3m', target: 1000 },
     { duration: '1m', target: 0 },
   ],
   thresholds: {
     http_req_duration: ['p(95)<2000'], // P95 latency < 2s
-    http_req_failed: ['rate<0.01'], // < 1% requests failing
+    http_req_failed: ['rate<0.01'],    // < 1% requests failing
     errors: ['rate<0.01'],
   },
 };
 
+// VU-scoped auth state — module-level variables are isolated per VU in k6
+let vuAuthHeaders = null;
+
 /**
- * setup()
- * Runs once before all VUs.
- * We log in once and share the JWT across all VUs to avoid
- * turning the test into an auth/load test.
+ * Authenticate this VU using a unique per-VU account.
+ * Registers on first call (409 conflict is safe to ignore on re-runs),
+ * then logs in and caches the token for the lifetime of the VU.
  */
-export function setup() {
-  const loginRes = http.post(
-    `${BASE_URL}/auth/login`,
-    JSON.stringify({
-      email: USER_EMAIL,
-      password: USER_PASSWORD,
-    }),
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
+function ensureAuth() {
+  if (vuAuthHeaders) return;
+
+  const email = `vu_${__VU}@perf.test`;
+  const password = 'PerfTest123!';
+  const jsonHeaders = { 'Content-Type': 'application/json' };
+
+  // Register — ignore 409 (user already exists from a previous run)
+  http.post(
+    `${BASE_URL}/auth/register`,
+    JSON.stringify({ email, password }),
+    { headers: jsonHeaders },
   );
 
+  const loginRes = http.post(
+    `${BASE_URL}/auth/login`,
+    JSON.stringify({ email, password }),
+    { headers: jsonHeaders },
+  );
+
+  loginDuration.add(loginRes.timings.duration);
+
   const ok = check(loginRes, {
-    'login status is 200': (r) => r.status === 200,
-    'login has accessToken': (r) => {
-      try {
-        const json = r.json();
-        return json && json.accessToken;
-      } catch (e) {
-        return false;
-      }
+    'VU login status is 200': (r) => r.status === 200,
+    'VU login has accessToken': (r) => {
+      try { return !!r.json('accessToken'); } catch (e) { return false; }
     },
   });
 
-  loginDuration.add(loginRes.timings.duration);
   errors.add(!ok);
 
   if (!ok) {
-    throw new Error(`Login failed: status=${loginRes.status} body=${loginRes.body}`);
+    console.error(`VU ${__VU} login failed: ${loginRes.status} ${loginRes.body}`);
+    return;
   }
 
-  const token = loginRes.json().accessToken;
-  const authHeaders = {
-    Authorization: `Bearer ${token}`,
+  vuAuthHeaders = {
+    Authorization: `Bearer ${loginRes.json('accessToken')}`,
     'Content-Type': 'application/json',
   };
-
-  return { authHeaders };
 }
 
 /**
  * Default function executed by each VU on each iteration.
- * Models: login -> search products -> add to cart -> create order -> payment
+ * Flow: authenticate → search products → add to cart → create order → payment
  */
-export default function (data) {
-  const { authHeaders } = data;
+export default function () {
+  ensureAuth();
+  if (!vuAuthHeaders) return; // skip iteration if auth failed
 
   const flowStart = Date.now();
+  let productId = 1;
 
   group('search products', () => {
-    const res = http.get(`${BASE_URL}/products`, {
-      headers: authHeaders,
-    });
+    const res = http.get(`${BASE_URL}/products`, { headers: vuAuthHeaders });
 
     const ok = check(res, {
       'products status is 200': (r) => r.status === 200,
@@ -100,40 +100,30 @@ export default function (data) {
         try {
           const json = r.json();
           return Array.isArray(json) && json.length > 0;
-        } catch (e) {
-          return false;
-        }
+        } catch (e) { return false; }
       },
     });
 
     errors.add(!ok);
-  });
 
-  let productId = null;
-  try {
-    const productsRes = http.get(`${BASE_URL}/products`, { headers: authHeaders });
-    const products = productsRes.json();
-    if (Array.isArray(products) && products.length > 0) {
-      productId = products[0].id || products[0].productId || 1;
-    } else {
-      productId = 1;
+    if (ok) {
+      try {
+        const products = res.json();
+        // Rotate through products by VU index to spread load
+        productId = products[(__VU - 1) % products.length].id;
+      } catch (e) { /* fallback to productId = 1 */ }
     }
-  } catch (e) {
-    productId = 1;
-  }
+  });
 
   group('add to cart', () => {
     const res = http.post(
       `${BASE_URL}/cart/add`,
-      JSON.stringify({
-        productId,
-        quantity: 1,
-      }),
-      { headers: authHeaders },
+      JSON.stringify({ productId, quantity: 1 }),
+      { headers: vuAuthHeaders },
     );
 
     const ok = check(res, {
-      'cart add status is 200': (r) => r.status === 200,
+      'cart add status is 201': (r) => r.status === 201,
     });
     errors.add(!ok);
   });
@@ -144,26 +134,20 @@ export default function (data) {
     const res = http.post(
       `${BASE_URL}/order/create`,
       JSON.stringify({}),
-      { headers: authHeaders },
+      { headers: vuAuthHeaders },
     );
 
     const ok = check(res, {
-      'order create status is 200': (r) => r.status === 200,
-      'order has id': (r) => {
-        try {
-          const json = r.json();
-          return json && (json.id || json.orderId);
-        } catch (e) {
-          return false;
-        }
+      'order create status is 201': (r) => r.status === 201,
+      'order has orderId': (r) => {
+        try { return !!r.json('orderId'); } catch (e) { return false; }
       },
     });
 
     errors.add(!ok);
 
     if (ok) {
-      const body = res.json();
-      orderId = body.id || body.orderId;
+      try { orderId = res.json('orderId'); } catch (e) { /* skip payment */ }
     }
   });
 
@@ -171,24 +155,22 @@ export default function (data) {
     group('payment charge', () => {
       const res = http.post(
         `${BASE_URL}/payment/charge`,
-        JSON.stringify({
-          orderId,
-          cardNumber: CARD_NUMBER,
-        }),
-        { headers: authHeaders },
+        JSON.stringify({ orderId, cardNumber: CARD_NUMBER }),
+        { headers: vuAuthHeaders },
       );
 
       const ok = check(res, {
         'payment status is 200': (r) => r.status === 200,
+        'payment status is PAID': (r) => {
+          try { return r.json('status') === 'PAID'; } catch (e) { return false; }
+        },
       });
       errors.add(!ok);
     });
   }
 
-  const flowDuration = Date.now() - flowStart;
-  purchaseDuration.add(flowDuration);
+  purchaseDuration.add(Date.now() - flowStart);
 
-  // Tiny sleep to avoid a 100% tight loop
-  sleep(0.5);
+  sleep(1);
 }
 

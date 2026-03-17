@@ -4,10 +4,29 @@ import { CartPage } from '../../pages/CartPage';
 import { CheckoutPage } from '../../pages/CheckoutPage';
 import { PaymentPage } from '../../pages/PaymentPage';
 
+const TEST_EMAIL = 'test@example.com';
+const TEST_PASSWORD = 'password123';
+
+test.describe.configure({ mode: 'serial' });
+
 test.describe('Checkout process', () => {
-  test.beforeEach(async ({ request }) => {
+  test.beforeEach(async ({ page, request }) => {
+    // Obtain a JWT token for the pre-seeded test user
+    const loginRes = await request.post('/auth/login', {
+      data: { email: TEST_EMAIL, password: TEST_PASSWORD },
+    });
+    const { accessToken } = await loginRes.json();
+
+    // Seed the token into localStorage so browser-side getAuthHeaders() works
+    await page.goto('/products-page');
+    await page.evaluate((token: string) => {
+      localStorage.setItem('authToken', token);
+    }, accessToken);
+
     // Start each test with a clean cart for isolation
-    await request.post('/cart/clear');
+    await request.post('/cart/clear', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
   });
 
   test('checkout from cart with items navigates to checkout page', async ({ page }) => {
