@@ -12,12 +12,12 @@ import pytest
 import requests
 
 # make api-tests/pytest importable (for client.py)
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "..", "api-tests", "pytest"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "api-tests", "pytest"))
 
 from client import ApiClient
 
 BASE_URL = os.getenv("SUT_BASE_URL", "http://localhost:3000")
-SUT_INDEX = os.path.join(os.path.dirname(__file__), "..", "..", "..", "sut", "index.js")
+SUT_INDEX = os.path.join(os.path.dirname(__file__), "..", "..", "sut", "index.js")
 
 
 def _sut_is_up(url: str) -> bool:
