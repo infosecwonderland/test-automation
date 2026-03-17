@@ -1,3 +1,5 @@
+import allure
+
 import jwt
 from jsonschema import validate
 
@@ -6,6 +8,8 @@ from utils.contract_loader import response_schema
 JWT_ALGORITHM = "HS256"
 
 
+@allure.feature("API Tests")
+@allure.story("Authentication")
 def test_auth_login_success(client, valid_credentials):
     resp, duration = client.login(**valid_credentials)
 
@@ -16,6 +20,8 @@ def test_auth_login_success(client, valid_credentials):
     validate(instance=body, schema=response_schema("/auth/login", "POST", 200))
 
 
+@allure.feature("API Tests")
+@allure.story("Authentication")
 def test_auth_login_invalid_credentials(client):
     resp, duration = client.login(email="wrong@example.com", password="wrongpass123")
 
@@ -27,6 +33,8 @@ def test_auth_login_invalid_credentials(client):
     assert body["message"] == "invalid credentials"
 
 
+@allure.feature("API Tests")
+@allure.story("Authentication")
 def test_auth_login_jwt_contents(client, valid_credentials):
     resp, _ = client.login(**valid_credentials)
     assert resp.status_code == 200

@@ -1,3 +1,5 @@
+import allure
+
 from jsonschema import validate
 
 from utils.contract_loader import response_schema
@@ -16,6 +18,8 @@ def _create_order(auth_client) -> str:
     return body["orderId"]
 
 
+@allure.feature("API Tests")
+@allure.story("Payment")
 def test_payment_success(auth_client):
     order_id = _create_order(auth_client)
 
@@ -30,6 +34,8 @@ def test_payment_success(auth_client):
     assert body["status"] == "PAID"
 
 
+@allure.feature("API Tests")
+@allure.story("Payment")
 def test_payment_order_not_found(auth_client):
     resp, duration = auth_client.charge_payment(order_id="non-existent-order", card_number="4111")
 
@@ -41,6 +47,8 @@ def test_payment_order_not_found(auth_client):
     assert body["error"] == "Order not found"
 
 
+@allure.feature("API Tests")
+@allure.story("Payment")
 def test_payment_invalid_card_details(auth_client):
     order_id = _create_order(auth_client)
 

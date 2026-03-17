@@ -1,8 +1,12 @@
+import allure
+
 from jsonschema import validate
 
 from utils.contract_loader import response_schema
 
 
+@allure.feature("API Tests")
+@allure.story("Products")
 def test_get_products_success(client):
     resp, duration = client.get_products()
 

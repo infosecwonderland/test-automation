@@ -1,8 +1,12 @@
+import allure
+
 from jsonschema import validate
 
 from utils.contract_loader import response_schema
 
 
+@allure.feature("API Tests")
+@allure.story("Order")
 def test_order_create_success(auth_client):
     auth_client.clear_cart()
     add_resp, _ = auth_client.add_to_cart(product_id=1, quantity=2)
@@ -20,6 +24,8 @@ def test_order_create_success(auth_client):
     assert body["total"] > 0
 
 
+@allure.feature("API Tests")
+@allure.story("Order")
 def test_order_create_empty_cart(auth_client):
     auth_client.clear_cart()
 

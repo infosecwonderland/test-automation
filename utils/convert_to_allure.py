@@ -2,19 +2,17 @@
 """
 convert_to_allure.py
 --------------------
-Converts security scanner JSON output to Allure result JSON files.
+Converts scanner / tool JSON output to Allure result JSON files.
 
-Supported scanners (--type):
+Supported types (--type):
   semgrep   Semgrep SAST output  (results[].check_id grouping)
   trivy     Trivy SCA output     (Results[].Vulnerabilities grouping)
-
-Each rule / target becomes one test case:
-  - findings exist  → status "failed"  with details
-  - no findings     → status "passed"
+  k6        k6 performance summary JSON (--summary-export)
 
 Usage:
     python3 convert_to_allure.py --type semgrep <results.json> <allure-results-dir>
     python3 convert_to_allure.py --type trivy   <results.json> <allure-results-dir>
+    python3 convert_to_allure.py --type k6      <summary.json> <allure-results-dir>
 """
 
 import argparse
@@ -73,6 +71,8 @@ def _convert_semgrep(data: dict, output_dir: str, now_ms: int) -> int:
                 "trace": "\n".join(lines),
             },
             "labels": [
+                {"name": "parentSuite", "value": "Security Tests"},
+                {"name": "suite", "value": "SAST (Semgrep)"},
                 {"name": "feature", "value": "SAST"},
                 {"name": "story", "value": "Semgrep"},
                 {"name": "severity", "value": SEMGREP_SEVERITY_MAP.get(severity_raw, "normal")},
@@ -91,6 +91,8 @@ def _convert_semgrep(data: dict, output_dir: str, now_ms: int) -> int:
             "status": "passed",
             "statusDetails": {"message": "All rules passed with zero findings."},
             "labels": [
+                {"name": "parentSuite", "value": "Security Tests"},
+                {"name": "suite", "value": "SAST (Semgrep)"},
                 {"name": "feature", "value": "SAST"},
                 {"name": "story", "value": "Semgrep"},
             ],
@@ -178,6 +180,8 @@ def _convert_trivy(data: dict, output_dir: str, now_ms: int) -> int:
             "status": "passed",
             "statusDetails": {"message": "Trivy found no scannable targets."},
             "labels": [
+                {"name": "parentSuite", "value": "Security Tests"},
+                {"name": "suite", "value": "SCA (Trivy)"},
                 {"name": "feature", "value": "SCA"},
                 {"name": "story", "value": "Trivy"},
             ],
@@ -190,11 +194,80 @@ def _convert_trivy(data: dict, output_dir: str, now_ms: int) -> int:
     return written
 
 
+def _convert_k6(data: dict, output_dir: str, now_ms: int) -> int:
+    """Convert k6 --summary-export JSON to Allure results."""
+    metrics = data.get("metrics", {})
+    written = 0
+
+    # Key thresholds to surface as test cases
+    checks_map = [
+        ("http_req_duration", "P95 latency < 2000ms",
+         lambda m: m.get("p(95)", 0) < 2000, "p(95)", "ms"),
+        ("http_req_failed", "Error rate < 1%",
+         lambda m: m.get("rate", 0) < 0.01, "rate", "%"),
+        ("http_reqs", "Throughput (total requests)",
+         lambda m: True, "count", "reqs"),
+        ("vus_max", "Peak VUs",
+         lambda m: True, "max", "VUs"),
+    ]
+
+    for metric_name, label, passes_fn, value_key, unit in checks_map:
+        metric = metrics.get(metric_name, {}).get("values", metrics.get(metric_name, {}))
+        if not metric:
+            continue
+
+        value = metric.get(value_key, metric.get("value", 0))
+        passed = passes_fn(metric)
+
+        _write_result(output_dir, {
+            "uuid": str(uuid.uuid4()),
+            "testCaseId": f"k6-{metric_name}",
+            "fullName": f"Performance: {label}",
+            "name": label,
+            "status": "passed" if passed else "failed",
+            "statusDetails": {
+                "message": f"{metric_name}.{value_key} = {value:.2f} {unit}",
+            },
+            "labels": [
+                {"name": "parentSuite", "value": "Performance Tests"},
+                {"name": "suite", "value": "k6"},
+                {"name": "feature", "value": "Performance"},
+                {"name": "story", "value": "k6 Load Test"},
+                {"name": "severity", "value": "critical" if not passed else "normal"},
+            ],
+            "start": now_ms,
+            "stop": now_ms + 1,
+        })
+        written += 1
+
+    if not written:
+        _write_result(output_dir, {
+            "uuid": str(uuid.uuid4()),
+            "testCaseId": "k6-run",
+            "fullName": "Performance: k6 load test",
+            "name": "k6 load test",
+            "status": "passed",
+            "statusDetails": {"message": "k6 run completed (no threshold metrics found)."},
+            "labels": [
+                {"name": "parentSuite", "value": "Performance Tests"},
+                {"name": "suite", "value": "k6"},
+                {"name": "feature", "value": "Performance"},
+                {"name": "story", "value": "k6 Load Test"},
+            ],
+            "start": now_ms,
+            "stop": now_ms + 1,
+        })
+        written = 1
+
+    print(f"[k6] Allure results written: {written}")
+    return written
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Convert scanner JSON to Allure results")
-    parser.add_argument("--type", required=True, choices=["semgrep", "trivy"],
-                        help="Scanner type")
-    parser.add_argument("results_file", help="Path to scanner JSON output")
+    parser = argparse.ArgumentParser(description="Convert scanner/tool JSON to Allure results")
+    parser.add_argument("--type", required=True, choices=["semgrep", "trivy", "k6"],
+                        help="Output type")
+    parser.add_argument("results_file", help="Path to JSON output")
     parser.add_argument("output_dir", help="Allure results directory")
     args = parser.parse_args()
 
@@ -207,8 +280,10 @@ def main():
 
     if args.type == "semgrep":
         _convert_semgrep(data, args.output_dir, now_ms)
-    else:
+    elif args.type == "trivy":
         _convert_trivy(data, args.output_dir, now_ms)
+    else:
+        _convert_k6(data, args.output_dir, now_ms)
 
 
 if __name__ == "__main__":
