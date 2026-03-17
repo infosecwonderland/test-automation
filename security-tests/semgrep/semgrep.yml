@@ -33,7 +33,7 @@ rules:
     languages: [javascript, typescript]
     patterns:
       - pattern: bodyParser.json()
-      - pattern-not: bodyParser.json({limit: ...})
+      - pattern-not: "bodyParser.json({limit: ...})"
 
   - id: sut-console-log-payment
     message: >
