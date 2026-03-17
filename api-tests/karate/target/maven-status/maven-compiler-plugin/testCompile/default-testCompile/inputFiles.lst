@@ -1,0 +1,6 @@
+/Users/monikatalekar/Documents/automation-testing/test-automation/api-tests/karate/src/test/java/auth/AuthLoginRunner.java
+/Users/monikatalekar/Documents/automation-testing/test-automation/api-tests/karate/src/test/java/cart/CartAddRunner.java
+/Users/monikatalekar/Documents/automation-testing/test-automation/api-tests/karate/src/test/java/contract/ContractApiRunner.java
+/Users/monikatalekar/Documents/automation-testing/test-automation/api-tests/karate/src/test/java/order/OrderCreateRunner.java
+/Users/monikatalekar/Documents/automation-testing/test-automation/api-tests/karate/src/test/java/payment/PaymentChargeRunner.java
+/Users/monikatalekar/Documents/automation-testing/test-automation/api-tests/karate/src/test/java/products/ProductsRunner.java

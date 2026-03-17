@@ -1,0 +1,8 @@
+pytest==8.3.3
+requests==2.32.3
+jsonschema==4.22.0
+PyJWT==2.8.0
+allure-pytest==2.13.5
+openapi3
+PyYAML
+

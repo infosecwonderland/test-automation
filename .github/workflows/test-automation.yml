@@ -1,0 +1,357 @@
+name: Test Automation Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - "feature/**"
+      - "**/feature/**"
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+
+  # ── SAST: Semgrep ────────────────────────────────────────────────────────────
+  sast:
+    name: SAST (Semgrep)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Semgrep
+        run: pip install semgrep
+
+      - name: Run Semgrep
+        run: |
+          semgrep scan \
+            --config p/nodejs \
+            --config p/jwt \
+            --config security-tests/semgrep/semgrep.yml \
+            --json \
+            --output security-tests/semgrep/results.json \
+            sut/
+          python3 utils/convert_to_allure.py \
+            --type semgrep \
+            security-tests/semgrep/results.json \
+            security-tests/semgrep/allure-results
+          python3 utils/gates/semgrep_gate.py
+
+      - name: Upload Semgrep Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-sast
+          path: security-tests/semgrep/allure-results/
+
+  # ── SCA: Trivy ───────────────────────────────────────────────────────────────
+  sca:
+    name: SCA (Trivy)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Trivy
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
+            | sh -s -- -b /usr/local/bin
+
+      - name: Run Trivy
+        run: |
+          mkdir -p security-tests/trivy
+          trivy fs \
+            --format json \
+            --output security-tests/trivy/results.json \
+            sut/
+          python3 utils/convert_to_allure.py \
+            --type trivy \
+            security-tests/trivy/results.json \
+            security-tests/trivy/allure-results
+          python3 utils/gates/trivy_gate.py
+
+      - name: Upload Trivy Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-sca
+          path: security-tests/trivy/allure-results/
+
+  # ── Functional, Security & Performance Tests ─────────────────────────────────
+  test:
+    name: Run All Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── Runtimes ──────────────────────────────────────────────────────────────
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      # ── Dependencies ──────────────────────────────────────────────────────────
+
+      - name: Install SUT dependencies
+        run: cd sut && npm install
+
+      - name: Install Playwright dependencies
+        working-directory: ui-tests/playwright
+        run: |
+          npm install
+          npx playwright install --with-deps
+
+      - name: Install PyTest dependencies
+        working-directory: api-tests/pytest
+        run: pip install -r requirements.txt
+
+      - name: Install Security Test dependencies
+        working-directory: security-tests/Pytest
+        run: pip install -r requirements.txt
+
+      - name: Install k6
+        uses: grafana/setup-k6-action@v1
+
+      # ── Start SUT ─────────────────────────────────────────────────────────────
+
+      - name: Start SUT
+        run: |
+          node sut/index.js &
+          for i in {1..30}; do
+            if curl -sf http://localhost:3000/health > /dev/null 2>&1; then
+              echo "SUT is ready on port 3000"
+              break
+            fi
+            echo "Waiting for SUT (attempt $i)..."
+            sleep 1
+          done
+
+      # ── Test Suites (all run regardless of individual failures) ──────────────
+
+      - name: UI Tests (Playwright)
+        id: playwright
+        continue-on-error: true
+        working-directory: ui-tests/playwright
+        run: npx playwright test
+
+      - name: UI Tests (Self-Healing)
+        id: self_healing
+        continue-on-error: true
+        working-directory: ui-tests/browseruse-self-healing
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BASE_URL: http://localhost:3000
+        run: |
+          pip install -r requirements.txt
+          pip show playwright
+          python -m playwright install chromium --with-deps
+          python -m pytest tests/ -v
+
+      - name: API Tests (PyTest)
+        id: pytest
+        continue-on-error: true
+        working-directory: api-tests/pytest
+        run: python -m pytest -v --alluredir=allure-results
+
+      - name: API Tests (Karate)
+        id: karate
+        continue-on-error: true
+        working-directory: api-tests/karate
+        run: mvn test -B
+
+      - name: API Tests (Newman)
+        id: newman
+        continue-on-error: true
+        run: |
+          npm install -g newman newman-reporter-allure
+          newman run api-tests/newman/ecommerce-api.postman_collection.json \
+            --environment api-tests/newman/local.postman_environment.json \
+            --reporters cli,allure \
+            --reporter-allure-export api-tests/newman/allure-results
+
+      - name: Security Tests
+        id: security
+        continue-on-error: true
+        working-directory: security-tests/Pytest
+        run: python -m pytest -v --alluredir=allure-results
+
+      - name: Performance Tests (k6)
+        id: k6
+        continue-on-error: true
+        run: |
+          mkdir -p performance-tests/k6/results
+          k6 run \
+            --env CI_PROFILE=smoke \
+            --summary-export performance-tests/k6/results/summary.json \
+            performance-tests/k6/ecommerce_load_test.js
+
+      # ── AI-Assisted Tests ─────────────────────────────────────────────────────
+
+      - name: Install AI test dependencies
+        run: pip install -r ai-tests/test-generation/requirements.txt
+
+      - name: AI Tests - Step 1 - Generate test data
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python3 ai-tests/test-generation/data_generator.py --no-run
+
+      - name: AI Tests - Step 2 - Generate scenario tests
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python3 ai-tests/test-generation/scenario_generator.py --no-run
+
+      - name: AI Tests - Step 3 - Generate negative tests
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python3 ai-tests/test-generation/negative_test_generator.py --no-run
+
+      - name: AI Tests - Step 4 - Run generated tests + analyse failures
+        id: ai_tests
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python3 ai-tests/test-generation/failure_analyzer.py \
+            --suite ai-tests/test-generation/generated \
+            --alluredir ai-tests/reports/allure-results
+
+      # ── Failure Gate ──────────────────────────────────────────────────────────
+
+      - name: Check all suites passed
+        if: always()
+        run: |
+          FAILED=""
+          [ "${{ steps.playwright.outcome }}"    != "success" ] && FAILED="$FAILED\n  - UI Tests (Playwright)"
+          [ "${{ steps.self_healing.outcome }}" != "success" ] && FAILED="$FAILED\n  - UI Tests (Self-Healing)"
+          [ "${{ steps.pytest.outcome }}"     != "success" ] && FAILED="$FAILED\n  - API Tests (PyTest)"
+          [ "${{ steps.karate.outcome }}"     != "success" ] && FAILED="$FAILED\n  - API Tests (Karate)"
+          [ "${{ steps.newman.outcome }}"     != "success" ] && FAILED="$FAILED\n  - API Tests (Newman)"
+          [ "${{ steps.security.outcome }}"   != "success" ] && FAILED="$FAILED\n  - Security Tests"
+          [ "${{ steps.k6.outcome }}"         != "success" ] && FAILED="$FAILED\n  - Performance Tests (k6)"
+          [ "${{ steps.ai_tests.outcome }}"   != "success" ] && FAILED="$FAILED\n  - AI-Assisted Tests"
+          if [ -n "$FAILED" ]; then
+            echo -e "GATE FAILED — the following suites failed:$FAILED"
+            exit 1
+          fi
+          echo "All suites passed."
+
+      # ── Stop SUT ──────────────────────────────────────────────────────────────
+
+      - name: Stop SUT
+        if: always()
+        run: pkill -f "node sut/index.js" || true
+
+      # ── Upload per-suite Allure results ───────────────────────────────────────
+
+      - name: Upload test Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-tests
+          path: |
+            ui-tests/playwright/allure-results/
+            api-tests/pytest/allure-results/
+            api-tests/karate/target/allure-results/
+            api-tests/newman/allure-results/
+            security-tests/Pytest/allure-results/
+            ai-tests/reports/allure-results/
+
+      - name: Upload AI test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-test-reports
+          path: |
+            ai-tests/reports/failure_analysis.json
+            ai-tests/test-generation/generated/test_data.json
+            ai-tests/test-generation/generated/test_ai_scenarios.py
+            ai-tests/test-generation/generated/test_negative_cases.py
+
+      - name: Upload k6 results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-results
+          path: performance-tests/k6/results/
+          retention-days: 30
+
+  # ── Allure Report ─────────────────────────────────────────────────────────────
+  report:
+    name: Generate Allure Report
+    runs-on: ubuntu-latest
+    needs: [sast, sca, test]
+    if: always()
+
+    steps:
+      - name: Download SAST results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-sast
+          path: reports/allure/results/
+        continue-on-error: true
+
+      - name: Download SCA results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-sca
+          path: reports/allure/results/
+        continue-on-error: true
+
+      - name: Download test results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-tests
+          path: reports/allure/results/
+        continue-on-error: true
+
+      - name: Flatten Allure results
+        run: |
+          find reports/allure/results -mindepth 2 -type f \( -name "*-result.json" -o -name "*-container.json" -o -name "*-attachment*" \) \
+            -exec mv {} reports/allure/results/ \; 2>/dev/null || true
+
+      - name: Install Allure CLI
+        run: |
+          wget -q https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz \
+            -O /tmp/allure.tgz
+          tar -xzf /tmp/allure.tgz -C /opt
+          echo "/opt/allure-2.27.0/bin" >> $GITHUB_PATH
+
+      - name: Generate Allure HTML report
+        run: allure generate reports/allure/results --clean -o reports/allure/html
+
+      - name: Upload Allure report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: reports/allure/html/
+          retention-days: 30

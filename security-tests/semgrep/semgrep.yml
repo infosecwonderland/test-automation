@@ -1,0 +1,44 @@
+rules:
+  # SUT-specific rules that supplement the registry packs (p/nodejs, p/jwt).
+  # These target patterns unique to this codebase that generic rules miss.
+
+  - id: sut-jwt-hardcoded-secret-fallback
+    message: >
+      JWT secret falls back to a hardcoded string when SUT_JWT_SECRET is unset.
+      Any environment running without the env var uses a predictable secret,
+      making every token forgeable.
+    severity: ERROR
+    languages: [javascript, typescript]
+    patterns:
+      - pattern: process.env.$VAR || '$FALLBACK'
+      - metavariable-regex:
+          metavariable: $VAR
+          regex: '.*SECRET.*|.*KEY.*|.*PASSWORD.*|.*TOKEN.*'
+
+  - id: sut-express-cors-unrestricted
+    message: >
+      cors() is called without an origin allowlist. All origins are permitted,
+      exposing authenticated API endpoints to cross-origin requests from any site.
+    severity: WARNING
+    languages: [javascript, typescript]
+    patterns:
+      - pattern: $APP.use(cors())
+      - pattern-not: $APP.use(cors({...}))
+
+  - id: sut-express-body-parser-no-limit
+    message: >
+      bodyParser.json() has no body size limit. An attacker can send an
+      arbitrarily large payload to exhaust server memory.
+    severity: WARNING
+    languages: [javascript, typescript]
+    patterns:
+      - pattern: bodyParser.json()
+      - pattern-not: "bodyParser.json({limit: ...})"
+
+  - id: sut-console-log-payment
+    message: >
+      console.log() inside payment processing code. Log output may contain
+      order totals or card-adjacent data that ends up in production log stores.
+    severity: WARNING
+    languages: [javascript, typescript]
+    pattern: console.log(...)

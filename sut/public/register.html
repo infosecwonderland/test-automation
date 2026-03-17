@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register - Demo Shop</title>
+</head>
+<body>
+  <h1>Register</h1>
+  <form id="register-form">
+    <div id="register-error" style="color: red; margin-bottom: 8px;" aria-live="polite"></div>
+    <label>
+      Email:
+      <input id="email" type="email" name="email" />
+    </label>
+    <br />
+    <label>
+      Password:
+      <input id="password" type="password" name="password" />
+    </label>
+    <br />
+    <button id="submit" type="submit">Register</button>
+  </form>
+  <p><a href="/login">Back to login</a></p>
+  <script>
+    const errorEl = document.getElementById('register-error');
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (errorEl) errorEl.textContent = '';
+      const form = e.target;
+      const email = form.querySelector('input[name="email"]').value;
+      const password = form.querySelector('input[name="password"]').value;
+      try {
+        const res = await fetch('/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          const msg = data.message || 'Registration failed';
+          if (errorEl) errorEl.textContent = msg;
+          return;
+        }
+        // On success, go back to login so user can log in
+        window.location.href = '/login';
+      } catch (err) {
+        console.error('Register failed', err);
+        if (errorEl) errorEl.textContent = 'Registration failed';
+      }
+    });
+  </script>
+</body>
+</html>
+

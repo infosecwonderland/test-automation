@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Payment - Demo Shop</title>
+</head>
+<body>
+  <h1>Payment</h1>
+  <p>This page represents the Payment screen.</p>
+  <form id="payment-form">
+    <div id="payment-error" data-testid="payment-error" style="color: red; margin-bottom: 8px;" aria-live="polite"></div>
+    <label>
+      Order ID:
+      <input type="text" name="orderId" />
+    </label>
+    <br />
+    <label>
+      Card Number:
+      <input type="text" name="cardNumber" />
+    </label>
+    <br />
+    <button type="submit">Pay</button>
+  </form>
+  <p><a href="/order-confirmation">Go to Order Confirmation</a></p>
+
+  <script>
+    function getAuthHeaders() {
+      const token = localStorage.getItem('authToken');
+      return token
+        ? {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          }
+        : { 'Content-Type': 'application/json' };
+    }
+
+    (async function enforceAuth() {
+      try {
+        const res = await fetch('/auth/me', { headers: getAuthHeaders() });
+        if (res.status === 401) {
+          window.location.href = '/login';
+        }
+      } catch {
+        window.location.href = '/login';
+      }
+    })();
+
+    const form = document.getElementById('payment-form');
+    const errorEl = document.getElementById('payment-error');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (errorEl) errorEl.textContent = '';
+      try {
+        // First, create an order from the current cart
+        const orderRes = await fetch('/order/create', {
+          method: 'POST',
+          headers: getAuthHeaders(),
+        });
+        if (!orderRes.ok) {
+          const text = await orderRes.text().catch(() => '');
+          console.error('Order create failed', text);
+          if (errorEl) {
+            errorEl.textContent = 'Unable to create order. Is your cart empty?';
+          }
+          return;
+        }
+        const orderData = await orderRes.json();
+        const orderId = orderData.orderId;
+
+        // Then, execute payment with the real orderId
+        const cardNumberInput = form.querySelector('input[name="cardNumber"]');
+        const cardNumber = cardNumberInput ? cardNumberInput.value : '';
+
+        const payRes = await fetch('/payment/charge', {
+          method: 'POST',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ orderId, cardNumber }),
+        });
+
+        if (!payRes.ok) {
+          const text = await payRes.text().catch(() => '');
+          console.error('Payment failed', text);
+          if (errorEl) {
+            errorEl.textContent = 'Payment failed, please check details.';
+          }
+          return;
+        }
+
+        // On success, go to order confirmation page with orderId
+        window.location.href = '/order-confirmation?orderId=' + encodeURIComponent(orderId);
+      } catch (err) {
+        console.error('Unexpected error during payment flow', err);
+        if (errorEl) {
+          errorEl.textContent = 'Unexpected error during payment.';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

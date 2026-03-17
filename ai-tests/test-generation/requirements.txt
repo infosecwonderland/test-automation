@@ -1,0 +1,5 @@
+anthropic
+pyyaml
+openapi3
+allure-pytest
+pytest-json-report

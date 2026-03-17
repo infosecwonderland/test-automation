@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Order Confirmation - Demo Shop</title>
+</head>
+<body>
+  <h1>Order Confirmation</h1>
+
+  <div id="order-details" data-testid="order-details" style="display: none;">
+    <p>Order ID: <span id="order-id" data-testid="order-id"></span></p>
+    <p>Total: $<span id="order-total" data-testid="order-total"></span></p>
+    <p>Status: <span id="order-status" data-testid="order-status"></span></p>
+    <p>Notification: <span id="notification-status" data-testid="notification-status">Sent</span></p>
+    <ul id="order-items"></ul>
+  </div>
+
+  <p id="no-order-message" data-testid="no-order-message" style="display: none; color: gray;">
+    No recent order found.
+  </p>
+
+  <p><a href="/products-page" id="back-to-products" data-testid="back-to-products">Back to Products</a></p>
+
+  <script>
+    function getAuthHeaders() {
+      const token = localStorage.getItem('authToken');
+      return token
+        ? {
+            Authorization: 'Bearer ' + token,
+          }
+        : {};
+    }
+
+    (async function enforceAuth() {
+      try {
+        const res = await fetch('/auth/me', { headers: getAuthHeaders() });
+        if (res.status === 401) {
+          window.location.href = '/login';
+        }
+      } catch {
+        window.location.href = '/login';
+      }
+    })();
+
+    (async function () {
+      const params = new URLSearchParams(window.location.search);
+      const orderId = params.get('orderId');
+      const orderDetails = document.getElementById('order-details');
+      const noOrderMessage = document.getElementById('no-order-message');
+
+      if (!orderId) {
+        if (orderDetails) orderDetails.style.display = 'none';
+        if (noOrderMessage) noOrderMessage.style.display = 'block';
+        return;
+      }
+
+      try {
+        const res = await fetch('/order/' + encodeURIComponent(orderId), {
+          headers: getAuthHeaders(),
+        });
+        if (!res.ok) {
+          if (orderDetails) orderDetails.style.display = 'none';
+          if (noOrderMessage) noOrderMessage.style.display = 'block';
+          return;
+        }
+        const order = await res.json();
+
+        document.getElementById('order-id').textContent = order.id;
+        document.getElementById('order-total').textContent = String(order.total);
+        document.getElementById('order-status').textContent = order.status || 'PAID';
+
+        const list = document.getElementById('order-items');
+        list.innerHTML = '';
+        (order.items || []).forEach(function (item) {
+          const li = document.createElement('li');
+          li.setAttribute('data-testid', 'order-item');
+          li.textContent = item.name + ' x ' + item.quantity + ' - $' + (item.price * item.quantity);
+          list.appendChild(li);
+        });
+
+        if (orderDetails) orderDetails.style.display = 'block';
+        if (noOrderMessage) noOrderMessage.style.display = 'none';
+      } catch (err) {
+        if (orderDetails) orderDetails.style.display = 'none';
+        if (noOrderMessage) noOrderMessage.style.display = 'block';
+      }
+    })();
+  </script>
+</body>
+</html>
