@@ -275,6 +275,9 @@ function createApp() {
     if (!order) {
       return res.status(404).json({ error: 'Order not found' });
     }
+    if (order.status === 'PAID') {
+      return res.status(400).json({ error: 'Order already paid' });
+    }
     if (!cardNumber || String(cardNumber).length < 4) {
       return res.status(400).json({ error: 'Invalid card details' });
     }
