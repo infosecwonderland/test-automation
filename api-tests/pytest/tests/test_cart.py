@@ -1,8 +1,12 @@
+import allure
+
 from jsonschema import validate
 
 from utils.contract_loader import response_schema
 
 
+@allure.feature("API Tests")
+@allure.story("Cart")
 def test_add_to_cart_success(auth_client):
     auth_client.clear_cart()
 
@@ -17,6 +21,8 @@ def test_add_to_cart_success(auth_client):
     assert len(body["cart"]) == 1
 
 
+@allure.feature("API Tests")
+@allure.story("Cart")
 def test_add_to_cart_invalid_product(auth_client):
     resp, duration = auth_client.add_to_cart(product_id=9999, quantity=1)
 
@@ -28,6 +34,8 @@ def test_add_to_cart_invalid_product(auth_client):
     assert body["error"] == "Invalid productId"
 
 
+@allure.feature("API Tests")
+@allure.story("Cart")
 def test_add_to_cart_invalid_quantity(auth_client):
     resp, duration = auth_client.add_to_cart(product_id=1, quantity=0)
 

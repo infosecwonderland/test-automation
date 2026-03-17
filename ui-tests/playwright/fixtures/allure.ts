@@ -6,6 +6,8 @@ export const test = base.extend({
     allure.parentSuite('UI Tests');
     allure.suite('Playwright');
     allure.subSuite(testInfo.titlePath[0] ?? '');
+    allure.feature('UI Tests');
+    allure.story(testInfo.titlePath[0] ?? '');
     await use(page);
   },
 });
