@@ -138,11 +138,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Install k6
-        run: |
-          curl -fsSL https://pkg.grafana.com/gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/grafana.gpg
-          echo "deb [signed-by=/usr/share/keyrings/grafana.gpg] https://pkg.grafana.com/oss/deb stable main" \
-            | sudo tee /etc/apt/sources.list.d/grafana.list
-          sudo apt-get update -qq && sudo apt-get install -y k6
+        uses: grafana/setup-k6-action@v1
 
       # ── Start SUT ─────────────────────────────────────────────────────────────
 
