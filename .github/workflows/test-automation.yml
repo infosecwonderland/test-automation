@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - master
+      - "feature/**"
       - "**/feature/**"
   pull_request:
     branches:
@@ -54,6 +55,10 @@ jobs:
         working-directory: api-tests/pytest
         run: pip install -r requirements.txt
 
+      - name: Install Security Test dependencies
+        working-directory: security-tests/Pytest
+        run: pip install -r requirements.txt
+
       # ── Start SUT (shared across all test suites) ───────────────────────────
 
       - name: Start SUT
@@ -72,11 +77,11 @@ jobs:
 
       - name: UI Tests (Playwright)
         working-directory: ui-tests/playwright
-        run: npx playwright test --reporter=line
+        run: npx playwright test
 
       - name: API Tests (PyTest)
         working-directory: api-tests/pytest
-        run: python -m pytest -v
+        run: python -m pytest -v --alluredir=allure-results
 
       - name: API Tests (Karate)
         working-directory: api-tests/karate
@@ -84,13 +89,50 @@ jobs:
 
       - name: API Tests (Newman)
         run: |
-          npm install -g newman
+          npm install -g newman newman-reporter-allure
           newman run api-tests/newman/ecommerce-api.postman_collection.json \
             --environment api-tests/newman/local.postman_environment.json \
-            --reporters cli
+            --reporters cli,allure \
+            --reporter-allure-export api-tests/newman/allure-results
+
+      - name: Security Tests
+        working-directory: security-tests/Pytest
+        run: python -m pytest -v --alluredir=allure-results
 
       # ── Stop SUT ─────────────────────────────────────────────────────────────
 
       - name: Stop SUT
         if: always()
         run: pkill -f "node sut/index.js" || true
+
+      # ── Allure Reporting ──────────────────────────────────────────────────────
+
+      - name: Install Allure CLI
+        if: always()
+        run: |
+          wget -q https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz \
+            -O /tmp/allure.tgz
+          tar -xzf /tmp/allure.tgz -C /opt
+          echo "/opt/allure-2.27.0/bin" >> $GITHUB_PATH
+
+      - name: Merge Allure results
+        if: always()
+        run: |
+          mkdir -p reports/allure/results
+          cp -r ui-tests/playwright/allure-results/.    reports/allure/results/ 2>/dev/null || true
+          cp -r api-tests/pytest/allure-results/.       reports/allure/results/ 2>/dev/null || true
+          cp -r api-tests/karate/target/allure-results/. reports/allure/results/ 2>/dev/null || true
+          cp -r api-tests/newman/allure-results/.        reports/allure/results/ 2>/dev/null || true
+          cp -r security-tests/Pytest/allure-results/.  reports/allure/results/ 2>/dev/null || true
+
+      - name: Generate Allure HTML report
+        if: always()
+        run: allure generate reports/allure/results --clean -o reports/allure/html
+
+      - name: Upload Allure report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: reports/allure/html/
+          retention-days: 30

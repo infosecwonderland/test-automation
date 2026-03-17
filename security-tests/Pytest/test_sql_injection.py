@@ -1,3 +1,4 @@
+import allure
 import pytest
 import requests
 
@@ -22,6 +23,8 @@ SQLI_PAYLOADS = [
 ]
 
 
+@allure.feature("Security")
+@allure.story("SQL Injection")
 @pytest.mark.parametrize("payload", SQLI_PAYLOADS)
 def test_sql_injection_in_login_email(payload: str):
   """
@@ -48,6 +51,8 @@ def test_sql_injection_in_login_email(payload: str):
   )
 
 
+@allure.feature("Security")
+@allure.story("SQL Injection")
 @pytest.mark.parametrize("payload", SQLI_PAYLOADS)
 def test_sql_injection_in_cart_product_id(payload: str):
   """
@@ -78,6 +83,8 @@ def test_sql_injection_in_cart_product_id(payload: str):
   )
 
 
+@allure.feature("Security")
+@allure.story("SQL Injection")
 @pytest.mark.parametrize("payload", SQLI_PAYLOADS)
 def test_sql_injection_in_order_id_path(payload: str):
   """

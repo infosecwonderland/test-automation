@@ -1,6 +1,7 @@
 import collections
 import time
 
+import allure
 import requests
 
 from auth_utils import BASE_URL, login
@@ -24,6 +25,8 @@ def _burst_requests(method: str, path: str, *, headers=None, json_body=None, att
   return counter
 
 
+@allure.feature("Security")
+@allure.story("Rate Limiting")
 def test_rate_limiting_on_auth_login():
   """
   Rate limiting: aggressive login attempts should eventually be throttled.
@@ -42,6 +45,8 @@ def test_rate_limiting_on_auth_login():
   )
 
 
+@allure.feature("Security")
+@allure.story("Rate Limiting")
 def test_rate_limiting_on_cart_add():
   """
   Rate limiting: repeated POST /cart/add with valid auth
@@ -63,6 +68,8 @@ def test_rate_limiting_on_cart_add():
   )
 
 
+@allure.feature("Security")
+@allure.story("Rate Limiting")
 def test_rate_limiting_on_order_create():
   """
   Rate limiting: repeated POST /order/create with valid auth
@@ -91,6 +98,8 @@ def test_rate_limiting_on_order_create():
   )
 
 
+@allure.feature("Security")
+@allure.story("Rate Limiting")
 def test_rate_limiting_on_payment_charge():
   """
   Rate limiting: repeated POST /payment/charge with valid auth

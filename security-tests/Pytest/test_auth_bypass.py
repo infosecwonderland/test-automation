@@ -1,3 +1,4 @@
+import allure
 import requests
 
 from auth_utils import BASE_URL
@@ -12,6 +13,8 @@ def _assert_requires_auth(method: str, path: str, json_body=None):
   )
 
 
+@allure.feature("Security")
+@allure.story("Authentication Bypass")
 def test_order_create_requires_auth():
   """
   Authorization bypass: creating an order without authentication
@@ -20,6 +23,8 @@ def test_order_create_requires_auth():
   _assert_requires_auth("POST", "/order/create", json_body={})
 
 
+@allure.feature("Security")
+@allure.story("Authentication Bypass")
 def test_cart_add_requires_auth():
   """
   Authorization bypass: adding to cart without authentication
@@ -28,6 +33,8 @@ def test_cart_add_requires_auth():
   _assert_requires_auth("POST", "/cart/add", json_body={"productId": 1, "quantity": 1})
 
 
+@allure.feature("Security")
+@allure.story("Authentication Bypass")
 def test_cart_items_requires_auth():
   """
   Authorization bypass: fetching cart items without authentication
@@ -36,6 +43,8 @@ def test_cart_items_requires_auth():
   _assert_requires_auth("GET", "/cart/items")
 
 
+@allure.feature("Security")
+@allure.story("Authentication Bypass")
 def test_cart_remove_requires_auth():
   """
   Authorization bypass: removing items from cart without authentication
@@ -44,6 +53,8 @@ def test_cart_remove_requires_auth():
   _assert_requires_auth("POST", "/cart/remove", json_body={"productId": 1})
 
 
+@allure.feature("Security")
+@allure.story("Authentication Bypass")
 def test_cart_clear_requires_auth():
   """
   Authorization bypass: clearing cart without authentication
@@ -52,6 +63,8 @@ def test_cart_clear_requires_auth():
   _assert_requires_auth("POST", "/cart/clear", json_body={})
 
 
+@allure.feature("Security")
+@allure.story("Authentication Bypass")
 def test_payment_charge_requires_auth():
   """
   Authorization bypass: charging payment without authentication

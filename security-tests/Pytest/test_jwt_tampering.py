@@ -1,6 +1,7 @@
 import base64
 import json
 
+import allure
 import pytest
 import requests
 
@@ -22,6 +23,8 @@ def _split_token(token: str):
   return parts
 
 
+@allure.feature("Security")
+@allure.story("JWT Tampering")
 def test_jwt_payload_tamper_without_resign_is_rejected():
   """
   If the JWT payload is modified without recomputing the signature,
@@ -50,6 +53,8 @@ def test_jwt_payload_tamper_without_resign_is_rejected():
   )
 
 
+@allure.feature("Security")
+@allure.story("JWT Tampering")
 def test_jwt_invalid_signature_is_rejected():
   """
   If the JWT signature is replaced with garbage, the token must be rejected.
@@ -71,6 +76,8 @@ def test_jwt_invalid_signature_is_rejected():
   )
 
 
+@allure.feature("Security")
+@allure.story("JWT Tampering")
 def test_jwt_used_without_bearer_prefix_is_rejected():
   """
   Using a raw JWT without the 'Bearer ' prefix should not be accepted.

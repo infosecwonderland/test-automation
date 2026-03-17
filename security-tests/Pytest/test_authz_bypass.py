@@ -1,5 +1,6 @@
 import time
 
+import allure
 import requests
 
 from auth_utils import BASE_URL, login
@@ -50,6 +51,8 @@ def _register_and_login_new_user() -> str:
   return token
 
 
+@allure.feature("Security")
+@allure.story("Authorization Bypass")
 def test_authorization_bypass_order_leak_between_users():
   """
   Authorization bypass: User B must not be able to see

@@ -1,5 +1,6 @@
 import html
 
+import allure
 import pytest
 import requests
 
@@ -15,6 +16,8 @@ XSS_PAYLOADS = [
 ]
 
 
+@allure.feature("Security")
+@allure.story("XSS")
 @pytest.mark.parametrize("payload", XSS_PAYLOADS)
 def test_xss_in_search_query_is_escaped(payload: str):
   """
@@ -46,6 +49,8 @@ def test_xss_in_search_query_is_escaped(payload: str):
   )
 
 
+@allure.feature("Security")
+@allure.story("XSS")
 @pytest.mark.parametrize("payload", XSS_PAYLOADS)
 def test_xss_in_cart_error_message_is_sanitized(payload: str):
   """
