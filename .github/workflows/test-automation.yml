@@ -304,7 +304,7 @@ jobs:
           github.event_name != 'workflow_dispatch' ||
           contains(fromJson('["all","api"]'), github.event.inputs.test_suite)
         working-directory: api-tests/karate
-        run: mvn test -B --quiet
+        run: mvn test -B -Dallure.results.directory=target/allure-results
 
       - name: API Tests (Newman)
         id: newman
@@ -313,11 +313,11 @@ jobs:
           github.event_name != 'workflow_dispatch' ||
           contains(fromJson('["all","api"]'), github.event.inputs.test_suite)
         run: |
-          npm install -g newman newman-reporter-allure
+          npm install -g newman newman-reporter-allure2
           newman run api-tests/newman/ecommerce-api.postman_collection.json \
             --environment api-tests/newman/local.postman_environment.json \
-            --reporters cli,allure \
-            --reporter-allure-export api-tests/newman/allure-results \
+            --reporters cli,allure2 \
+            --reporter-allure2-export api-tests/newman/allure-results \
             --timeout 30000
 
       - name: Security Tests
