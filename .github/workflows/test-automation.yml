@@ -45,17 +45,7 @@ jobs:
             --type semgrep \
             security-tests/semgrep/results.json \
             security-tests/semgrep/allure-results
-          python3 -c "
-import json, sys
-d = json.load(open('security-tests/semgrep/results.json'))
-errors = [r for r in d.get('results', []) if r.get('extra', {}).get('severity') == 'ERROR']
-if errors:
-    print(f'GATE FAILED: {len(errors)} ERROR-severity finding(s):')
-    for r in errors:
-        print(f'  {r[\"check_id\"]} at {r[\"path\"]}:{r[\"start\"][\"line\"]}')
-    sys.exit(1)
-print('Semgrep gate passed.')
-"
+          python3 utils/gates/semgrep_gate.py
 
       - name: Upload Semgrep Allure results
         if: always()
@@ -94,23 +84,7 @@ print('Semgrep gate passed.')
             --type trivy \
             security-tests/trivy/results.json \
             security-tests/trivy/allure-results
-          python3 -c "
-import json, sys
-BLOCKING = {'HIGH', 'CRITICAL'}
-d = json.load(open('security-tests/trivy/results.json'))
-findings = [
-    f\"{v['VulnerabilityID']} ({v['Severity']}) in {v['PkgName']}@{v['InstalledVersion']}\"
-    for r in d.get('Results', [])
-    for v in (r.get('Vulnerabilities') or [])
-    if v.get('Severity', '').upper() in BLOCKING
-]
-if findings:
-    print(f'GATE FAILED: {len(findings)} HIGH/CRITICAL CVE(s):')
-    for f in findings:
-        print(f'  {f}')
-    sys.exit(1)
-print('Trivy gate passed.')
-"
+          python3 utils/gates/trivy_gate.py
 
       - name: Upload Trivy Allure results
         if: always()
