@@ -88,3 +88,11 @@ def auth_client(client: ApiClient, valid_credentials: dict) -> Generator[ApiClie
     token = resp.json()["accessToken"]
     client.session.headers.update({"Authorization": f"Bearer {token}"})
     yield client
+
+
+import allure
+
+@pytest.fixture(autouse=True)
+def _allure_suite_labels():
+    allure.dynamic.parent_suite("API Tests")
+    allure.dynamic.suite("pytest")

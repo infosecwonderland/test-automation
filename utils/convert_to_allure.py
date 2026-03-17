@@ -71,6 +71,8 @@ def _convert_semgrep(data: dict, output_dir: str, now_ms: int) -> int:
                 "trace": "\n".join(lines),
             },
             "labels": [
+                {"name": "parentSuite", "value": "Security Tests"},
+                {"name": "suite", "value": "SAST (Semgrep)"},
                 {"name": "feature", "value": "SAST"},
                 {"name": "story", "value": "Semgrep"},
                 {"name": "severity", "value": SEMGREP_SEVERITY_MAP.get(severity_raw, "normal")},
@@ -89,6 +91,8 @@ def _convert_semgrep(data: dict, output_dir: str, now_ms: int) -> int:
             "status": "passed",
             "statusDetails": {"message": "All rules passed with zero findings."},
             "labels": [
+                {"name": "parentSuite", "value": "Security Tests"},
+                {"name": "suite", "value": "SAST (Semgrep)"},
                 {"name": "feature", "value": "SAST"},
                 {"name": "story", "value": "Semgrep"},
             ],
@@ -176,6 +180,8 @@ def _convert_trivy(data: dict, output_dir: str, now_ms: int) -> int:
             "status": "passed",
             "statusDetails": {"message": "Trivy found no scannable targets."},
             "labels": [
+                {"name": "parentSuite", "value": "Security Tests"},
+                {"name": "suite", "value": "SCA (Trivy)"},
                 {"name": "feature", "value": "SCA"},
                 {"name": "story", "value": "Trivy"},
             ],
@@ -223,6 +229,8 @@ def _convert_k6(data: dict, output_dir: str, now_ms: int) -> int:
                 "message": f"{metric_name}.{value_key} = {value:.2f} {unit}",
             },
             "labels": [
+                {"name": "parentSuite", "value": "Performance Tests"},
+                {"name": "suite", "value": "k6"},
                 {"name": "feature", "value": "Performance"},
                 {"name": "story", "value": "k6 Load Test"},
                 {"name": "severity", "value": "critical" if not passed else "normal"},
@@ -241,6 +249,8 @@ def _convert_k6(data: dict, output_dir: str, now_ms: int) -> int:
             "status": "passed",
             "statusDetails": {"message": "k6 run completed (no threshold metrics found)."},
             "labels": [
+                {"name": "parentSuite", "value": "Performance Tests"},
+                {"name": "suite", "value": "k6"},
                 {"name": "feature", "value": "Performance"},
                 {"name": "story", "value": "k6 Load Test"},
             ],

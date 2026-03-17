@@ -63,3 +63,10 @@ def auth_client():
     assert resp.status_code == 200, f"Login failed: {resp.status_code} {resp.text}"
     ac.session.headers.update({"Authorization": f"Bearer {resp.json()['accessToken']}"})
     return ac
+
+
+@pytest.fixture(autouse=True)
+def _allure_suite_labels():
+    import allure
+    allure.dynamic.parent_suite("AI Tests")
+    allure.dynamic.suite("Generated Tests")
