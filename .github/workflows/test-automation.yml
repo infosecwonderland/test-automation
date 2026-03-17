@@ -54,10 +54,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be0f245ec8763ff594 # v4.1.1
+        uses: actions/checkout@v4
 
       - name: Run Trivy dependency check
-        uses: aquasecurity/trivy-action@6e7b7d1feac57ef12cc873e0e6f9ad6293f0ec33 # v0.24.0
+        uses: aquasecurity/trivy-action@v0.24.0
         with:
           scan-type: 'fs'
           scan-ref: '.'
@@ -66,7 +66,7 @@ jobs:
           severity: 'CRITICAL,HIGH'
 
       - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@ea9e104ddf51205a72467713186665039c2b990a # v3.24.0
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: 'trivy-results.sarif'
           wait-for-processing: true
@@ -85,10 +85,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be0f245ec8763ff594 # v4.1.1
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
@@ -113,7 +113,7 @@ jobs:
 
       - name: Upload Semgrep Allure results
         if: always()
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb9c915 # v4.3.1
+        uses: actions/upload-artifact@v4
         with:
           name: allure-sast
           path: security-tests/semgrep/allure-results/
@@ -134,16 +134,16 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be0f245ec8763ff594 # v4.1.1
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
 
       - name: Run Trivy filesystem scan
-        uses: aquasecurity/trivy-action@6e7b7d1feac57ef12cc873e0e6f9ad6293f0ec33 # v0.24.0
+        uses: aquasecurity/trivy-action@v0.24.0
         with:
           scan-type: 'fs'
           scan-ref: 'sut/'
@@ -163,7 +163,7 @@ jobs:
 
       - name: Upload Trivy Allure results
         if: always()
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb9c915 # v4.3.1
+        uses: actions/upload-artifact@v4
         with:
           name: allure-sca
           path: security-tests/trivy/allure-results/
@@ -185,7 +185,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be0f245ec8763ff594 # v4.1.1
+        uses: actions/checkout@v4
 
       - name: Validate test environment
         run: |
@@ -198,19 +198,19 @@ jobs:
       # ── Runtimes ──────────────────────────────────────────────────────────────
 
       - name: Set up Node.js
-        uses: actions/setup-node@60edb5dd545a775178fac7f3d46c2f61d85ee269 # v4.0.2
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
       - name: Set up Python
-        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
 
       - name: Set up Java
-        uses: actions/setup-java@9da3f4fb69f0a9e0cf3edd5da16ccd29fde1c9c6 # v4.0.0
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: ${{ env.JAVA_VERSION }}
@@ -419,7 +419,7 @@ jobs:
 
       - name: Upload test Allure results
         if: always()
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb9c915 # v4.3.1
+        uses: actions/upload-artifact@v4
         with:
           name: allure-tests
           path: |
@@ -434,7 +434,7 @@ jobs:
 
       - name: Upload AI test reports
         if: always()
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb9c915 # v4.3.1
+        uses: actions/upload-artifact@v4
         with:
           name: ai-test-reports
           path: |
@@ -447,7 +447,7 @@ jobs:
 
       - name: Upload k6 results
         if: always()
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb9c915 # v4.3.1
+        uses: actions/upload-artifact@v4
         with:
           name: k6-results
           path: performance-tests/k6/results/
@@ -465,21 +465,21 @@ jobs:
 
     steps:
       - name: Download SAST results
-        uses: actions/download-artifact@c4b5ff82d5c59e238e5b53cc3fcee3cc3cabd59f # v4.1.0
+        uses: actions/download-artifact@v4
         with:
           name: allure-sast
           path: reports/allure/results/
         continue-on-error: true
 
       - name: Download SCA results
-        uses: actions/download-artifact@c4b5ff82d5c59e238e5b53cc3fcee3cc3cabd59f # v4.1.0
+        uses: actions/download-artifact@v4
         with:
           name: allure-sca
           path: reports/allure/results/
         continue-on-error: true
 
       - name: Download test results
-        uses: actions/download-artifact@c4b5ff82d5c59e238e5b53cc3fcee3cc3cabd59f # v4.1.0
+        uses: actions/download-artifact@v4
         with:
           name: allure-tests
           path: reports/allure/results/
@@ -503,7 +503,7 @@ jobs:
         run: allure generate reports/allure/results --clean -o reports/allure/html
 
       - name: Upload Allure report artifact
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb9c915 # v4.3.1
+        uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: reports/allure/html/
