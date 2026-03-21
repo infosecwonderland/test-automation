@@ -57,7 +57,8 @@ semgrep-results/
 .github/artifacts/
 
 # ── Screenshots / Videos (captured on failure) ────────────────────────────────
-screenshots/
+screenshots/*.png
+screenshots/*.jpg
 videos/
 ui-tests/playwright/test-results/
 
