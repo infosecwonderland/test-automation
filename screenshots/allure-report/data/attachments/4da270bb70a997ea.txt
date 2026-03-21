@@ -1,0 +1,18 @@
+pm.test("Status code is 201", function () {
+  pm.response.to.have.status(201);
+});
+
+pm.test("Order create response structure", function () {
+  const json = pm.response.json();
+  pm.expect(json).to.have.property("message", "Order created");
+  pm.expect(json).to.have.property("orderId");
+  pm.expect(json.orderId).to.be.a("string");
+  pm.expect(json).to.have.property("total");
+});
+
+pm.test("Order create under 500ms", function () {
+  pm.expect(pm.response.responseTime).to.be.below(500);
+});
+
+// Save orderId for payment tests
+pm.collectionVariables.set("orderId", pm.response.json().orderId);

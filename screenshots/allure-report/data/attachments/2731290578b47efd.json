@@ -1,0 +1,11 @@
+{
+    "X-Powered-By": "Express",
+    "Access-Control-Allow-Origin": "http://localhost:3000",
+    "Vary": "Origin",
+    "Content-Type": "application/json; charset=utf-8",
+    "Content-Length": "70",
+    "ETag": "W/\"46-lmUkMrGTCH1jeOY0fDlxktBV/jc\"",
+    "Date": "Tue, 17 Mar 2026 15:24:01 GMT",
+    "Connection": "keep-alive",
+    "Keep-Alive": "timeout=5"
+}

@@ -1,0 +1,12 @@
+pm.test("Status code is 404", function () {
+  pm.response.to.have.status(404);
+});
+
+pm.test("Order not found error", function () {
+  const json = pm.response.json();
+  pm.expect(json).to.have.property("error", "Order not found");
+});
+
+pm.test("Payment 404 under 500ms", function () {
+  pm.expect(pm.response.responseTime).to.be.below(500);
+});

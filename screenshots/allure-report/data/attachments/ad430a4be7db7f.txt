@@ -1,0 +1,12 @@
+pm.test("Status code is 401", function () {
+  pm.response.to.have.status(401);
+});
+
+pm.test("Invalid credentials error message", function () {
+  const json = pm.response.json();
+  pm.expect(json).to.have.property("message", "invalid credentials");
+});
+
+pm.test("Login error under 500ms", function () {
+  pm.expect(pm.response.responseTime).to.be.below(500);
+});

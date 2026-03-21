@@ -1,0 +1,3 @@
+pm.test("Register returns 201 or 409 (idempotent)", function () {
+  pm.expect(pm.response.code).to.be.oneOf([201, 409]);
+});

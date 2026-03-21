@@ -1,0 +1,8 @@
+pm.test("Status code is 400", function () {
+  pm.response.to.have.status(400);
+});
+
+pm.test("Invalid quantity error", function () {
+  const json = pm.response.json();
+  pm.expect(json).to.have.property("error", "Invalid quantity");
+});

@@ -1,0 +1,12 @@
+{
+    "X-Powered-By": "Express",
+    "Access-Control-Allow-Origin": "http://localhost:3000",
+    "Vary": "Origin",
+    "Content-Security-Policy": "default-src 'none'",
+    "X-Content-Type-Options": "nosniff",
+    "Content-Type": "text/html; charset=utf-8",
+    "Content-Length": "616",
+    "Date": "Tue, 17 Mar 2026 15:24:01 GMT",
+    "Connection": "keep-alive",
+    "Keep-Alive": "timeout=5"
+}

@@ -1,0 +1,17 @@
+pm.test("Status code is 200", function () {
+  pm.response.to.have.status(200);
+});
+
+pm.test("Products match expected schema", function () {
+  const json = pm.response.json();
+  pm.expect(json).to.be.an("array");
+  pm.expect(json.length).to.be.at.least(3);
+  const first = json[0];
+  pm.expect(first).to.have.property("id");
+  pm.expect(first).to.have.property("name");
+  pm.expect(first).to.have.property("price");
+});
+
+pm.test("Products response under 500ms", function () {
+  pm.expect(pm.response.responseTime).to.be.below(500);
+});

@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Bad Request: request/body/cardNumber must NOT have fewer than 4 characters<br> &nbsp; &nbsp;at Object.POST-/payment/charge-application/json (/Users/monikatalekar/Documents/automation-testing/test-automation/sut/node_modules/express-openapi-validator/dist/middlewares/openapi.request.validator.js:134:31)<br> &nbsp; &nbsp;at RequestValidator.validate (/Users/monikatalekar/Documents/automation-testing/test-automation/sut/node_modules/express-openapi-validator/dist/middlewares/openapi.request.validator.js:48:41)<br> &nbsp; &nbsp;at /Users/monikatalekar/Documents/automation-testing/test-automation/sut/node_modules/express-openapi-validator/dist/openapi.validator.js:233:53<br> &nbsp; &nbsp;at /Users/monikatalekar/Documents/automation-testing/test-automation/sut/node_modules/express-openapi-validator/dist/openapi.validator.js:165:28<br> &nbsp; &nbsp;at process.processTicksAndRejections (node:internal/process/task_queues:104:5)</pre>
+</body>
+</html>
