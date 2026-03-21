@@ -56,17 +56,6 @@ semgrep-results/
 # ── CI/CD artifacts ───────────────────────────────────────────────────────────
 .github/artifacts/
 
-# ── Screenshots / Videos (captured on failure) ────────────────────────────────
-screenshots/*.png
-screenshots/*.jpg
-videos/
-ui-tests/playwright/test-results/
-
-# ── AI test generation outputs ────────────────────────────────────────────────
-ai-tests/test-generation/generated/
-ai-tests/test-generation/*.generated.py
-ai-tests/test-generation/*.generated.ts
-
 # ── Claude / local docs ───────────────────────────────────────────────────────
 CLAUDE.md
 STATUS.md
