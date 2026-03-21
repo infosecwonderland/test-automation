@@ -63,10 +63,10 @@ async def test_self_healing_selector():
     """
     ts_file = _PAGES_DIR / "LoginPage.ts"
     original = ts_file.read_text(encoding="utf-8")
-    broken_selector = "#broken-email-id"
+    broken_selector = "#broken-password-id"
 
     # Step 1: Simulate a selector breaking (as if the SUT HTML changed)
-    ts_file.write_text(original.replace("#email", broken_selector, 1), encoding="utf-8")
+    ts_file.write_text(original.replace("#password-id", broken_selector, 1), encoding="utf-8")
     print(f"\n[self-heal] Injected broken selector: {broken_selector} into LoginPage.ts")
 
     try:
@@ -74,7 +74,7 @@ async def test_self_healing_selector():
         outcome = await heal_and_patch(
             page_name="login",
             page_path="/login",
-            element_purpose="email input",
+            element_purpose="password input",
             broken_selector=broken_selector,
             headless=True,
         )

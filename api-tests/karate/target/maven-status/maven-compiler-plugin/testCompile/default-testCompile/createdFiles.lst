@@ -1,5 +1,5 @@
-contract/ContractApiRunner.class
 auth/AuthLoginRunner.class
+contract/ContractApiRunner.class
 cart/CartAddRunner.class
 payment/PaymentChargeRunner.class
 order/OrderCreateRunner.class

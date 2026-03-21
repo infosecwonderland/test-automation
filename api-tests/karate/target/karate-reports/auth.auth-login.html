@@ -49,7 +49,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
     <div>Scenarios</div>
   </div>
   <div id="nav-date">
-    <div>2026-03-17 12:38:25 PM</div>
+    <div>2026-03-21 09:39:18 PM</div>
   </div>
 </div>
 
@@ -200,27 +200,28 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
 
   
 
-  <div class="preformatted" data-parent="0.9">12:38:25.650 request:
+  <div class="preformatted" data-parent="0.9">21:39:18.505 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
 1 &gt; Accept-Encoding: gzip,deflate
 {&quot;email&quot;:&quot;test@example.com&quot;,&quot;password&quot;:&quot;password123&quot;}
 
-12:38:25.651 response time in milliseconds: 1
+21:39:18.506 response time in milliseconds: 1
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: *
+1 &lt; Access-Control-Allow-Origin: http://localhost:3000
+1 &lt; Vary: Origin
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
-1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
+1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
+1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
-{&quot;accessToken&quot;:&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,&quot;tokenType&quot;:&quot;Bearer&quot;}
+{&quot;accessToken&quot;:&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,&quot;tokenType&quot;:&quot;Bearer&quot;}
 
 </div>   
 
@@ -301,7 +302,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
               </div>
             </div>
             <div class="scenario-time passed">
-              <span>ms:</span>&nbsp;<span>2</span>
+              <span>ms:</span>&nbsp;<span>1</span>
             </div>
           </div>
           <div class="step-row">
@@ -408,7 +409,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">2</div>
+    <div class="time-cell passed">1</div>
   </div>
 
    
@@ -417,24 +418,25 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
 
   
 
-  <div class="preformatted" data-parent="0.21">12:38:25.654 request:
+  <div class="preformatted" data-parent="0.21">21:39:18.509 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 55
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
 1 &gt; Accept-Encoding: gzip,deflate
 {&quot;email&quot;:&quot;wrong@example.com&quot;,&quot;password&quot;:&quot;wrongpass123&quot;}
 
-12:38:25.655 response time in milliseconds: 1
+21:39:18.509 response time in milliseconds: 0
 1 &lt; 401
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: *
+1 &lt; Access-Control-Allow-Origin: http://localhost:3000
+1 &lt; Vary: Origin
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 33
 1 &lt; ETag: W/&quot;21-MzZHBeQUXOlT3agGHY2uE7J05rU&quot;
-1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
+1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {&quot;message&quot;:&quot;invalid credentials&quot;}
