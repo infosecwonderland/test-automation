@@ -33,21 +33,6 @@ from utils.contract_loader import (
 )
 
 
-def _anthropic_client() -> anthropic.Anthropic:
-    """
-    Build an Anthropic client with explicit auth checks so failures are actionable.
-    """
-    api_key = os.getenv("ANTHROPIC_API_KEY")
-    auth_token = os.getenv("ANTHROPIC_AUTH_TOKEN")
-    if not api_key and not auth_token:
-        raise RuntimeError(
-            "Missing Anthropic credentials. Set ANTHROPIC_API_KEY (recommended) "
-            "or ANTHROPIC_AUTH_TOKEN before running scenario generation.\n"
-            "Example (zsh): export ANTHROPIC_API_KEY='your-key'"
-        )
-    return anthropic.Anthropic(api_key=api_key, auth_token=auth_token)
-
-
 def build_endpoint_summary() -> list[dict]:
     """Use contract_loader to extract structured endpoint info."""
     api = _load()
@@ -89,7 +74,7 @@ def load_test_data() -> dict:
 
 
 def generate_scenarios(endpoints: list[dict]) -> str:
-    client = _anthropic_client()
+    client = anthropic.Anthropic()
 
     test_data = load_test_data()
     test_data_section = ""
@@ -188,11 +173,7 @@ def main():
     endpoints = build_endpoint_summary()
     print(f"[scenario_generator] Found {len(endpoints)} endpoints. Sending to Claude...\n")
 
-    try:
-        code = generate_scenarios(endpoints)
-    except RuntimeError as exc:
-        print(f"[scenario_generator] {exc}")
-        sys.exit(2)
+    code = generate_scenarios(endpoints)
 
     filename = args.output or "test_ai_scenarios.py"
     test_file = os.path.join(GENERATED_DIR, filename)

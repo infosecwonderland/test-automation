@@ -49,7 +49,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
     <div>Scenarios</div>
   </div>
   <div id="nav-date">
-    <div>2026-03-21 09:39:18 PM</div>
+    <div>2026-03-17 12:38:25 PM</div>
   </div>
 </div>
 
@@ -129,7 +129,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
               </div>
             </div>
             <div class="scenario-time passed">
-              <span>ms:</span>&nbsp;<span>12</span>
+              <span>ms:</span>&nbsp;<span>14</span>
             </div>
           </div>
           <div class="step-row">
@@ -271,7 +271,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
         <span>*</span>&nbsp;<span>def password = karate.get(&#39;auth.password&#39;, karate.properties[&#39;auth.password&#39;])</span>
       </div>
     </div>
-    <div class="time-cell passed">0</div>
+    <div class="time-cell passed">1</div>
   </div>
 
    
@@ -355,7 +355,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">3</div>
+    <div class="time-cell passed">4</div>
   </div>
 
    
@@ -364,13 +364,13 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.173 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.293 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -378,19 +378,18 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
 }
 
 
-21:39:18.175 response time in milliseconds: 2
+12:38:25.295 response time in milliseconds: 2
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -610,7 +609,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">2</div>
+    <div class="time-cell passed">3</div>
   </div>
 
    
@@ -619,14 +618,14 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
 
   
 
-  <div class="preformatted" data-parent="0.24">21:39:18.178 request:
+  <div class="preformatted" data-parent="0.24">12:38:25.298 request:
 2 &gt; POST http://localhost:3000/auth/login
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Content-Type: application/json; charset=UTF-8
 2 &gt; Content-Length: 53
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -634,19 +633,18 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
 }
 
 
-21:39:18.179 response time in milliseconds: 1
+12:38:25.300 response time in milliseconds: 2
 2 &lt; 200
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Content-Type: application/json; charset=utf-8
 2 &lt; Content-Length: 216
-2 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -758,7 +756,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
               </div>
             </div>
             <div class="scenario-time passed">
-              <span>ms:</span>&nbsp;<span>7</span>
+              <span>ms:</span>&nbsp;<span>10</span>
             </div>
           </div>
           <div class="step-row">
@@ -984,7 +982,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">2</div>
+    <div class="time-cell passed">4</div>
   </div>
 
    
@@ -993,13 +991,13 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.185 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.306 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -1007,19 +1005,18 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
 }
 
 
-21:39:18.187 response time in milliseconds: 2
+12:38:25.309 response time in milliseconds: 3
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -1267,7 +1264,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">2</div>
+    <div class="time-cell passed">3</div>
   </div>
 
    
@@ -1276,27 +1273,26 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
 
   
 
-  <div class="preformatted" data-parent="0.42">21:39:18.188 request:
+  <div class="preformatted" data-parent="0.42">12:38:25.311 request:
 2 &gt; POST http://localhost:3000/auth/login
 2 &gt; Content-Type: text/plain; charset=UTF-8
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Content-Length: 43
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 email=test@example.com&amp;password=password123
 
-21:39:18.190 response time in milliseconds: 1
+12:38:25.313 response time in milliseconds: 2
 2 &lt; 415
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Content-Security-Policy: default-src &#39;none&#39;
 2 &lt; X-Content-Type-Options: nosniff
 2 &lt; Content-Type: text/html; charset=utf-8
 2 &lt; Content-Length: 1349
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 &lt;!DOCTYPE html&gt;
@@ -1359,7 +1355,7 @@ email=test@example.com&amp;password=password123
               </div>
             </div>
             <div class="scenario-time passed">
-              <span>ms:</span>&nbsp;<span>4</span>
+              <span>ms:</span>&nbsp;<span>6</span>
             </div>
           </div>
           <div class="step-row">
@@ -1585,7 +1581,7 @@ email=test@example.com&amp;password=password123
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">2</div>
+    <div class="time-cell passed">3</div>
   </div>
 
    
@@ -1594,13 +1590,13 @@ email=test@example.com&amp;password=password123
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.194 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.319 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -1608,19 +1604,18 @@ email=test@example.com&amp;password=password123
 }
 
 
-21:39:18.196 response time in milliseconds: 1
+12:38:25.321 response time in milliseconds: 2
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -1756,7 +1751,7 @@ email=test@example.com&amp;password=password123
         <span>When</span>&nbsp;<span>method get</span>
       </div>
     </div>
-    <div class="time-cell passed">1</div>
+    <div class="time-cell passed">2</div>
   </div>
 
    
@@ -1765,26 +1760,25 @@ email=test@example.com&amp;password=password123
 
   
 
-  <div class="preformatted" data-parent="0.48">21:39:18.196 request:
+  <div class="preformatted" data-parent="0.48">12:38:25.322 request:
 2 &gt; GET http://localhost:3000/auth/login
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.197 response time in milliseconds: 1
+12:38:25.324 response time in milliseconds: 1
 2 &lt; 405
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Allow: POST
 2 &lt; Content-Security-Policy: default-src &#39;none&#39;
 2 &lt; X-Content-Type-Options: nosniff
 2 &lt; Content-Type: text/html; charset=utf-8
 2 &lt; Content-Length: 503
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 &lt;!DOCTYPE html&gt;
@@ -1847,7 +1841,7 @@ email=test@example.com&amp;password=password123
               </div>
             </div>
             <div class="scenario-time passed">
-              <span>ms:</span>&nbsp;<span>8</span>
+              <span>ms:</span>&nbsp;<span>9</span>
             </div>
           </div>
           <div class="step-row">
@@ -2073,7 +2067,7 @@ email=test@example.com&amp;password=password123
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">2</div>
+    <div class="time-cell passed">3</div>
   </div>
 
    
@@ -2082,13 +2076,13 @@ email=test@example.com&amp;password=password123
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.201 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.328 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -2096,19 +2090,18 @@ email=test@example.com&amp;password=password123
 }
 
 
-21:39:18.203 response time in milliseconds: 1
+12:38:25.330 response time in milliseconds: 2
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -2253,24 +2246,23 @@ email=test@example.com&amp;password=password123
 
   
 
-  <div class="preformatted" data-parent="0.54">21:39:18.203 request:
+  <div class="preformatted" data-parent="0.54">12:38:25.331 request:
 2 &gt; GET http://localhost:3000/products
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.204 response time in milliseconds: 1
+12:38:25.332 response time in milliseconds: 1
 2 &lt; 200
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Content-Type: application/json; charset=utf-8
 2 &lt; Content-Length: 116
 2 &lt; ETag: W/&quot;74-QzZ91loSPXAU6ZToBxQtPxHI8nc&quot;
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 [
@@ -2726,13 +2718,13 @@ email=test@example.com&amp;password=password123
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.212 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.340 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -2740,19 +2732,18 @@ email=test@example.com&amp;password=password123
 }
 
 
-21:39:18.212 response time in milliseconds: 0
+12:38:25.341 response time in milliseconds: 1
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -2897,24 +2888,23 @@ email=test@example.com&amp;password=password123
 
   
 
-  <div class="preformatted" data-parent="0.73">21:39:18.213 request:
+  <div class="preformatted" data-parent="0.73">12:38:25.342 request:
 2 &gt; POST http://localhost:3000/cart/clear
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.214 response time in milliseconds: 1
+12:38:25.343 response time in milliseconds: 1
 2 &lt; 200
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Content-Type: application/json; charset=utf-8
 2 &lt; Content-Length: 26
 2 &lt; ETag: W/&quot;1a-i0KbVIjnYMATZcf2ZX6d2KmG078&quot;
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 {
@@ -3034,14 +3024,14 @@ email=test@example.com&amp;password=password123
 
   
 
-  <div class="preformatted" data-parent="0.78">21:39:18.214 request:
+  <div class="preformatted" data-parent="0.78">12:38:25.344 request:
 3 &gt; POST http://localhost:3000/cart/add
-3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 3 &gt; Content-Type: application/json; charset=UTF-8
 3 &gt; Content-Length: 28
 3 &gt; Host: localhost:3000
 3 &gt; Connection: Keep-Alive
-3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 3 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;productId&quot;: 1,
@@ -3049,15 +3039,14 @@ email=test@example.com&amp;password=password123
 }
 
 
-21:39:18.215 response time in milliseconds: 1
+12:38:25.345 response time in milliseconds: 1
 3 &lt; 201
 3 &lt; X-Powered-By: Express
-3 &lt; Access-Control-Allow-Origin: http://localhost:3000
-3 &lt; Vary: Origin
+3 &lt; Access-Control-Allow-Origin: *
 3 &lt; Content-Type: application/json; charset=utf-8
 3 &lt; Content-Length: 70
 3 &lt; ETag: W/&quot;46-lmUkMrGTCH1jeOY0fDlxktBV/jc&quot;
-3 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+3 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 3 &lt; Connection: keep-alive
 3 &lt; Keep-Alive: timeout=5
 {
@@ -3290,7 +3279,7 @@ email=test@example.com&amp;password=password123
               </div>
             </div>
             <div class="scenario-time passed">
-              <span>ms:</span>&nbsp;<span>5</span>
+              <span>ms:</span>&nbsp;<span>4</span>
             </div>
           </div>
           <div class="step-row">
@@ -3525,13 +3514,13 @@ email=test@example.com&amp;password=password123
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.221 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.349 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -3539,19 +3528,18 @@ email=test@example.com&amp;password=password123
 }
 
 
-21:39:18.222 response time in milliseconds: 1
+12:38:25.350 response time in milliseconds: 1
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -3715,7 +3703,7 @@ email=test@example.com&amp;password=password123
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">2</div>
+    <div class="time-cell passed">1</div>
   </div>
 
    
@@ -3724,14 +3712,14 @@ email=test@example.com&amp;password=password123
 
   
 
-  <div class="preformatted" data-parent="0.97">21:39:18.223 request:
+  <div class="preformatted" data-parent="0.97">12:38:25.351 request:
 2 &gt; POST http://localhost:3000/cart/add
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Content-Type: application/json; charset=UTF-8
 2 &gt; Content-Length: 32
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;productId&quot;: 99999,
@@ -3739,15 +3727,14 @@ email=test@example.com&amp;password=password123
 }
 
 
-21:39:18.224 response time in milliseconds: 1
+12:38:25.352 response time in milliseconds: 1
 2 &lt; 400
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Content-Type: application/json; charset=utf-8
 2 &lt; Content-Length: 29
 2 &lt; ETag: W/&quot;1d-IHpbFjgXCZfREhR9Mq/X4SIMLLw&quot;
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 {
@@ -4068,13 +4055,13 @@ email=test@example.com&amp;password=password123
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.228 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.355 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -4082,19 +4069,18 @@ email=test@example.com&amp;password=password123
 }
 
 
-21:39:18.229 response time in milliseconds: 1
+12:38:25.356 response time in milliseconds: 1
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -4230,7 +4216,7 @@ email=test@example.com&amp;password=password123
         <span>When</span>&nbsp;<span>method get</span>
       </div>
     </div>
-    <div class="time-cell passed">1</div>
+    <div class="time-cell passed">2</div>
   </div>
 
    
@@ -4239,26 +4225,25 @@ email=test@example.com&amp;password=password123
 
   
 
-  <div class="preformatted" data-parent="0.109">21:39:18.230 request:
+  <div class="preformatted" data-parent="0.109">12:38:25.356 request:
 2 &gt; GET http://localhost:3000/cart/add
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.231 response time in milliseconds: 1
+12:38:25.358 response time in milliseconds: 2
 2 &lt; 405
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Allow: POST
 2 &lt; Content-Security-Policy: default-src &#39;none&#39;
 2 &lt; X-Content-Type-Options: nosniff
 2 &lt; Content-Type: text/html; charset=utf-8
 2 &lt; Content-Length: 503
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 &lt;!DOCTYPE html&gt;
@@ -4357,26 +4342,25 @@ email=test@example.com&amp;password=password123
 
   
 
-  <div class="preformatted" data-parent="0.113">21:39:18.231 request:
+  <div class="preformatted" data-parent="0.113">12:38:25.358 request:
 3 &gt; PUT http://localhost:3000/cart/add
-3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 3 &gt; Host: localhost:3000
 3 &gt; Connection: Keep-Alive
-3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 3 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.232 response time in milliseconds: 1
+12:38:25.359 response time in milliseconds: 1
 3 &lt; 405
 3 &lt; X-Powered-By: Express
-3 &lt; Access-Control-Allow-Origin: http://localhost:3000
-3 &lt; Vary: Origin
+3 &lt; Access-Control-Allow-Origin: *
 3 &lt; Allow: POST
 3 &lt; Content-Security-Policy: default-src &#39;none&#39;
 3 &lt; X-Content-Type-Options: nosniff
 3 &lt; Content-Type: text/html; charset=utf-8
 3 &lt; Content-Length: 599
-3 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+3 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 3 &lt; Connection: keep-alive
 3 &lt; Keep-Alive: timeout=5
 &lt;!DOCTYPE html&gt;
@@ -4475,26 +4459,25 @@ email=test@example.com&amp;password=password123
 
   
 
-  <div class="preformatted" data-parent="0.117">21:39:18.232 request:
+  <div class="preformatted" data-parent="0.117">12:38:25.359 request:
 4 &gt; DELETE http://localhost:3000/cart/add
-4 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+4 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 4 &gt; Host: localhost:3000
 4 &gt; Connection: Keep-Alive
-4 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+4 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 4 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.233 response time in milliseconds: 1
+12:38:25.360 response time in milliseconds: 1
 4 &lt; 405
 4 &lt; X-Powered-By: Express
-4 &lt; Access-Control-Allow-Origin: http://localhost:3000
-4 &lt; Vary: Origin
+4 &lt; Access-Control-Allow-Origin: *
 4 &lt; Allow: POST
 4 &lt; Content-Security-Policy: default-src &#39;none&#39;
 4 &lt; X-Content-Type-Options: nosniff
 4 &lt; Content-Type: text/html; charset=utf-8
 4 &lt; Content-Length: 602
-4 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+4 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 4 &lt; Connection: keep-alive
 4 &lt; Keep-Alive: timeout=5
 &lt;!DOCTYPE html&gt;
@@ -4783,7 +4766,7 @@ email=test@example.com&amp;password=password123
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">1</div>
+    <div class="time-cell passed">2</div>
   </div>
 
    
@@ -4792,13 +4775,13 @@ email=test@example.com&amp;password=password123
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.236 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.363 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -4806,19 +4789,18 @@ email=test@example.com&amp;password=password123
 }
 
 
-21:39:18.237 response time in milliseconds: 1
+12:38:25.364 response time in milliseconds: 1
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -5010,7 +4992,7 @@ email=test@example.com&amp;password=password123
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">1</div>
+    <div class="time-cell passed">2</div>
   </div>
 
    
@@ -5019,27 +5001,26 @@ email=test@example.com&amp;password=password123
 
   
 
-  <div class="preformatted" data-parent="0.125">21:39:18.238 request:
+  <div class="preformatted" data-parent="0.125">12:38:25.365 request:
 2 &gt; POST http://localhost:3000/cart/add
 2 &gt; Content-Type: text/plain; charset=UTF-8
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Content-Length: 22
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 productId=1&amp;quantity=2
 
-21:39:18.239 response time in milliseconds: 1
+12:38:25.367 response time in milliseconds: 2
 2 &lt; 415
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Content-Security-Policy: default-src &#39;none&#39;
 2 &lt; X-Content-Type-Options: nosniff
 2 &lt; Content-Type: text/html; charset=utf-8
 2 &lt; Content-Length: 1349
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 &lt;!DOCTYPE html&gt;
@@ -5102,7 +5083,7 @@ productId=1&amp;quantity=2
               </div>
             </div>
             <div class="scenario-time passed">
-              <span>ms:</span>&nbsp;<span>6</span>
+              <span>ms:</span>&nbsp;<span>7</span>
             </div>
           </div>
           <div class="step-row">
@@ -5328,7 +5309,7 @@ productId=1&amp;quantity=2
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">1</div>
+    <div class="time-cell passed">2</div>
   </div>
 
    
@@ -5337,13 +5318,13 @@ productId=1&amp;quantity=2
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.241 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.370 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -5351,19 +5332,18 @@ productId=1&amp;quantity=2
 }
 
 
-21:39:18.242 response time in milliseconds: 1
+12:38:25.371 response time in milliseconds: 1
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -5515,24 +5495,23 @@ productId=1&amp;quantity=2
 
   
 
-  <div class="preformatted" data-parent="0.132">21:39:18.243 request:
+  <div class="preformatted" data-parent="0.132">12:38:25.371 request:
 2 &gt; POST http://localhost:3000/cart/clear
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.243 response time in milliseconds: 0
+12:38:25.372 response time in milliseconds: 1
 2 &lt; 200
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Content-Type: application/json; charset=utf-8
 2 &lt; Content-Length: 26
 2 &lt; ETag: W/&quot;1a-i0KbVIjnYMATZcf2ZX6d2KmG078&quot;
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 {
@@ -5652,14 +5631,14 @@ productId=1&amp;quantity=2
 
   
 
-  <div class="preformatted" data-parent="0.137">21:39:18.244 request:
+  <div class="preformatted" data-parent="0.137">12:38:25.373 request:
 3 &gt; POST http://localhost:3000/cart/add
-3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 3 &gt; Content-Type: application/json; charset=UTF-8
 3 &gt; Content-Length: 28
 3 &gt; Host: localhost:3000
 3 &gt; Connection: Keep-Alive
-3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 3 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;productId&quot;: 1,
@@ -5667,15 +5646,14 @@ productId=1&amp;quantity=2
 }
 
 
-21:39:18.244 response time in milliseconds: 0
+12:38:25.374 response time in milliseconds: 1
 3 &lt; 201
 3 &lt; X-Powered-By: Express
-3 &lt; Access-Control-Allow-Origin: http://localhost:3000
-3 &lt; Vary: Origin
+3 &lt; Access-Control-Allow-Origin: *
 3 &lt; Content-Type: application/json; charset=utf-8
 3 &lt; Content-Length: 70
 3 &lt; ETag: W/&quot;46-lmUkMrGTCH1jeOY0fDlxktBV/jc&quot;
-3 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+3 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 3 &lt; Connection: keep-alive
 3 &lt; Keep-Alive: timeout=5
 {
@@ -5808,33 +5786,32 @@ productId=1&amp;quantity=2
 
   
 
-  <div class="preformatted" data-parent="0.143">21:39:18.245 request:
+  <div class="preformatted" data-parent="0.143">12:38:25.374 request:
 4 &gt; POST http://localhost:3000/order/create
-4 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+4 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 4 &gt; Content-Type: application/json; charset=UTF-8
 4 &gt; Content-Length: 2
 4 &gt; Host: localhost:3000
 4 &gt; Connection: Keep-Alive
-4 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+4 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 4 &gt; Accept-Encoding: gzip,deflate
 {
 }
 
 
-21:39:18.246 response time in milliseconds: 1
+12:38:25.375 response time in milliseconds: 1
 4 &lt; 201
 4 &lt; X-Powered-By: Express
-4 &lt; Access-Control-Allow-Origin: http://localhost:3000
-4 &lt; Vary: Origin
+4 &lt; Access-Control-Allow-Origin: *
 4 &lt; Content-Type: application/json; charset=utf-8
 4 &lt; Content-Length: 66
-4 &lt; ETag: W/&quot;42-OzCYD9BLKoG2oAwz1S83IFl5k48&quot;
-4 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+4 &lt; ETag: W/&quot;42-14XU/US2wdo4vUyCLex2NrpVVs4&quot;
+4 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 4 &lt; Connection: keep-alive
 4 &lt; Keep-Alive: timeout=5
 {
   &quot;message&quot;: &quot;Order created&quot;,
-  &quot;orderId&quot;: &quot;1774100358245&quot;,
+  &quot;orderId&quot;: &quot;1773722305375&quot;,
   &quot;total&quot;: 2400
 }
 
@@ -5975,7 +5952,7 @@ productId=1&amp;quantity=2
               </div>
             </div>
             <div class="scenario-time passed">
-              <span>ms:</span>&nbsp;<span>4</span>
+              <span>ms:</span>&nbsp;<span>5</span>
             </div>
           </div>
           <div class="step-row">
@@ -6201,7 +6178,7 @@ productId=1&amp;quantity=2
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">1</div>
+    <div class="time-cell passed">2</div>
   </div>
 
    
@@ -6210,13 +6187,13 @@ productId=1&amp;quantity=2
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.249 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.378 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -6224,19 +6201,18 @@ productId=1&amp;quantity=2
 }
 
 
-21:39:18.249 response time in milliseconds: 0
+12:38:25.379 response time in milliseconds: 1
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -6381,24 +6357,23 @@ productId=1&amp;quantity=2
 
   
 
-  <div class="preformatted" data-parent="0.159">21:39:18.250 request:
+  <div class="preformatted" data-parent="0.159">12:38:25.380 request:
 2 &gt; POST http://localhost:3000/cart/clear
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.251 response time in milliseconds: 1
+12:38:25.381 response time in milliseconds: 1
 2 &lt; 200
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Content-Type: application/json; charset=utf-8
 2 &lt; Content-Length: 26
 2 &lt; ETag: W/&quot;1a-i0KbVIjnYMATZcf2ZX6d2KmG078&quot;
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 {
@@ -6518,28 +6493,27 @@ productId=1&amp;quantity=2
 
   
 
-  <div class="preformatted" data-parent="0.164">21:39:18.251 request:
+  <div class="preformatted" data-parent="0.164">12:38:25.382 request:
 3 &gt; POST http://localhost:3000/order/create
-3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 3 &gt; Content-Type: application/json; charset=UTF-8
 3 &gt; Content-Length: 2
 3 &gt; Host: localhost:3000
 3 &gt; Connection: Keep-Alive
-3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 3 &gt; Accept-Encoding: gzip,deflate
 {
 }
 
 
-21:39:18.252 response time in milliseconds: 1
+12:38:25.383 response time in milliseconds: 1
 3 &lt; 400
 3 &lt; X-Powered-By: Express
-3 &lt; Access-Control-Allow-Origin: http://localhost:3000
-3 &lt; Vary: Origin
+3 &lt; Access-Control-Allow-Origin: *
 3 &lt; Content-Type: application/json; charset=utf-8
 3 &lt; Content-Length: 25
 3 &lt; ETag: W/&quot;19-P/vM9paoTjtGyT+tdk1GkJsIvUE&quot;
-3 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+3 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 3 &lt; Connection: keep-alive
 3 &lt; Keep-Alive: timeout=5
 {
@@ -6851,7 +6825,7 @@ productId=1&amp;quantity=2
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">2</div>
+    <div class="time-cell passed">1</div>
   </div>
 
    
@@ -6860,13 +6834,13 @@ productId=1&amp;quantity=2
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.255 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.385 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -6874,19 +6848,18 @@ productId=1&amp;quantity=2
 }
 
 
-21:39:18.256 response time in milliseconds: 1
+12:38:25.386 response time in milliseconds: 1
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -7031,26 +7004,25 @@ productId=1&amp;quantity=2
 
   
 
-  <div class="preformatted" data-parent="0.176">21:39:18.256 request:
+  <div class="preformatted" data-parent="0.176">12:38:25.386 request:
 2 &gt; GET http://localhost:3000/order/create
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.257 response time in milliseconds: 0
+12:38:25.387 response time in milliseconds: 1
 2 &lt; 405
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Allow: POST
 2 &lt; Content-Security-Policy: default-src &#39;none&#39;
 2 &lt; X-Content-Type-Options: nosniff
 2 &lt; Content-Type: text/html; charset=utf-8
 2 &lt; Content-Length: 503
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 &lt;!DOCTYPE html&gt;
@@ -7149,26 +7121,25 @@ productId=1&amp;quantity=2
 
   
 
-  <div class="preformatted" data-parent="0.180">21:39:18.258 request:
+  <div class="preformatted" data-parent="0.180">12:38:25.388 request:
 3 &gt; PUT http://localhost:3000/order/create
-3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 3 &gt; Host: localhost:3000
 3 &gt; Connection: Keep-Alive
-3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 3 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.258 response time in milliseconds: 0
+12:38:25.388 response time in milliseconds: 0
 3 &lt; 405
 3 &lt; X-Powered-By: Express
-3 &lt; Access-Control-Allow-Origin: http://localhost:3000
-3 &lt; Vary: Origin
+3 &lt; Access-Control-Allow-Origin: *
 3 &lt; Allow: POST
 3 &lt; Content-Security-Policy: default-src &#39;none&#39;
 3 &lt; X-Content-Type-Options: nosniff
 3 &lt; Content-Type: text/html; charset=utf-8
 3 &lt; Content-Length: 599
-3 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+3 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 3 &lt; Connection: keep-alive
 3 &lt; Keep-Alive: timeout=5
 &lt;!DOCTYPE html&gt;
@@ -7267,26 +7238,25 @@ productId=1&amp;quantity=2
 
   
 
-  <div class="preformatted" data-parent="0.184">21:39:18.259 request:
+  <div class="preformatted" data-parent="0.184">12:38:25.389 request:
 4 &gt; DELETE http://localhost:3000/order/create
-4 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+4 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 4 &gt; Host: localhost:3000
 4 &gt; Connection: Keep-Alive
-4 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+4 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 4 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.259 response time in milliseconds: 0
+12:38:25.390 response time in milliseconds: 1
 4 &lt; 405
 4 &lt; X-Powered-By: Express
-4 &lt; Access-Control-Allow-Origin: http://localhost:3000
-4 &lt; Vary: Origin
+4 &lt; Access-Control-Allow-Origin: *
 4 &lt; Allow: POST
 4 &lt; Content-Security-Policy: default-src &#39;none&#39;
 4 &lt; X-Content-Type-Options: nosniff
 4 &lt; Content-Type: text/html; charset=utf-8
 4 &lt; Content-Length: 602
-4 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+4 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 4 &lt; Connection: keep-alive
 4 &lt; Keep-Alive: timeout=5
 &lt;!DOCTYPE html&gt;
@@ -7575,7 +7545,7 @@ productId=1&amp;quantity=2
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">1</div>
+    <div class="time-cell passed">2</div>
   </div>
 
    
@@ -7584,13 +7554,13 @@ productId=1&amp;quantity=2
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.262 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.393 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -7598,19 +7568,18 @@ productId=1&amp;quantity=2
 }
 
 
-21:39:18.263 response time in milliseconds: 1
+12:38:25.394 response time in milliseconds: 1
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -7802,7 +7771,7 @@ productId=1&amp;quantity=2
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">1</div>
+    <div class="time-cell passed">2</div>
   </div>
 
    
@@ -7811,27 +7780,26 @@ productId=1&amp;quantity=2
 
   
 
-  <div class="preformatted" data-parent="0.192">21:39:18.264 request:
+  <div class="preformatted" data-parent="0.192">12:38:25.395 request:
 2 &gt; POST http://localhost:3000/order/create
 2 &gt; Content-Type: text/plain; charset=UTF-8
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Content-Length: 12
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 create=order
 
-21:39:18.265 response time in milliseconds: 1
+12:38:25.396 response time in milliseconds: 1
 2 &lt; 415
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Content-Security-Policy: default-src &#39;none&#39;
 2 &lt; X-Content-Type-Options: nosniff
 2 &lt; Content-Type: text/html; charset=utf-8
 2 &lt; Content-Length: 1349
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 &lt;!DOCTYPE html&gt;
@@ -7894,7 +7862,7 @@ create=order
               </div>
             </div>
             <div class="scenario-time passed">
-              <span>ms:</span>&nbsp;<span>8</span>
+              <span>ms:</span>&nbsp;<span>9</span>
             </div>
           </div>
           <div class="step-row">
@@ -8120,7 +8088,7 @@ create=order
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">1</div>
+    <div class="time-cell passed">2</div>
   </div>
 
    
@@ -8129,13 +8097,13 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.268 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.399 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -8143,19 +8111,18 @@ create=order
 }
 
 
-21:39:18.269 response time in milliseconds: 1
+12:38:25.400 response time in milliseconds: 1
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -8307,24 +8274,23 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.199">21:39:18.269 request:
+  <div class="preformatted" data-parent="0.199">12:38:25.401 request:
 2 &gt; POST http://localhost:3000/cart/clear
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.270 response time in milliseconds: 1
+12:38:25.401 response time in milliseconds: 0
 2 &lt; 200
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Content-Type: application/json; charset=utf-8
 2 &lt; Content-Length: 26
 2 &lt; ETag: W/&quot;1a-i0KbVIjnYMATZcf2ZX6d2KmG078&quot;
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 {
@@ -8444,14 +8410,14 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.204">21:39:18.270 request:
+  <div class="preformatted" data-parent="0.204">12:38:25.402 request:
 3 &gt; POST http://localhost:3000/cart/add
-3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 3 &gt; Content-Type: application/json; charset=UTF-8
 3 &gt; Content-Length: 28
 3 &gt; Host: localhost:3000
 3 &gt; Connection: Keep-Alive
-3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 3 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;productId&quot;: 1,
@@ -8459,15 +8425,14 @@ create=order
 }
 
 
-21:39:18.271 response time in milliseconds: 1
+12:38:25.403 response time in milliseconds: 1
 3 &lt; 201
 3 &lt; X-Powered-By: Express
-3 &lt; Access-Control-Allow-Origin: http://localhost:3000
-3 &lt; Vary: Origin
+3 &lt; Access-Control-Allow-Origin: *
 3 &lt; Content-Type: application/json; charset=utf-8
 3 &lt; Content-Length: 70
 3 &lt; ETag: W/&quot;46-mxRWyvYHDpRhQafjdj5Li7Y7MNA&quot;
-3 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+3 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 3 &lt; Connection: keep-alive
 3 &lt; Keep-Alive: timeout=5
 {
@@ -8593,33 +8558,32 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.209">21:39:18.272 request:
+  <div class="preformatted" data-parent="0.209">12:38:25.403 request:
 4 &gt; POST http://localhost:3000/order/create
-4 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+4 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 4 &gt; Content-Type: application/json; charset=UTF-8
 4 &gt; Content-Length: 2
 4 &gt; Host: localhost:3000
 4 &gt; Connection: Keep-Alive
-4 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+4 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 4 &gt; Accept-Encoding: gzip,deflate
 {
 }
 
 
-21:39:18.273 response time in milliseconds: 1
+12:38:25.405 response time in milliseconds: 2
 4 &lt; 201
 4 &lt; X-Powered-By: Express
-4 &lt; Access-Control-Allow-Origin: http://localhost:3000
-4 &lt; Vary: Origin
+4 &lt; Access-Control-Allow-Origin: *
 4 &lt; Content-Type: application/json; charset=utf-8
 4 &lt; Content-Length: 66
-4 &lt; ETag: W/&quot;42-sUiF0dqMBGE2XrdNLLJhpJBiQqk&quot;
-4 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+4 &lt; ETag: W/&quot;42-MCICcsG90Yl1IL9JL5sddB8uOz0&quot;
+4 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 4 &lt; Connection: keep-alive
 4 &lt; Keep-Alive: timeout=5
 {
   &quot;message&quot;: &quot;Order created&quot;,
-  &quot;orderId&quot;: &quot;1774100358273&quot;,
+  &quot;orderId&quot;: &quot;1773722305404&quot;,
   &quot;total&quot;: 1200
 }
 
@@ -8771,35 +8735,34 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.216">21:39:18.274 request:
+  <div class="preformatted" data-parent="0.216">12:38:25.406 request:
 5 &gt; POST http://localhost:3000/payment/charge
-5 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+5 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 5 &gt; Content-Type: application/json; charset=UTF-8
 5 &gt; Content-Length: 59
 5 &gt; Host: localhost:3000
 5 &gt; Connection: Keep-Alive
-5 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+5 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 5 &gt; Accept-Encoding: gzip,deflate
 {
-  &quot;orderId&quot;: &quot;1774100358273&quot;,
+  &quot;orderId&quot;: &quot;1773722305404&quot;,
   &quot;cardNumber&quot;: &quot;4111111111111111&quot;
 }
 
 
-21:39:18.275 response time in milliseconds: 1
+12:38:25.407 response time in milliseconds: 1
 5 &lt; 200
 5 &lt; X-Powered-By: Express
-5 &lt; Access-Control-Allow-Origin: http://localhost:3000
-5 &lt; Vary: Origin
+5 &lt; Access-Control-Allow-Origin: *
 5 &lt; Content-Type: application/json; charset=utf-8
 5 &lt; Content-Length: 74
-5 &lt; ETag: W/&quot;4a-NuFdSZ0CIyPD0PFl3HIis3B/m30&quot;
-5 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+5 &lt; ETag: W/&quot;4a-kqlVfzyIjAz9jJVcaXHc3Nm0HLs&quot;
+5 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 5 &lt; Connection: keep-alive
 5 &lt; Keep-Alive: timeout=5
 {
   &quot;message&quot;: &quot;Payment successful&quot;,
-  &quot;orderId&quot;: &quot;1774100358273&quot;,
+  &quot;orderId&quot;: &quot;1773722305404&quot;,
   &quot;status&quot;: &quot;PAID&quot;
 }
 
@@ -9203,13 +9166,13 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.278 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.410 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -9217,19 +9180,18 @@ create=order
 }
 
 
-21:39:18.279 response time in milliseconds: 1
+12:38:25.411 response time in milliseconds: 1
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -9402,14 +9364,14 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.234">21:39:18.280 request:
+  <div class="preformatted" data-parent="0.234">12:38:25.412 request:
 2 &gt; POST http://localhost:3000/payment/charge
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Content-Type: application/json; charset=UTF-8
 2 &gt; Content-Length: 52
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;orderId&quot;: &quot;non-existent-order&quot;,
@@ -9417,15 +9379,14 @@ create=order
 }
 
 
-21:39:18.280 response time in milliseconds: 0
+12:38:25.412 response time in milliseconds: 0
 2 &lt; 404
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Content-Type: application/json; charset=utf-8
 2 &lt; Content-Length: 27
 2 &lt; ETag: W/&quot;1b-G7RX01EQFHhrsSpXHe3p7uxrQrs&quot;
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 {
@@ -9511,7 +9472,7 @@ create=order
               </div>
             </div>
             <div class="scenario-time passed">
-              <span>ms:</span>&nbsp;<span>6</span>
+              <span>ms:</span>&nbsp;<span>7</span>
             </div>
           </div>
           <div class="step-row">
@@ -9746,13 +9707,13 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.283 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.415 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -9760,19 +9721,18 @@ create=order
 }
 
 
-21:39:18.284 response time in milliseconds: 1
+12:38:25.416 response time in milliseconds: 1
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -9924,24 +9884,23 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.247">21:39:18.284 request:
+  <div class="preformatted" data-parent="0.247">12:38:25.416 request:
 2 &gt; POST http://localhost:3000/cart/clear
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.285 response time in milliseconds: 1
+12:38:25.417 response time in milliseconds: 1
 2 &lt; 200
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Content-Type: application/json; charset=utf-8
 2 &lt; Content-Length: 26
 2 &lt; ETag: W/&quot;1a-i0KbVIjnYMATZcf2ZX6d2KmG078&quot;
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 {
@@ -10061,14 +10020,14 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.252">21:39:18.285 request:
+  <div class="preformatted" data-parent="0.252">12:38:25.418 request:
 3 &gt; POST http://localhost:3000/cart/add
-3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 3 &gt; Content-Type: application/json; charset=UTF-8
 3 &gt; Content-Length: 28
 3 &gt; Host: localhost:3000
 3 &gt; Connection: Keep-Alive
-3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 3 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;productId&quot;: 1,
@@ -10076,15 +10035,14 @@ create=order
 }
 
 
-21:39:18.286 response time in milliseconds: 1
+12:38:25.418 response time in milliseconds: 0
 3 &lt; 201
 3 &lt; X-Powered-By: Express
-3 &lt; Access-Control-Allow-Origin: http://localhost:3000
-3 &lt; Vary: Origin
+3 &lt; Access-Control-Allow-Origin: *
 3 &lt; Content-Type: application/json; charset=utf-8
 3 &lt; Content-Length: 70
 3 &lt; ETag: W/&quot;46-mxRWyvYHDpRhQafjdj5Li7Y7MNA&quot;
-3 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+3 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 3 &lt; Connection: keep-alive
 3 &lt; Keep-Alive: timeout=5
 {
@@ -10210,33 +10168,32 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.257">21:39:18.286 request:
+  <div class="preformatted" data-parent="0.257">12:38:25.419 request:
 4 &gt; POST http://localhost:3000/order/create
-4 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+4 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 4 &gt; Content-Type: application/json; charset=UTF-8
 4 &gt; Content-Length: 2
 4 &gt; Host: localhost:3000
 4 &gt; Connection: Keep-Alive
-4 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+4 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 4 &gt; Accept-Encoding: gzip,deflate
 {
 }
 
 
-21:39:18.287 response time in milliseconds: 1
+12:38:25.420 response time in milliseconds: 0
 4 &lt; 201
 4 &lt; X-Powered-By: Express
-4 &lt; Access-Control-Allow-Origin: http://localhost:3000
-4 &lt; Vary: Origin
+4 &lt; Access-Control-Allow-Origin: *
 4 &lt; Content-Type: application/json; charset=utf-8
 4 &lt; Content-Length: 66
-4 &lt; ETag: W/&quot;42-RFsRuV4MWlakAxxer7O/kjlcMa8&quot;
-4 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+4 &lt; ETag: W/&quot;42-YeWEypFj8pauYYHDh7EdzKzo4i0&quot;
+4 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 4 &lt; Connection: keep-alive
 4 &lt; Keep-Alive: timeout=5
 {
   &quot;message&quot;: &quot;Order created&quot;,
-  &quot;orderId&quot;: &quot;1774100358287&quot;,
+  &quot;orderId&quot;: &quot;1773722305419&quot;,
   &quot;total&quot;: 1200
 }
 
@@ -10388,31 +10345,30 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.264">21:39:18.287 request:
+  <div class="preformatted" data-parent="0.264">12:38:25.420 request:
 5 &gt; POST http://localhost:3000/payment/charge
-5 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+5 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 5 &gt; Content-Type: application/json; charset=UTF-8
 5 &gt; Content-Length: 46
 5 &gt; Host: localhost:3000
 5 &gt; Connection: Keep-Alive
-5 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+5 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 5 &gt; Accept-Encoding: gzip,deflate
 {
-  &quot;orderId&quot;: &quot;1774100358287&quot;,
+  &quot;orderId&quot;: &quot;1773722305419&quot;,
   &quot;cardNumber&quot;: &quot;123&quot;
 }
 
 
-21:39:18.288 response time in milliseconds: 1
+12:38:25.421 response time in milliseconds: 1
 5 &lt; 400
 5 &lt; X-Powered-By: Express
-5 &lt; Access-Control-Allow-Origin: http://localhost:3000
-5 &lt; Vary: Origin
+5 &lt; Access-Control-Allow-Origin: *
 5 &lt; Content-Security-Policy: default-src &#39;none&#39;
 5 &lt; X-Content-Type-Options: nosniff
 5 &lt; Content-Type: text/html; charset=utf-8
 5 &lt; Content-Length: 1074
-5 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+5 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 5 &lt; Connection: keep-alive
 5 &lt; Keep-Alive: timeout=5
 &lt;!DOCTYPE html&gt;
@@ -10475,7 +10431,7 @@ create=order
               </div>
             </div>
             <div class="scenario-time passed">
-              <span>ms:</span>&nbsp;<span>5</span>
+              <span>ms:</span>&nbsp;<span>7</span>
             </div>
           </div>
           <div class="step-row">
@@ -10710,13 +10666,13 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.291 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.424 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -10724,19 +10680,18 @@ create=order
 }
 
 
-21:39:18.292 response time in milliseconds: 1
+12:38:25.425 response time in milliseconds: 1
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -10881,26 +10836,25 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.270">21:39:18.292 request:
+  <div class="preformatted" data-parent="0.270">12:38:25.426 request:
 2 &gt; GET http://localhost:3000/payment/charge
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.293 response time in milliseconds: 1
+12:38:25.427 response time in milliseconds: 0
 2 &lt; 405
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Allow: POST
 2 &lt; Content-Security-Policy: default-src &#39;none&#39;
 2 &lt; X-Content-Type-Options: nosniff
 2 &lt; Content-Type: text/html; charset=utf-8
 2 &lt; Content-Length: 503
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 &lt;!DOCTYPE html&gt;
@@ -10999,26 +10953,25 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.274">21:39:18.293 request:
+  <div class="preformatted" data-parent="0.274">12:38:25.427 request:
 3 &gt; PUT http://localhost:3000/payment/charge
-3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+3 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 3 &gt; Host: localhost:3000
 3 &gt; Connection: Keep-Alive
-3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+3 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 3 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.294 response time in milliseconds: 1
+12:38:25.428 response time in milliseconds: 1
 3 &lt; 405
 3 &lt; X-Powered-By: Express
-3 &lt; Access-Control-Allow-Origin: http://localhost:3000
-3 &lt; Vary: Origin
+3 &lt; Access-Control-Allow-Origin: *
 3 &lt; Allow: POST
 3 &lt; Content-Security-Policy: default-src &#39;none&#39;
 3 &lt; X-Content-Type-Options: nosniff
 3 &lt; Content-Type: text/html; charset=utf-8
 3 &lt; Content-Length: 599
-3 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+3 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 3 &lt; Connection: keep-alive
 3 &lt; Keep-Alive: timeout=5
 &lt;!DOCTYPE html&gt;
@@ -11117,26 +11070,25 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.278">21:39:18.294 request:
+  <div class="preformatted" data-parent="0.278">12:38:25.429 request:
 4 &gt; DELETE http://localhost:3000/payment/charge
-4 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+4 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 4 &gt; Host: localhost:3000
 4 &gt; Connection: Keep-Alive
-4 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+4 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 4 &gt; Accept-Encoding: gzip,deflate
 
 
-21:39:18.295 response time in milliseconds: 1
+12:38:25.429 response time in milliseconds: 0
 4 &lt; 405
 4 &lt; X-Powered-By: Express
-4 &lt; Access-Control-Allow-Origin: http://localhost:3000
-4 &lt; Vary: Origin
+4 &lt; Access-Control-Allow-Origin: *
 4 &lt; Allow: POST
 4 &lt; Content-Security-Policy: default-src &#39;none&#39;
 4 &lt; X-Content-Type-Options: nosniff
 4 &lt; Content-Type: text/html; charset=utf-8
 4 &lt; Content-Length: 602
-4 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+4 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 4 &lt; Connection: keep-alive
 4 &lt; Keep-Alive: timeout=5
 &lt;!DOCTYPE html&gt;
@@ -11199,7 +11151,7 @@ create=order
               </div>
             </div>
             <div class="scenario-time passed">
-              <span>ms:</span>&nbsp;<span>3</span>
+              <span>ms:</span>&nbsp;<span>4</span>
             </div>
           </div>
           <div class="step-row">
@@ -11425,7 +11377,7 @@ create=order
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell passed">1</div>
+    <div class="time-cell passed">2</div>
   </div>
 
    
@@ -11434,13 +11386,13 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.12">21:39:18.298 request:
+  <div class="preformatted" data-parent="0.12">12:38:25.433 request:
 1 &gt; POST http://localhost:3000/auth/login
 1 &gt; Content-Type: application/json; charset=UTF-8
 1 &gt; Content-Length: 53
 1 &gt; Host: localhost:3000
 1 &gt; Connection: Keep-Alive
-1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+1 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 1 &gt; Accept-Encoding: gzip,deflate
 {
   &quot;email&quot;: &quot;test@example.com&quot;,
@@ -11448,19 +11400,18 @@ create=order
 }
 
 
-21:39:18.299 response time in milliseconds: 1
+12:38:25.434 response time in milliseconds: 1
 1 &lt; 200
 1 &lt; X-Powered-By: Express
-1 &lt; Access-Control-Allow-Origin: http://localhost:3000
-1 &lt; Vary: Origin
+1 &lt; Access-Control-Allow-Origin: *
 1 &lt; Content-Type: application/json; charset=utf-8
 1 &lt; Content-Length: 216
-1 &lt; ETag: W/&quot;d8-LyMHGoE02HopcvU7U+FOxJqzXho&quot;
-1 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+1 &lt; ETag: W/&quot;d8-e7MTfscu8JTLLaBDo8z+mb1QQVk&quot;
+1 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 1 &lt; Connection: keep-alive
 1 &lt; Keep-Alive: timeout=5
 {
-  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ&quot;,
+  &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE&quot;,
   &quot;tokenType&quot;: &quot;Bearer&quot;
 }
 
@@ -11661,27 +11612,26 @@ create=order
 
   
 
-  <div class="preformatted" data-parent="0.286">21:39:18.300 request:
+  <div class="preformatted" data-parent="0.286">12:38:25.435 request:
 2 &gt; POST http://localhost:3000/payment/charge
 2 &gt; Content-Type: text/plain; charset=UTF-8
-2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MTAwMzU4LCJleHAiOjE3NzQxMDM5NTh9.32duSG4xbsDNePOPyGboi1z3-ld2a5vP97166Yf7rMQ
+2 &gt; Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzczNzIyMzA1LCJleHAiOjE3NzM3MjU5MDV9.fw515eKDR0qxBdyUlfPW8wGJT6qpLfHLHWTO_6W71aE
 2 &gt; Content-Length: 27
 2 &gt; Host: localhost:3000
 2 &gt; Connection: Keep-Alive
-2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.18)
+2 &gt; User-Agent: Apache-HttpClient/4.5.14 (Java/21.0.10)
 2 &gt; Accept-Encoding: gzip,deflate
 orderId=123&amp;cardNumber=4111
 
-21:39:18.301 response time in milliseconds: 0
+12:38:25.436 response time in milliseconds: 1
 2 &lt; 415
 2 &lt; X-Powered-By: Express
-2 &lt; Access-Control-Allow-Origin: http://localhost:3000
-2 &lt; Vary: Origin
+2 &lt; Access-Control-Allow-Origin: *
 2 &lt; Content-Security-Policy: default-src &#39;none&#39;
 2 &lt; X-Content-Type-Options: nosniff
 2 &lt; Content-Type: text/html; charset=utf-8
 2 &lt; Content-Length: 1349
-2 &lt; Date: Sat, 21 Mar 2026 13:39:18 GMT
+2 &lt; Date: Tue, 17 Mar 2026 04:38:25 GMT
 2 &lt; Connection: keep-alive
 2 &lt; Keep-Alive: timeout=5
 &lt;!DOCTYPE html&gt;
