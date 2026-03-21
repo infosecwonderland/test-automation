@@ -1,0 +1,14 @@
+pm.test("Status code is 201", function () {
+  pm.response.to.have.status(201);
+});
+
+pm.test("Cart add response structure", function () {
+  const json = pm.response.json();
+  pm.expect(json).to.have.property("message", "Item added to cart");
+  pm.expect(json).to.have.property("cart");
+  pm.expect(json.cart).to.be.an("array");
+});
+
+pm.test("Cart add under 500ms", function () {
+  pm.expect(pm.response.responseTime).to.be.below(500);
+});

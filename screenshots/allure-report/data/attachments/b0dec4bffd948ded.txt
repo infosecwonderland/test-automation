@@ -1,0 +1,5 @@
+// Ensure cart is cleared before adding
+pm.sendRequest({
+  url: pm.environment.get("baseUrl") + "/cart/clear",
+  method: "POST"
+}, function () {});

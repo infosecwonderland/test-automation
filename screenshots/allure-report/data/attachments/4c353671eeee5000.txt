@@ -1,0 +1,6 @@
+// Ensure empty cart before negative test
+pm.sendRequest({
+  url: pm.environment.get("baseUrl") + "/cart/clear",
+  method: "POST",
+  header: { "Authorization": "Bearer " + pm.collectionVariables.get("accessToken") }
+}, function () {});

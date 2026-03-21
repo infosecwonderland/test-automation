@@ -1,0 +1,32 @@
+// Ensure we have a valid order for invalid card test
+if (!pm.collectionVariables.get("orderId")) {
+  pm.sendRequest({
+    url: pm.environment.get("baseUrl") + "/cart/clear",
+    method: "POST",
+    header: { "Authorization": "Bearer " + pm.collectionVariables.get("accessToken") }
+  }, function () {
+    pm.sendRequest({
+      url: pm.environment.get("baseUrl") + "/cart/add",
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + pm.collectionVariables.get("accessToken")
+      },
+      body: { mode: "raw", raw: JSON.stringify({ productId: 1, quantity: 1 }) }
+    }, function () {
+      pm.sendRequest({
+        url: pm.environment.get("baseUrl") + "/order/create",
+        method: "POST",
+        header: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + pm.collectionVariables.get("accessToken")
+        },
+        body: { mode: "raw", raw: "{}" }
+      }, function (err, res) {
+        if (!err) {
+          pm.collectionVariables.set("orderId", res.json().orderId);
+        }
+      });
+    });
+  });
+}

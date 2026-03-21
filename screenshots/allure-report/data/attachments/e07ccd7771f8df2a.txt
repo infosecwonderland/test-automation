@@ -1,0 +1,3 @@
+pm.test("Status code is 200 or 401", function () {
+  pm.expect(pm.response.code).to.be.oneOf([200, 401]);
+});

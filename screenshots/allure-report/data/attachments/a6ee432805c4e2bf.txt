@@ -1,0 +1,16 @@
+// Ensure clean cart and add an item before creating order
+pm.sendRequest({
+  url: pm.environment.get("baseUrl") + "/cart/clear",
+  method: "POST",
+  header: { "Authorization": "Bearer " + pm.collectionVariables.get("accessToken") }
+}, function () {
+  pm.sendRequest({
+    url: pm.environment.get("baseUrl") + "/cart/add",
+    method: "POST",
+    header: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + pm.collectionVariables.get("accessToken")
+    },
+    body: { mode: "raw", raw: JSON.stringify({ productId: 1, quantity: 2 }) }
+  }, function () {});
+});
