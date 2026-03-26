@@ -1,0 +1,1 @@
+[XSS] POST /auth/login field=password payload="<body onload=alert('xss')>" -> 400

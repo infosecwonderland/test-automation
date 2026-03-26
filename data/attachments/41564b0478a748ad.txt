@@ -1,0 +1,3 @@
+[API] POST http://localhost:3000/cart/add -> 201 in 2.1 ms
+[API] POST http://localhost:3000/cart/clear -> 200 in 2.0 ms
+[API] GET http://localhost:3000/cart/items -> 200 in 2.1 ms

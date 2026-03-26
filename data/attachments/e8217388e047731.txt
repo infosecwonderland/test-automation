@@ -1,0 +1,1 @@
+[RATE-LIMIT] POST /cart/add statuses: {201: 20, 429: 10}

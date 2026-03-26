@@ -1,0 +1,2 @@
+[API] POST http://localhost:3000/auth/register -> 201 in 1.6 ms
+[API] POST http://localhost:3000/auth/register -> 409 in 1.5 ms

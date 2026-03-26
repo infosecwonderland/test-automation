@@ -1,0 +1,1 @@
+[XSS] POST /payment/charge field=cardNumber payload="<script>alert('xss')</script>" -> 429

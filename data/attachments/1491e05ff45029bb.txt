@@ -1,0 +1,8 @@
+[JWT] Raw token without Bearer prefix -> 401, body=<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Unauthorized: Authorization header with scheme &#39;Bearer&#39; required<br> &nbsp; &nbsp;at Htt

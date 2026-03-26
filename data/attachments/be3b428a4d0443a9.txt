@@ -1,0 +1,1 @@
+[XSS] POST /auth/login field=password payload='<img src=x onerror=alert(1)>' -> 400

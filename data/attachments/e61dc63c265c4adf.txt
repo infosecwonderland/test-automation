@@ -1,0 +1,1 @@
+[SQLI] POST /auth/register field=email payload="1' UNION SELECT NULL--" -> 400

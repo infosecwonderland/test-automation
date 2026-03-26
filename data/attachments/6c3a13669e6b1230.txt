@@ -1,0 +1,1 @@
+[XSS] POST /payment/charge field=cardNumber payload='<img src=x onerror=alert(1)>' -> 429

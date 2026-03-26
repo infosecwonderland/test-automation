@@ -1,0 +1,7 @@
+
+[self-heal] Injected broken selector: #broken-email-id into LoginPage.ts
+[self-heal] Healed selector : #email
+[self-heal] Confidence      : high
+[self-heal] Reason          : The email input element is inside an open shadow DOM and has an explicit id attribute of 'email' (type=email, name=email), labeled 'Email:' — making #email the direct and unambiguous selector.
+[self-heal] Patched file    : /home/runner/work/test-automation/test-automation/ui-tests/browseruse-self-healing/pages/LoginPage.ts
+[self-heal] LoginPage.ts successfully patched — self-healing complete.
