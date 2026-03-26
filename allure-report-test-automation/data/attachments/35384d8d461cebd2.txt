@@ -1,0 +1,1 @@
+[XSS] POST /payment/charge field=orderId payload="<body onload=alert('xss')>" -> 429

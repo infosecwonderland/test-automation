@@ -1,0 +1,1 @@
+[AUTHZ-BYPASS] GET /order/1773760872530 as User B -> 403, body={"error":"Forbidden"}

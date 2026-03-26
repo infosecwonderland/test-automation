@@ -1,0 +1,502 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [password]-1 OR 1=1--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [password]-1' OR 'x'='x' --]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [email]-1' UNION SELECT NULL--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [password]-1; SHUTDOWN;--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:17:53 UTC 2026","Tue Mar 17 15:17:54 UTC 2026","647","UI Tests","Playwright","e2e/add-to-cart.spec.ts","","","add multiple different products to cart",""
+"passed","Tue Mar 17 15:21:12 UTC 2026","Tue Mar 17 15:21:12 UTC 2026","2","Security Tests","pytest","","","","test_requires_auth[POST /cart/clear]","
+    Every endpoint secured by bearerAuth in the OpenAPI contract must
+    reject unauthenticated requests with 401 or 403.
+    "
+"passed","Tue Mar 17 15:21:12 UTC 2026","Tue Mar 17 15:21:12 UTC 2026","2","Security Tests","pytest","","","","test_requires_auth[POST /order/create]","
+    Every endpoint secured by bearerAuth in the OpenAPI contract must
+    reject unauthenticated requests with 401 or 403.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","9","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [orderId]-1 OR 1=1--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [password]-1' AND SLEEP(5)--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:26:48 UTC 2026","Tue Mar 17 15:26:48 UTC 2026","2","AI Tests","Generated Tests","","","","test_get_current_user_unauthorized","Accessing /auth/me without auth should return 401."
+"passed","Tue Mar 17 15:26:49 UTC 2026","Tue Mar 17 15:26:49 UTC 2026","7","AI Tests","Generated Tests","","","","test_remove_item_from_cart","Remove an item from the cart by productId."
+"passed","Tue Mar 17 15:26:48 UTC 2026","Tue Mar 17 15:26:48 UTC 2026","2","AI Tests","Generated Tests","","","","test_register_new_user","Register a new user and verify 201 response with id and email."
+"passed","Tue Mar 17 15:20:38 UTC 2026","Tue Mar 17 15:20:38 UTC 2026","36","API Tests","pytest","","","","test_auth_login_invalid_credentials",""
+"passed","Tue Mar 17 15:26:49 UTC 2026","Tue Mar 17 15:26:49 UTC 2026","7","AI Tests","Generated Tests","","","","test_get_cart_items","Retrieve cart items for the authenticated user."
+"passed","Tue Mar 17 15:26:48 UTC 2026","Tue Mar 17 15:26:48 UTC 2026","3","AI Tests","Generated Tests","","","","test_health_check","Verify the health endpoint returns 200 with status field."
+"passed","Tue Mar 17 15:18:00 UTC 2026","Tue Mar 17 15:18:00 UTC 2026","409","UI Tests","Playwright","e2e/payment-execution.spec.ts","","","cannot execute payment when cart is empty",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","1","Security Tests","pytest","","","","test_xss[POST /auth/login [password]-<img src=x onerror=alert(1)>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:20:38 UTC 2026","Tue Mar 17 15:20:38 UTC 2026","44","API Tests","pytest","","","","test_add_to_cart_success",""
+"passed","Tue Mar 17 15:17:51 UTC 2026","Tue Mar 17 15:17:53 UTC 2026","1828","UI Tests","Playwright","e2e/add-to-cart.spec.ts","","","add single product to cart",""
+"passed","Tue Mar 17 15:22:16 UTC 2026","Tue Mar 17 15:22:16 UTC 2026","1","Performance Tests","k6","","","","Throughput (total requests)",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [email]-' OR ''=']","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:17:58 UTC 2026","Tue Mar 17 15:17:58 UTC 2026","234","UI Tests","Playwright","e2e/order-confirmation.spec.ts","","","direct visit with invalid orderId shows no-order message",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_xss[POST /auth/register [email]-<script>alert('xss')</script>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:26:49 UTC 2026","Tue Mar 17 15:26:49 UTC 2026","2","AI Tests","Generated Tests","","","","test_create_order_unauthorized","Creating an order without auth should return 401."
+"passed","Tue Mar 17 15:26:48 UTC 2026","Tue Mar 17 15:26:48 UTC 2026","3","AI Tests","Generated Tests","","","","test_get_current_user_authenticated","Authenticated user can retrieve their own profile."
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [email]-1 OR 1=1--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [password]-1' AND SLEEP(5)--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:20:01 UTC 2026","Tue Mar 17 15:20:37 UTC 2026","35566","UI Tests","Self-Healing (browser-use)","","","","test_self_healing_selector","
+    Demonstrates the self-healing loop:
+      inject broken selector → AI heals it → .ts file is patched automatically.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_xss[POST /auth/register [password]-<script>alert('xss')</script>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","9","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [cardNumber]-1; SHUTDOWN;--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:20:38 UTC 2026","Tue Mar 17 15:20:38 UTC 2026","3","API Tests","pytest","","","","test_auth_login_jwt_contents",""
+"passed","Tue Mar 17 15:18:02 UTC 2026","Tue Mar 17 15:18:02 UTC 2026","173","UI Tests","Playwright","e2e/product-search.spec.ts","","","shows all products when search is empty",""
+"passed","Tue Mar 17 15:26:49 UTC 2026","Tue Mar 17 15:26:49 UTC 2026","5","AI Tests","Generated Tests","","","","test_remove_item_not_in_cart","Removing an item not in the cart should return 400 or 404."
+"passed","Tue Mar 17 15:17:08 UTC 2026","Tue Mar 17 15:17:08 UTC 2026","1","","","","","","Trivy: package-lock.json",""
+"passed","Tue Mar 17 15:18:03 UTC 2026","Tue Mar 17 15:18:04 UTC 2026","293","UI Tests","Playwright","e2e/user-login.spec.ts","","","successful login redirects to product search page",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","1","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [password]-1 OR 1=1--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:26:49 UTC 2026","Tue Mar 17 15:26:49 UTC 2026","10","AI Tests","Generated Tests","","","","test_payment_charge_already_paid","Charging an already-paid order should return 400."
+"passed","Tue Mar 17 15:26:48 UTC 2026","Tue Mar 17 15:26:49 UTC 2026","6","AI Tests","Generated Tests","","","","test_add_multiple_items_to_cart","Add multiple different items to the cart successfully."
+"passed","Tue Mar 17 15:26:49 UTC 2026","Tue Mar 17 15:26:49 UTC 2026","6","AI Tests","Generated Tests","","","","test_create_order_happy_path","Create an order from the cart with a single item."
+"passed","Tue Mar 17 15:20:38 UTC 2026","Tue Mar 17 15:20:38 UTC 2026","33","API Tests","pytest","","","","test_add_to_cart_invalid_quantity",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","8","Security Tests","pytest","","","","test_xss[POST /payment/charge [cardNumber]-<script>alert('xss')</script>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_xss[POST /auth/login [password]-<svg/onload=alert`xss`>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","3","Security Tests","pytest","","","","test_xss[POST /auth/register [email]-<body onload=alert('xss')>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:17:58 UTC 2026","Tue Mar 17 15:17:59 UTC 2026","666","UI Tests","Playwright","e2e/order-confirmation.spec.ts","","","back to products link navigates to products page",""
+"passed","Tue Mar 17 15:21:12 UTC 2026","Tue Mar 17 15:21:12 UTC 2026","3","Security Tests","pytest","","","","test_requires_auth[POST /cart/add]","
+    Every endpoint secured by bearerAuth in the OpenAPI contract must
+    reject unauthenticated requests with 401 or 403.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [email]-1' AND SLEEP(5)--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:26:49 UTC 2026","Tue Mar 17 15:26:49 UTC 2026","3","AI Tests","Generated Tests","","","","test_get_order_not_found","Getting a nonexistent order should return 400 or 404."
+"passed","Tue Mar 17 15:26:48 UTC 2026","Tue Mar 17 15:26:48 UTC 2026","2","AI Tests","Generated Tests","","","","test_list_products","List products returns a non-empty array with required fields."
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","7","Security Tests","pytest","","","","test_xss[POST /payment/charge [cardNumber]-<img src=x onerror=alert(1)>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","8","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [cardNumber]-1 OR 1=1]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:13 UTC 2026","Tue Mar 17 15:21:13 UTC 2026","710","Security Tests","pytest","","","","test_rate_limit[POST /cart/add]","
+    Endpoints tagged x-rate-limited in the OpenAPI contract must return
+    429 when burst-requested beyond their threshold.
+    "
+"passed","Tue Mar 17 15:17:58 UTC 2026","Tue Mar 17 15:17:58 UTC 2026","227","UI Tests","Playwright","e2e/order-confirmation.spec.ts","","","direct visit to order-confirmation with no order shows no-order message",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [email]-1' OR '1'='1]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:14 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","698","Security Tests","pytest","","","","test_rate_limit[POST /payment/charge]","
+    Endpoints tagged x-rate-limited in the OpenAPI contract must return
+    429 when burst-requested beyond their threshold.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_xss[POST /auth/login [email]-<body onload=alert('xss')>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [password]-1' OR '1'='1]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_xss[POST /auth/register [password]-<img src=x onerror=alert(1)>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [password]-1 OR 1=1]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_xss[POST /auth/login [email]-<img src=x onerror=alert(1)>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:12 UTC 2026","Tue Mar 17 15:21:12 UTC 2026","3","Security Tests","pytest","","","","test_requires_auth[POST /payment/charge]","
+    Every endpoint secured by bearerAuth in the OpenAPI contract must
+    reject unauthenticated requests with 401 or 403.
+    "
+"passed","Tue Mar 17 15:20:38 UTC 2026","Tue Mar 17 15:20:38 UTC 2026","32","API Tests","pytest","","","","test_get_products_success",""
+"passed","Tue Mar 17 15:18:02 UTC 2026","Tue Mar 17 15:18:02 UTC 2026","210","UI Tests","Playwright","e2e/product-search.spec.ts","","","exact-name search returns only matching product",""
+"passed","Tue Mar 17 15:26:48 UTC 2026","Tue Mar 17 15:26:48 UTC 2026","2","AI Tests","Generated Tests","","","","test_add_item_to_cart_unauthorized","Adding to cart without auth should return 401."
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [email]-1' UNION SELECT NULL--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:20:38 UTC 2026","Tue Mar 17 15:20:38 UTC 2026","36","API Tests","pytest","","","","test_auth_login_success",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_xss[POST /auth/login [password]-<body onload=alert('xss')>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:17:56 UTC 2026","Tue Mar 17 15:17:57 UTC 2026","519","UI Tests","Playwright","e2e/checkout-process.spec.ts","","","checkout process continues from checkout to payment page",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [email]-1; SHUTDOWN;--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","6","Security Tests","pytest","","","","test_xss[POST /payment/charge [orderId]-""><script>alert('xss')</script>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_xss[POST /auth/register [password]-""><script>alert('xss')</script>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:17:59 UTC 2026","Tue Mar 17 15:18:00 UTC 2026","670","UI Tests","Playwright","e2e/payment-execution.spec.ts","","","successful payment redirects to order confirmation",""
+"passed","Tue Mar 17 15:17:57 UTC 2026","Tue Mar 17 15:17:58 UTC 2026","634","UI Tests","Playwright","e2e/order-confirmation.spec.ts","","","after successful payment, confirmation shows order details and notification",""
+"passed","Tue Mar 17 15:18:03 UTC 2026","Tue Mar 17 15:18:03 UTC 2026","750","UI Tests","Playwright","e2e/purchase-flow.spec.ts","","","user can complete purchase UI flow",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","6","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [orderId]-1' OR 'x'='x' --]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_xss[POST /auth/register [password]-<body onload=alert('xss')>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:20:38 UTC 2026","Tue Mar 17 15:20:38 UTC 2026","40","API Tests","pytest","","","","test_payment_invalid_card_details",""
+"passed","Tue Mar 17 15:20:38 UTC 2026","Tue Mar 17 15:20:38 UTC 2026","59","API Tests","pytest","","","","test_order_create_success",""
+"passed","Tue Mar 17 15:18:04 UTC 2026","Tue Mar 17 15:18:04 UTC 2026","280","UI Tests","Playwright","e2e/user-login.spec.ts","","","invalid credentials show error message",""
+"passed","Tue Mar 17 15:26:48 UTC 2026","Tue Mar 17 15:26:48 UTC 2026","4","AI Tests","Generated Tests","","","","test_register_duplicate_email","Registering with an already-used email should fail."
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","3","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [email]-1' OR '1'='1]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","6","Security Tests","pytest","","","","test_xss[POST /payment/charge [orderId]-<script>alert('xss')</script>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","8","Security Tests","pytest","","","","test_xss[POST /payment/charge [cardNumber]-""><script>alert('xss')</script>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:26:49 UTC 2026","Tue Mar 17 15:26:49 UTC 2026","1","AI Tests","Generated Tests","","","","test_get_cart_items_unauthorized","Getting cart items without auth should return 401."
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_xss[POST /auth/login [email]-<script>alert('xss')</script>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","6","Security Tests","pytest","","","","test_xss[POST /payment/charge [orderId]-<svg/onload=alert`xss`>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [email]-1' OR 'x'='x' --]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [email]-1 OR 1=1]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:26:49 UTC 2026","Tue Mar 17 15:26:49 UTC 2026","13","AI Tests","Generated Tests","","","","test_get_order_by_id","Retrieve a created order by its id and verify status is CREATED."
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [password]-1' UNION SELECT NULL--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [password]-1' OR '1'='1]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:22:16 UTC 2026","Tue Mar 17 15:22:16 UTC 2026","1","Performance Tests","k6","","","","Error rate < 1%",""
+"passed","Tue Mar 17 15:21:12 UTC 2026","Tue Mar 17 15:21:12 UTC 2026","8","Security Tests","pytest","","","","test_jwt_invalid_signature_is_rejected","
+  If the JWT signature is replaced with garbage, the token must be rejected.
+  "
+"passed","Tue Mar 17 15:21:12 UTC 2026","Tue Mar 17 15:21:13 UTC 2026","680","Security Tests","pytest","","","","test_rate_limit[POST /auth/login]","
+    Endpoints tagged x-rate-limited in the OpenAPI contract must return
+    429 when burst-requested beyond their threshold.
+    "
+"passed","Tue Mar 17 15:17:59 UTC 2026","Tue Mar 17 15:17:59 UTC 2026","515","UI Tests","Playwright","e2e/payment-execution.spec.ts","","","payment form is visible when reached from checkout",""
+"passed","Tue Mar 17 15:18:02 UTC 2026","Tue Mar 17 15:18:02 UTC 2026","213","UI Tests","Playwright","e2e/product-search.spec.ts","","","partial-name search can match multiple products",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","7","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [orderId]-1; SHUTDOWN;--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","8","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [orderId]-1 OR 1=1]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:20:38 UTC 2026","Tue Mar 17 15:20:38 UTC 2026","35","API Tests","pytest","","","","test_add_to_cart_invalid_product",""
+"passed","Tue Mar 17 15:22:16 UTC 2026","Tue Mar 17 15:22:16 UTC 2026","1","Performance Tests","k6","","","","P95 latency < 2000ms",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","3","Security Tests","pytest","","","","test_xss[POST /auth/register [email]-<svg/onload=alert`xss`>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:17:56 UTC 2026","Tue Mar 17 15:17:56 UTC 2026","437","UI Tests","Playwright","e2e/checkout-process.spec.ts","","","checkout from cart with items navigates to checkout page",""
+"passed","Tue Mar 17 15:26:49 UTC 2026","Tue Mar 17 15:26:49 UTC 2026","8","AI Tests","Generated Tests","","","","test_payment_charge_happy_path","Charge an order with a valid Visa card and verify PAID status."
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","7","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [cardNumber]-1' AND SLEEP(5)--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_xss[POST /auth/login [password]-<script>alert('xss')</script>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:26:48 UTC 2026","Tue Mar 17 15:26:48 UTC 2026","4","AI Tests","Generated Tests","","","","test_add_item_to_cart","Add a valid item to the cart and verify 201 response."
+"passed","Tue Mar 17 15:17:54 UTC 2026","Tue Mar 17 15:17:54 UTC 2026","643","UI Tests","Playwright","e2e/add-to-cart.spec.ts","","","add same product twice results in two entries",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","3","Security Tests","pytest","","","","test_xss[POST /auth/register [email]-<img src=x onerror=alert(1)>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:20:38 UTC 2026","Tue Mar 17 15:20:38 UTC 2026","35","API Tests","pytest","","","","test_order_create_empty_cart",""
+"passed","Tue Mar 17 15:17:57 UTC 2026","Tue Mar 17 15:17:57 UTC 2026","237","UI Tests","Playwright","e2e/checkout-process.spec.ts","","","cannot checkout when cart is empty",""
+"passed","Tue Mar 17 15:26:48 UTC 2026","Tue Mar 17 15:26:48 UTC 2026","4","AI Tests","Generated Tests","","","","test_login_valid_credentials","Login with valid credentials and receive an access token."
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_xss[POST /auth/login [email]-""><script>alert('xss')</script>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","7","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [orderId]-' OR ''=']","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:26:49 UTC 2026","Tue Mar 17 15:26:49 UTC 2026","6","AI Tests","Generated Tests","","","","test_clear_cart","Clear the cart and verify it is empty."
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_xss[POST /auth/register [email]-""><script>alert('xss')</script>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:17:54 UTC 2026","Tue Mar 17 15:17:55 UTC 2026","768","UI Tests","Playwright","e2e/add-to-cart.spec.ts","","","remove product from cart after adding",""
+"passed","Tue Mar 17 15:18:28 UTC 2026","Tue Mar 17 15:20:01 UTC 2026","92651","UI Tests","Self-Healing (browser-use)","","","","test_full_purchase_flow","E2E flow: login → search → cart → checkout → payment → confirmation."
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [email]-' OR ''=']","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:18:01 UTC 2026","Tue Mar 17 15:18:02 UTC 2026","632","UI Tests","Playwright","e2e/payment-execution.spec.ts","","","invalid short card number shows error",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [password]-1' UNION SELECT NULL--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:26:48 UTC 2026","Tue Mar 17 15:26:48 UTC 2026","2","AI Tests","Generated Tests","","","","test_register_missing_password","Registering without a password should return 400."
+"passed","Tue Mar 17 15:21:12 UTC 2026","Tue Mar 17 15:21:12 UTC 2026","3","Security Tests","pytest","","","","test_requires_auth[GET /auth/me]","
+    Every endpoint secured by bearerAuth in the OpenAPI contract must
+    reject unauthenticated requests with 401 or 403.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [password]-1 OR 1=1]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:12 UTC 2026","Tue Mar 17 15:21:12 UTC 2026","2","Security Tests","pytest","","","","test_requires_auth[GET /order/0]","
+    Every endpoint secured by bearerAuth in the OpenAPI contract must
+    reject unauthenticated requests with 401 or 403.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","6","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [orderId]-1' UNION SELECT NULL--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [email]-1; SHUTDOWN;--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:22:16 UTC 2026","Tue Mar 17 15:22:16 UTC 2026","1","Performance Tests","k6","","","","Peak VUs",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","1","Security Tests","pytest","","","","test_xss[POST /auth/login [email]-<svg/onload=alert`xss`>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","7","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [orderId]-1' AND SLEEP(5)--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [password]-1; SHUTDOWN;--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [email]-1' AND SLEEP(5)--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [password]-' OR ''=']","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:18:04 UTC 2026","Tue Mar 17 15:18:05 UTC 2026","272","UI Tests","Playwright","e2e/user-register.spec.ts","","","registering an existing email shows error",""
+"passed","Tue Mar 17 15:20:38 UTC 2026","Tue Mar 17 15:20:38 UTC 2026","33","API Tests","pytest","","","","test_payment_order_not_found",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [email]-1 OR 1=1--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","7","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [cardNumber]-1' UNION SELECT NULL--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [password]-1' OR 'x'='x' --]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:17:55 UTC 2026","Tue Mar 17 15:17:56 UTC 2026","445","UI Tests","Playwright","e2e/add-to-cart.spec.ts","","","cart persists across navigation",""
+"passed","Tue Mar 17 15:17:19 UTC 2026","Tue Mar 17 15:17:19 UTC 2026","1","Security Tests","SAST (Semgrep)","","","","Semgrep — no issues found",""
+"passed","Tue Mar 17 15:21:12 UTC 2026","Tue Mar 17 15:21:12 UTC 2026","2","Security Tests","pytest","","","","test_requires_auth[GET /cart/items]","
+    Every endpoint secured by bearerAuth in the OpenAPI contract must
+    reject unauthenticated requests with 401 or 403.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","7","Security Tests","pytest","","","","test_xss[POST /payment/charge [cardNumber]-<svg/onload=alert`xss`>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","7","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [cardNumber]-1' OR '1'='1]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [password]-' OR ''=']","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:20:38 UTC 2026","Tue Mar 17 15:20:38 UTC 2026","72","API Tests","pytest","","","","test_payment_success",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_xss[POST /auth/login [password]-""><script>alert('xss')</script>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","7","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [cardNumber]-' OR ''=']","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:18:02 UTC 2026","Tue Mar 17 15:18:03 UTC 2026","199","UI Tests","Playwright","e2e/product-search.spec.ts","","","no-match search shows no products",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","6","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [orderId]-1' OR '1'='1]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","8","Security Tests","pytest","","","","test_xss[POST /payment/charge [orderId]-<img src=x onerror=alert(1)>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_xss[POST /auth/register [password]-<svg/onload=alert`xss`>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:18:00 UTC 2026","Tue Mar 17 15:18:01 UTC 2026","688","UI Tests","Playwright","e2e/payment-execution.spec.ts","","","blank card number shows error",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","8","Security Tests","pytest","","","","test_xss[POST /payment/charge [cardNumber]-<body onload=alert('xss')>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:18:02 UTC 2026","Tue Mar 17 15:18:02 UTC 2026","207","UI Tests","Playwright","e2e/product-search.spec.ts","","","case-insensitive search works",""
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","3","Security Tests","pytest","","","","test_sql_injection[POST /auth/register [email]-1 OR 1=1]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:12 UTC 2026","Tue Mar 17 15:21:12 UTC 2026","8","Security Tests","pytest","","","","test_jwt_payload_tamper_without_resign_is_rejected","
+  If the JWT payload is modified without recomputing the signature,
+  /auth/me should reject it (401/403), not accept it.
+  "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","2","Security Tests","pytest","","","","test_sql_injection[POST /auth/login [email]-1' OR 'x'='x' --]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:26:48 UTC 2026","Tue Mar 17 15:26:48 UTC 2026","2","AI Tests","Generated Tests","","","","test_login_wrong_password","Login with incorrect password should fail with 401."
+"passed","Tue Mar 17 15:21:12 UTC 2026","Tue Mar 17 15:21:12 UTC 2026","2","Security Tests","pytest","","","","test_requires_auth[POST /cart/remove]","
+    Every endpoint secured by bearerAuth in the OpenAPI contract must
+    reject unauthenticated requests with 401 or 403.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","6","Security Tests","pytest","","","","test_xss[POST /payment/charge [orderId]-<body onload=alert('xss')>]","
+    XSS payloads in string request-body fields must not be reflected
+    unescaped in the response and must not cause a server error (5xx).
+    "
+"passed","Tue Mar 17 15:26:49 UTC 2026","Tue Mar 17 15:26:49 UTC 2026","4","AI Tests","Generated Tests","","","","test_create_order_empty_cart","Creating an order with an empty cart should return 400."
+"passed","Tue Mar 17 15:21:13 UTC 2026","Tue Mar 17 15:21:14 UTC 2026","700","Security Tests","pytest","","","","test_rate_limit[POST /order/create]","
+    Endpoints tagged x-rate-limited in the OpenAPI contract must return
+    429 when burst-requested beyond their threshold.
+    "
+"passed","Tue Mar 17 15:18:04 UTC 2026","Tue Mar 17 15:18:04 UTC 2026","385","UI Tests","Playwright","e2e/user-register.spec.ts","","","new user can register and then log in",""
+"passed","Tue Mar 17 15:21:12 UTC 2026","Tue Mar 17 15:21:12 UTC 2026","20","Security Tests","pytest","","","","test_authorization_bypass_order_leak_between_users","
+  Authorization bypass: User B must not be able to see
+  orders that belong to User A.
+
+  Today, GET /order/:orderId does not enforce user ownership
+  or authentication at all, so this test will currently fail,
+  highlighting an access-control vulnerability.
+  "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","6","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [cardNumber]-1' OR 'x'='x' --]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:21:15 UTC 2026","Tue Mar 17 15:21:15 UTC 2026","6","Security Tests","pytest","","","","test_sql_injection[POST /payment/charge [cardNumber]-1 OR 1=1--]","
+    SQL injection payloads in string request-body fields must not cause
+    the server to succeed (2xx) or crash (5xx).  Any 4xx response is
+    an acceptable rejection.
+    "
+"passed","Tue Mar 17 15:26:48 UTC 2026","Tue Mar 17 15:26:48 UTC 2026","2","AI Tests","Generated Tests","","","","test_add_item_missing_product_id","Adding to cart without productId should return 400."
+"passed","Tue Mar 17 15:21:12 UTC 2026","Tue Mar 17 15:21:12 UTC 2026","8","Security Tests","pytest","","","","test_jwt_used_without_bearer_prefix_is_rejected","
+  Using a raw JWT without the 'Bearer ' prefix should not be accepted.
+  "

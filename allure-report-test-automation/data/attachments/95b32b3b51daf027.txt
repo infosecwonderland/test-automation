@@ -1,0 +1,1 @@
+[API] GET http://localhost:3000/cart/items -> 401 in 1.5 ms

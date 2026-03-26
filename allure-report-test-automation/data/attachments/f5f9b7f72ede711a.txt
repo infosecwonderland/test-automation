@@ -1,0 +1,1 @@
+[XSS] POST /auth/register field=email payload='<img src=x onerror=alert(1)>' -> 400

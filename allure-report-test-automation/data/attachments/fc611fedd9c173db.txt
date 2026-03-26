@@ -1,0 +1,1 @@
+[XSS] POST /auth/register field=email payload='"><script>alert(\'xss\')</script>' -> 400

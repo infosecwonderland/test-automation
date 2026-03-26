@@ -1,0 +1,1 @@
+[API] GET http://localhost:3000/products -> 200 in 1.6 ms

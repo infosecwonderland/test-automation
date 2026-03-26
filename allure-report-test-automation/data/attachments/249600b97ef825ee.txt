@@ -1,0 +1,4 @@
+[API] POST http://localhost:3000/auth/register -> 409 in 1.8 ms
+[API] POST http://localhost:3000/auth/login -> 200 in 2.3 ms
+[API] POST http://localhost:3000/cart/clear -> 200 in 3.4 ms
+[API] POST http://localhost:3000/cart/add -> 201 in 2.6 ms
